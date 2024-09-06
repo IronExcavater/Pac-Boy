@@ -1,3 +1,5 @@
+using System.Collections;
+using NUnit.Framework.Internal;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -27,7 +29,18 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(Test());
+    }
+
+    IEnumerator Test()
+    {
         PlayMusicLoop(musicNormal);
+        yield return new WaitForSecondsRealtime(2);
+        PlaySfxOneShot(coin);
+        yield return new WaitForSecondsRealtime(2);
+        PlayMusicOneShot(musicScared);
+        yield return new WaitForSecondsRealtime(5);
+        PlaySfxOneShot(hit);
     }
     
     private void Update()
@@ -68,7 +81,13 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusicOneShot(AudioClipTempoTuple clip)
     {
-        musicSource[1 - _sourceToggle].PlayOneShot(clip.AudioClip);
+        if (_loopedMusic != null)
+        {
+            musicSource[1 - _sourceToggle].SetScheduledEndTime(AudioSettings.dspTime);
+            _endDspTime = AudioSettings.dspTime + (double) clip.AudioClip.samples / clip.AudioClip.frequency;
+        }
+        musicSource[_sourceToggle].PlayOneShot(clip.AudioClip);
+        _sourceToggle = 1 - _sourceToggle;
     }
 
     public void PlaySfxOneShot(AudioClip clip)
