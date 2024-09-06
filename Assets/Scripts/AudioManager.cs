@@ -41,6 +41,8 @@ public class AudioManager : MonoBehaviour
         PlayMusicOneShot(musicScared);
         yield return new WaitForSecondsRealtime(5);
         PlaySfxOneShot(hit);
+        yield return new WaitForSecondsRealtime(5);
+        PlayMusicLoop(musicIntermission);
     }
     
     private void Update()
@@ -58,40 +60,49 @@ public class AudioManager : MonoBehaviour
         _sourceToggle = 1 - _sourceToggle;
     }
 
-    public void PlayMusicLoop(AudioClipTempoTuple clip)
-    {
-        // Calculate next bar time of current clip
-        double nextBarDspTime = AudioSettings.dspTime;
-        if (_loopedMusic != null)
-        {
-            double barDuration = 60d / _loopedMusic.Tempo * 4; // minute / bpm * time signature
-            double clipElapsedDspTime = (double)musicSource[1 - _sourceToggle].timeSamples / _loopedMusic.AudioClip.frequency;
-            nextBarDspTime += barDuration - clipElapsedDspTime % barDuration;
-            musicSource[1 - _sourceToggle].SetScheduledEndTime(nextBarDspTime);
-        }
-        // Load next clip and schedule at next bar
-        musicSource[_sourceToggle].clip = clip.AudioClip;
-        musicSource[_sourceToggle].PlayScheduled(nextBarDspTime);
-        // Set end time to next bar plus clip's duration
-        _endDspTime = nextBarDspTime + (double) clip.AudioClip.samples / clip.AudioClip.frequency;
-        // Switch source toggle and set looped music to clip
-        _sourceToggle = 1 - _sourceToggle;
-        _loopedMusic = clip;
-    }
-
     public void PlayMusicOneShot(AudioClipTempoTuple clip)
     {
-        if (_loopedMusic != null)
-        {
-            musicSource[1 - _sourceToggle].SetScheduledEndTime(AudioSettings.dspTime);
-            _endDspTime = AudioSettings.dspTime + (double) clip.AudioClip.samples / clip.AudioClip.frequency;
-        }
-        musicSource[_sourceToggle].PlayOneShot(clip.AudioClip);
-        _sourceToggle = 1 - _sourceToggle;
+        ScheduleMusicClip(clip, NextBeat());
     }
-
+    
+    public void PlayMusicLoop(AudioClipTempoTuple clip)
+    {
+        ScheduleMusicClip(clip, NextBar());
+        _loopedMusic = clip;
+    }
+    
     public void PlaySfxOneShot(AudioClip clip)
     {
         sfxSource.PlayOneShot(clip);
+    }
+
+    private double NextBar()
+    {
+        if (_loopedMusic == null) return 0;
+        // Calculate next musical bar time of current clip
+        double barDuration = 60d / _loopedMusic.Tempo * 4; // minute / bpm * time signature (assumed 4/4)
+        double clipElapsedDspTime = (double) musicSource[1 - _sourceToggle].timeSamples / _loopedMusic.AudioClip.frequency;
+        return AudioSettings.dspTime + barDuration - clipElapsedDspTime % barDuration;
+    }
+
+    private double NextBeat()
+    {
+        if (_loopedMusic == null) return 0;
+        // Calculate next musical beat time of current clip
+        double beatDuration = 60d / _loopedMusic.Tempo;
+        double clipElapsedDspTime = (double) musicSource[1 - _sourceToggle].timeSamples / _loopedMusic.AudioClip.frequency;
+        return AudioSettings.dspTime + beatDuration - clipElapsedDspTime % beatDuration;
+    }
+
+    private void ScheduleMusicClip(AudioClipTempoTuple clip, double nextDspTime)
+    {
+        // Load next clip and schedule at next time
+        musicSource[_sourceToggle].clip = clip.AudioClip;
+        musicSource[_sourceToggle].PlayScheduled(nextDspTime);
+        // Set end time to next time plus clip's duration
+        if (_loopedMusic != null) musicSource[1 - _sourceToggle].SetScheduledEndTime(nextDspTime);
+        _endDspTime = nextDspTime + (double) clip.AudioClip.samples / clip.AudioClip.frequency;
+        // Switch source toggle
+        _sourceToggle = 1 - _sourceToggle;
     }
 }
