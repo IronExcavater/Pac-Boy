@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music Clips:")]
     [SerializeField] private AudioClipTempoTuple musicMenu;
+    [SerializeField] private AudioClipTempoTuple musicIntro;
     [SerializeField] private AudioClipTempoTuple musicNormal;
     [SerializeField] private AudioClipTempoTuple musicScared;
     [SerializeField] private AudioClipTempoTuple musicIntermission;
@@ -32,20 +33,27 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(Test());
     }
 
-    IEnumerator Test()
+    private IEnumerator Test()
     {
-        PlayMusicLoop(musicNormal);
+        PlayMusicOneShot(musicIntro);
+        QueueMusicLoop(musicNormal);
         yield return new WaitForSecondsRealtime(2);
         PlaySfxOneShot(coin);
-        yield return new WaitForSecondsRealtime(2);
-        PlayMusicOneShot(musicScared);
+        yield return new WaitForSecondsRealtime(10);
+        PlaySfxOneShot(potion);
+        ImmediateMusicOneShot(musicScared);
         yield return new WaitForSecondsRealtime(5);
         PlaySfxOneShot(hit);
-        yield return new WaitForSecondsRealtime(5);
+        yield return new WaitForSecondsRealtime(10);
         PlayMusicLoop(musicIntermission);
     }
     
     private void Update()
+    {
+        LoopMusic();
+    }
+
+    private void LoopMusic()
     {
         if (AudioSettings.dspTime < _endDspTime - 1) return;
         if (_loopedMusic is null) return;
@@ -64,10 +72,20 @@ public class AudioManager : MonoBehaviour
     {
         ScheduleMusicClip(clip, NextBeat());
     }
+
+    public void ImmediateMusicOneShot(AudioClipTempoTuple clip)
+    {
+        ScheduleMusicClip(clip, AudioSettings.dspTime);
+    }
     
     public void PlayMusicLoop(AudioClipTempoTuple clip)
     {
         ScheduleMusicClip(clip, NextBar());
+        _loopedMusic = clip;
+    }
+
+    public void QueueMusicLoop(AudioClipTempoTuple clip)
+    {
         _loopedMusic = clip;
     }
     
@@ -78,7 +96,7 @@ public class AudioManager : MonoBehaviour
 
     private double NextBar()
     {
-        if (_loopedMusic == null) return 0;
+        if (_loopedMusic == null) return AudioSettings.dspTime;
         // Calculate next musical bar time of current clip
         double barDuration = 60d / _loopedMusic.Tempo * 4; // minute / bpm * time signature (assumed 4/4)
         double clipElapsedDspTime = (double) musicSource[1 - _sourceToggle].timeSamples / _loopedMusic.AudioClip.frequency;
@@ -87,7 +105,7 @@ public class AudioManager : MonoBehaviour
 
     private double NextBeat()
     {
-        if (_loopedMusic == null) return 0;
+        if (_loopedMusic == null) return AudioSettings.dspTime;
         // Calculate next musical beat time of current clip
         double beatDuration = 60d / _loopedMusic.Tempo;
         double clipElapsedDspTime = (double) musicSource[1 - _sourceToggle].timeSamples / _loopedMusic.AudioClip.frequency;
