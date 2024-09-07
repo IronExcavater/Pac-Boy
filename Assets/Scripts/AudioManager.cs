@@ -37,6 +37,7 @@ public class AudioManager : MonoBehaviour
             Audio = this;
             DontDestroyOnLoad(Audio);
         }
+        else Destroy(this);
     }
     
     private void Update()
