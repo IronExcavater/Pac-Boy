@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: ani
+      value: 
+      objectReference: {fileID: 5632268738571384069}
     - target: {fileID: 1753161451708760938, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_Controller
       value: 
@@ -77,3 +81,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+--- !u!95 &5632268738571384069 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1753161451708760938, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+  m_PrefabInstance: {fileID: 6232328356035556975}
+  m_PrefabAsset: {fileID: 0}

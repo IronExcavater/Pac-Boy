@@ -199,7 +199,7 @@ MonoBehaviour:
   coin: {fileID: 8300000, guid: c795620ef7c95b84eaf2ad136f1f0e1e, type: 3}
   potion: {fileID: 8300000, guid: 60c81ffdf69d67042bd3f109fd72e2c7, type: 3}
   hit: {fileID: 8300000, guid: 127c5776c6cf83a439bd909333fa765e, type: 3}
-  death: {fileID: 8300000, guid: f8f39b1358f8cfb4c9779caa910f9033, type: 3}
+  defeat: {fileID: 8300000, guid: f8f39b1358f8cfb4c9779caa910f9033, type: 3}
   score: {fileID: 8300000, guid: 8931e9dc72d9070498967403603833d3, type: 3}
   select: {fileID: 8300000, guid: 0eab1fbd45b9b9f48865667981614a3f, type: 3}
 --- !u!1 &4281810089051750984

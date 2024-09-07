@@ -1,9 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -16,7 +12,10 @@ public class GameManager : MonoBehaviour
     {
         Normal,
         Scared,
-        Victory,
+        // Temp modes
+        Flip,
+        Move,
+        Attack,
         Defeat
     }
     
@@ -41,15 +40,25 @@ public class GameManager : MonoBehaviour
         AudioManager.PlayMusicOneShot(AudioManager.Audio.musicIntro);
         AudioManager.QueueMusicLoop(AudioManager.Audio.musicNormal);
         yield return new WaitForSecondsRealtime(2);
+        TriggerMode(Mode.Flip);
         AudioManager.PlaySfxOneShot(AudioManager.Audio.coin);
-        yield return new WaitForSecondsRealtime(10);
+        yield return new WaitForSecondsRealtime(3);
+        TriggerMode(Mode.Attack);
+        AudioManager.PlaySfxOneShot(AudioManager.Audio.hit);
+        yield return new WaitForSecondsRealtime(5);
         TriggerMode(Mode.Scared);
         AudioManager.PlaySfxOneShot(AudioManager.Audio.potion);
         AudioManager.ImmediateMusicOneShot(AudioManager.Audio.musicScared);
         yield return new WaitForSecondsRealtime(5);
-        AudioManager.PlaySfxOneShot(AudioManager.Audio.hit);
-        yield return new WaitForSecondsRealtime(10);
+        TriggerMode(Mode.Flip);
+        TriggerMode(Mode.Move);
+        yield return new WaitForSecondsRealtime(5);
+        TriggerMode(Mode.Move);
+        yield return new WaitForSecondsRealtime(1);
         AudioManager.PlayMusicLoop(AudioManager.Audio.musicIntermission);
+        yield return new WaitForSecondsRealtime(4);
+        TriggerMode(Mode.Defeat);
+        AudioManager.PlaySfxOneShot(AudioManager.Audio.defeat);
     }
 
     public static void RegisterCharacter(Character character)

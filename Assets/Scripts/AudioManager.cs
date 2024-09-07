@@ -1,5 +1,3 @@
-using System.Collections;
-using NUnit.Framework.Internal;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -22,7 +20,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip coin;
     public AudioClip potion;
     public AudioClip hit;
-    public AudioClip death;
+    public AudioClip defeat;
     public AudioClip score;
     public AudioClip select;
 
