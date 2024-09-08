@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
         Normal,
         Scared,
         // Temp modes
-        Flip,
+        Direction,
         Move,
         Attack,
         Defeat
@@ -36,27 +36,31 @@ public class GameManager : MonoBehaviour
     
     private IEnumerator Test()
     {
-        TriggerMode(Mode.Normal);
         AudioManager.PlayMusicOneShot(AudioManager.Audio.musicIntro);
         AudioManager.QueueMusicLoop(AudioManager.Audio.musicNormal);
-        yield return new WaitForSecondsRealtime(2);
-        TriggerMode(Mode.Flip);
-        AudioManager.PlaySfxOneShot(AudioManager.Audio.coin);
-        yield return new WaitForSecondsRealtime(3);
-        TriggerMode(Mode.Attack);
-        AudioManager.PlaySfxOneShot(AudioManager.Audio.hit);
-        yield return new WaitForSecondsRealtime(5);
-        TriggerMode(Mode.Scared);
-        AudioManager.PlaySfxOneShot(AudioManager.Audio.potion);
-        AudioManager.ImmediateMusicOneShot(AudioManager.Audio.musicScared);
-        yield return new WaitForSecondsRealtime(5);
-        TriggerMode(Mode.Flip);
-        TriggerMode(Mode.Move);
-        yield return new WaitForSecondsRealtime(5);
-        TriggerMode(Mode.Move);
-        yield return new WaitForSecondsRealtime(1);
+        yield return new WaitForSeconds(3);
+        TriggerMode(Mode.Normal);
+        for (var i = 0; i < 3; i++)
+        {
+            AudioManager.PlaySfxOneShot(AudioManager.Audio.coin);
+            yield return new WaitForSeconds(1);
+            TriggerMode(Mode.Attack);
+            AudioManager.PlaySfxOneShot(AudioManager.Audio.hit);
+            yield return new WaitForSeconds(2);
+            TriggerMode(Mode.Move);
+            yield return new WaitForSeconds(2);
+            TriggerMode(Mode.Scared);
+            AudioManager.PlaySfxOneShot(AudioManager.Audio.potion);
+            AudioManager.ImmediateMusicOneShot(AudioManager.Audio.musicScared);
+            yield return new WaitForSeconds(4);
+            TriggerMode(Mode.Move);
+            yield return new WaitForSeconds(6);
+            TriggerMode(Mode.Direction);
+            AudioManager.PlaySfxOneShot(AudioManager.Audio.select);
+            yield return new WaitForSeconds(2);
+        }
         AudioManager.PlayMusicLoop(AudioManager.Audio.musicIntermission);
-        yield return new WaitForSecondsRealtime(4);
+        yield return new WaitForSeconds(4);
         TriggerMode(Mode.Defeat);
         AudioManager.PlaySfxOneShot(AudioManager.Audio.defeat);
     }

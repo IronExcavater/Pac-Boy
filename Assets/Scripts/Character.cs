@@ -8,27 +8,35 @@ public abstract class Character : MonoBehaviour
     [SerializeField] protected Animator ani;
 
     private Dictionary<string, int> _aniHash = new();
-    private bool _isFacingRight = true;
-    private bool _isArmed;
-    
-    public bool IsFacingRight
+    private Direction facing;
+    private bool isArmed;
+
+    public enum Direction
     {
-        get => _isFacingRight;
+        North,
+        East,
+        South,
+        West
+    }
+    
+    public Direction Facing
+    {
+        get => facing;
         set
         {
-            if (_isFacingRight == value) return;
-            _isFacingRight = value;
-            FlipCharacter();
+            if (facing == value) return;
+            facing = value;
+            ChangeFacing();
         }
     }
 
     public bool IsArmed
     {
-        get => _isArmed;
+        get => isArmed;
         set
         {
-            if (_isArmed == value) return;
-            _isArmed = value;
+            if (isArmed == value) return;
+            isArmed = value;
             StartCoroutine(BlinkTransition("Armed", 4));
         }
     }
@@ -54,11 +62,29 @@ public abstract class Character : MonoBehaviour
         return _aniHash.TryGetValue(parameterName, out var hash) ? hash : throw new KeyNotFoundException();
     }
     
+    private void ChangeFacing()
+    {
+        switch (Facing)
+        {
+            case Direction.North:
+                ani.SetFloat(GetAnimatorHash("Direction"), 0);
+                break;
+            case Direction.East:
+            case Direction.West:
+                ani.SetFloat(GetAnimatorHash("Direction"), 1);
+                FlipCharacter();
+                break;
+            case Direction.South:
+                ani.SetFloat(GetAnimatorHash("Direction"), 2);
+                break;
+        }
+    }
+
     private void FlipCharacter()
     {
         // Flip the character by inverting the x scale
         Vector3 scale = transform.localScale;
-        scale.x *= -1;
+        scale.x = Facing == Direction.West ? -1 : 1;
         transform.localScale = scale;
     }
 

@@ -11,8 +11,8 @@ public class Player : Character
                 IsArmed = true;
                 break;
             // Temporary modes
-            case GameManager.Mode.Flip:
-                IsFacingRight = !IsFacingRight;
+            case GameManager.Mode.Direction:
+                Facing = (Direction) ((int) Facing + 1);
                 break;
             case GameManager.Mode.Move:
                 ani.SetBool(GetAnimatorHash("Moving"), !ani.GetBool(GetAnimatorHash("Moving")));

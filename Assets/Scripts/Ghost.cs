@@ -1,5 +1,8 @@
 public class Ghost : Character
 {
+    
+    protected bool _isArmed = true;
+    
     public override void ChangeMode(GameManager.Mode mode)
     {
         switch (mode)
@@ -11,8 +14,8 @@ public class Ghost : Character
                 IsArmed = false;
                 break;
             // Temporary modes
-            case GameManager.Mode.Flip:
-                IsFacingRight = !IsFacingRight;
+            case GameManager.Mode.Direction:
+                Facing = (Direction) ((int) Facing + 1);
                 break;
             case GameManager.Mode.Move:
                 ani.SetBool(GetAnimatorHash("Moving"), !ani.GetBool(GetAnimatorHash("Moving")));
