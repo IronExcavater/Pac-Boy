@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: fe78a4a2363ab114ca0d8d91e717b4d9
+guid: fa18e5786bc55184da39e7000264dded
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8610279347594985942
-    second: Skeleton_Death_0
+      213: -8631858943262867415
+    second: Knight_Death_0
   - first:
-      213: -3134359789022687535
-    second: Skeleton_Death_1
+      213: 3205060758753991331
+    second: Knight_Death_1
   - first:
-      213: 8399632352712144361
-    second: Skeleton_Death_2
+      213: -2038535105493469302
+    second: Knight_Death_2
   - first:
-      213: -2072202752667699138
-    second: Skeleton_Death_3
+      213: 4699135063730355073
+    second: Knight_Death_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -62,7 +62,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -109,7 +109,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Skeleton_Death_0
+      name: Knight_Defeat_0
       rect:
         serializedVersion: 2
         x: 0
@@ -117,20 +117,20 @@ TextureImporter:
         width: 100
         height: 100
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6d1084a827bdd7770800000000000000
-      internalID: 8610279347594985942
+      spriteID: 920c98f460a753880800000000000000
+      internalID: -8631858943262867415
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Death_1
+      name: Knight_Defeat_1
       rect:
         serializedVersion: 2
         x: 100
@@ -138,20 +138,20 @@ TextureImporter:
         width: 100
         height: 100
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1dec801e0648084d0800000000000000
-      internalID: -3134359789022687535
+      spriteID: 3aa531967c9aa7c20800000000000000
+      internalID: 3205060758753991331
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Death_2
+      name: Knight_Defeat_2
       rect:
         serializedVersion: 2
         x: 200
@@ -159,20 +159,20 @@ TextureImporter:
         width: 100
         height: 100
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9e539432f1d719470800000000000000
-      internalID: 8399632352712144361
+      spriteID: a87f5e64f1ba5b3e0800000000000000
+      internalID: -2038535105493469302
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Death_3
+      name: Knight_Defeat_3
       rect:
         serializedVersion: 2
         x: 300
@@ -180,14 +180,14 @@ TextureImporter:
         width: 100
         height: 100
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e38b7a0539e0e33e0800000000000000
-      internalID: -2072202752667699138
+      spriteID: 18bfa31817ea63140800000000000000
+      internalID: 4699135063730355073
       vertices: []
       indices: 
       edges: []
@@ -195,7 +195,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 02df42366256554418db69cc6c222f10
+    spriteID: 8ee5e69311104bb408741a0af655d296
     internalID: 0
     vertices: []
     indices: 
@@ -203,10 +203,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Skeleton_Death_0: 8610279347594985942
-      Skeleton_Death_1: -3134359789022687535
-      Skeleton_Death_2: 8399632352712144361
-      Skeleton_Death_3: -2072202752667699138
+      Knight_Defeat_0: -8631858943262867415
+      Knight_Defeat_1: 3205060758753991331
+      Knight_Defeat_2: -2038535105493469302
+      Knight_Defeat_3: 4699135063730355073
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
