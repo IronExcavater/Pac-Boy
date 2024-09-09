@@ -41,7 +41,7 @@ public abstract class Character : MonoBehaviour
         }
     }
     
-    private void Awake()
+    private void Start()
     {
         GameManager.RegisterCharacter(this);
         CacheAnimatorHashes();

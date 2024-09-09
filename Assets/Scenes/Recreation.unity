@@ -129,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5311676960400328643, guid: 16c2b15d625ee354f9566d2b2a6c913d, type: 3}
       propertyPath: m_Name
-      value: GameManager
+      value: Game Manager
       objectReference: {fileID: 0}
     - target: {fileID: 5672061260962836751, guid: 16c2b15d625ee354f9566d2b2a6c913d, type: 3}
       propertyPath: m_LocalPosition.x

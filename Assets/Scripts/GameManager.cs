@@ -67,6 +67,8 @@ public class GameManager : MonoBehaviour
 
     public static void RegisterCharacter(Character character)
     {
+        print(character);
+        print(Game._characters);
         if (!Game._characters.Contains(character)) Game._characters.Add(character);
     }
 
