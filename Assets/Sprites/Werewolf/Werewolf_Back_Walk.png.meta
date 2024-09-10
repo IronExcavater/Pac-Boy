@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: ff441410f76c74b6cb0df0107fd19883
+guid: 3a76fa54204978b448aa5b622af4f639
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2238598868404540355
-    second: Skeleton_Back_Walk_0
+      213: 2568047013863310251
+    second: Werewolf_Back_Walk_0
   - first:
-      213: 2534182459457088210
-    second: Skeleton_Back_Walk_1
+      213: -8348379458212594458
+    second: Werewolf_Back_Walk_1
   - first:
-      213: 6257960150479018566
-    second: Skeleton_Back_Walk_2
+      213: 6709963735853638702
+    second: Werewolf_Back_Walk_2
   - first:
-      213: -1560478723360663227
-    second: Skeleton_Back_Walk_3
+      213: 559619596962605687
+    second: Werewolf_Back_Walk_3
   - first:
-      213: -2080950549200798064
-    second: Skeleton_Back_Walk_4
+      213: 7910665958118327662
+    second: Werewolf_Back_Walk_4
   - first:
-      213: -3221953247054863580
-    second: Skeleton_Back_Walk_5
+      213: 8193305217117318358
+    second: Werewolf_Back_Walk_5
   - first:
-      213: 1289558109063334726
-    second: Skeleton_Back_Walk_6
+      213: 5394675195050957196
+    second: Werewolf_Back_Walk_6
   - first:
-      213: -8507714755380775306
-    second: Skeleton_Back_Walk_7
+      213: -3336685741990659420
+    second: Werewolf_Back_Walk_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -121,7 +121,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_0
+      name: Werewolf_Back_Walk_0
       rect:
         serializedVersion: 2
         x: 0
@@ -135,14 +135,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3c318d96fc9111f10800000000000000
-      internalID: 2238598868404540355
+      spriteID: ba343db272983a320800000000000000
+      internalID: 2568047013863310251
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_1
+      name: Werewolf_Back_Walk_1
       rect:
         serializedVersion: 2
         x: 100
@@ -156,14 +156,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2da27fb25893b2320800000000000000
-      internalID: 2534182459457088210
+      spriteID: 6ecf1174d19942c80800000000000000
+      internalID: -8348379458212594458
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_2
+      name: Werewolf_Back_Walk_2
       rect:
         serializedVersion: 2
         x: 200
@@ -177,14 +177,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 64a1adbc99db8d650800000000000000
-      internalID: 6257960150479018566
+      spriteID: e242f4387749e1d50800000000000000
+      internalID: 6709963735853638702
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_3
+      name: Werewolf_Back_Walk_3
       rect:
         serializedVersion: 2
         x: 300
@@ -198,14 +198,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 549588e6ed0185ae0800000000000000
-      internalID: -1560478723360663227
+      spriteID: 77aad46fe0b24c700800000000000000
+      internalID: 559619596962605687
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_4
+      name: Werewolf_Back_Walk_4
       rect:
         serializedVersion: 2
         x: 400
@@ -219,14 +219,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 09e7bb7308afe13e0800000000000000
-      internalID: -2080950549200798064
+      spriteID: e650b62c6c458cd60800000000000000
+      internalID: 7910665958118327662
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_5
+      name: Werewolf_Back_Walk_5
       rect:
         serializedVersion: 2
         x: 500
@@ -240,14 +240,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 423e06aa7925943d0800000000000000
-      internalID: -3221953247054863580
+      spriteID: 6dce1aa5fa774b170800000000000000
+      internalID: 8193305217117318358
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_6
+      name: Werewolf_Back_Walk_6
       rect:
         serializedVersion: 2
         x: 600
@@ -261,14 +261,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 64bc1ff844e65e110800000000000000
-      internalID: 1289558109063334726
+      spriteID: c899f97f18cbdda40800000000000000
+      internalID: 5394675195050957196
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_7
+      name: Werewolf_Back_Walk_7
       rect:
         serializedVersion: 2
         x: 700
@@ -282,8 +282,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 676fd2b71868ee980800000000000000
-      internalID: -8507714755380775306
+      spriteID: 4aa39850ff5b1b1d0800000000000000
+      internalID: -3336685741990659420
       vertices: []
       indices: 
       edges: []
@@ -291,7 +291,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 4fca77e9a7150b2418761777d663f402
+    spriteID: 96f88a4206c896b4697b4a1d6e9880db
     internalID: 0
     vertices: []
     indices: 
@@ -299,14 +299,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Skeleton_Back_Walk_0: 2238598868404540355
-      Skeleton_Back_Walk_1: 2534182459457088210
-      Skeleton_Back_Walk_2: 6257960150479018566
-      Skeleton_Back_Walk_3: -1560478723360663227
-      Skeleton_Back_Walk_4: -2080950549200798064
-      Skeleton_Back_Walk_5: -3221953247054863580
-      Skeleton_Back_Walk_6: 1289558109063334726
-      Skeleton_Back_Walk_7: -8507714755380775306
+      Werewolf_Back_Walk_0: 2568047013863310251
+      Werewolf_Back_Walk_1: -8348379458212594458
+      Werewolf_Back_Walk_2: 6709963735853638702
+      Werewolf_Back_Walk_3: 559619596962605687
+      Werewolf_Back_Walk_4: 7910665958118327662
+      Werewolf_Back_Walk_5: 8193305217117318358
+      Werewolf_Back_Walk_6: 5394675195050957196
+      Werewolf_Back_Walk_7: -3336685741990659420
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -58,7 +58,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -72,7 +72,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -96,7 +96,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -124,10 +124,10 @@ TextureImporter:
       name: Skeleton_Back_Walk_Unarmed_0
       rect:
         serializedVersion: 2
-        x: 42
-        y: 39
-        width: 21
-        height: 20
+        x: 0
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,10 +145,10 @@ TextureImporter:
       name: Skeleton_Back_Walk_Unarmed_1
       rect:
         serializedVersion: 2
-        x: 142
-        y: 39
-        width: 21
-        height: 21
+        x: 100
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,10 +166,10 @@ TextureImporter:
       name: Skeleton_Back_Walk_Unarmed_2
       rect:
         serializedVersion: 2
-        x: 242
-        y: 39
-        width: 21
-        height: 20
+        x: 200
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,10 +187,10 @@ TextureImporter:
       name: Skeleton_Back_Walk_Unarmed_3
       rect:
         serializedVersion: 2
-        x: 342
-        y: 39
-        width: 21
-        height: 19
+        x: 300
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,10 +208,10 @@ TextureImporter:
       name: Skeleton_Back_Walk_Unarmed_4
       rect:
         serializedVersion: 2
-        x: 442
-        y: 39
-        width: 21
-        height: 20
+        x: 400
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,10 +229,10 @@ TextureImporter:
       name: Skeleton_Back_Walk_Unarmed_5
       rect:
         serializedVersion: 2
-        x: 542
-        y: 39
-        width: 21
-        height: 21
+        x: 500
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -250,10 +250,10 @@ TextureImporter:
       name: Skeleton_Back_Walk_Unarmed_6
       rect:
         serializedVersion: 2
-        x: 642
-        y: 39
-        width: 21
-        height: 20
+        x: 600
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -271,10 +271,10 @@ TextureImporter:
       name: Skeleton_Back_Walk_Unarmed_7
       rect:
         serializedVersion: 2
-        x: 742
-        y: 39
-        width: 21
-        height: 19
+        x: 700
+        y: 0
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -291,14 +291,22 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: f6e72fe521d00f848b53c5048c61f6f8
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Skeleton_Back_Walk_Unarmed_0: -3803708881801139312
+      Skeleton_Back_Walk_Unarmed_1: 197680706202730436
+      Skeleton_Back_Walk_Unarmed_2: 7728210033098190210
+      Skeleton_Back_Walk_Unarmed_3: 6885996763218276858
+      Skeleton_Back_Walk_Unarmed_4: -3164061435258346818
+      Skeleton_Back_Walk_Unarmed_5: 4117781422409277494
+      Skeleton_Back_Walk_Unarmed_6: 5744707895040663343
+      Skeleton_Back_Walk_Unarmed_7: -6300770236170739994
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 6f70c519dcb474cbdb4623f49f9fb291
+guid: 7e0304e59222c0e4b9b2e177e484ab8a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1421432829825234594
-    second: Werewolf_Back_Idle_0
+      213: 8576285362408728961
+    second: Werewolf_Back_Idle_Unarmed_0
   - first:
-      213: -7571509730345008324
-    second: Werewolf_Back_Idle_1
+      213: -184817723914014318
+    second: Werewolf_Back_Idle_Unarmed_1
   - first:
-      213: 5211332030798272933
-    second: Werewolf_Back_Idle_2
+      213: 6486788502818033970
+    second: Werewolf_Back_Idle_Unarmed_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,7 +106,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Werewolf_Back_Idle_0
+      name: Werewolf_Back_Idle_Unarmed_0
       rect:
         serializedVersion: 2
         x: 0
@@ -120,14 +120,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2a6bfcda0a1f9b310800000000000000
-      internalID: 1421432829825234594
+      spriteID: 18921c61916150770800000000000000
+      internalID: 8576285362408728961
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Werewolf_Back_Idle_1
+      name: Werewolf_Back_Idle_Unarmed_1
       rect:
         serializedVersion: 2
         x: 100
@@ -141,14 +141,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c334f5d04089ce690800000000000000
-      internalID: -7571509730345008324
+      spriteID: 291b8e162456f6df0800000000000000
+      internalID: -184817723914014318
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Werewolf_Back_Idle_2
+      name: Werewolf_Back_Idle_Unarmed_2
       rect:
         serializedVersion: 2
         x: 200
@@ -162,8 +162,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5a998560fde525840800000000000000
-      internalID: 5211332030798272933
+      spriteID: 2319e8b56c3b50a50800000000000000
+      internalID: 6486788502818033970
       vertices: []
       indices: 
       edges: []
@@ -171,7 +171,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: e35c1646f2cb7bb44924f3cd8f6c7f6c
+    spriteID: 20341d754b21b164b8da6c7eebc7992a
     internalID: 0
     vertices: []
     indices: 
@@ -179,9 +179,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Werewolf_Back_Idle_0: 1421432829825234594
-      Werewolf_Back_Idle_1: -7571509730345008324
-      Werewolf_Back_Idle_2: 5211332030798272933
+      Werewolf_Back_Idle_Unarmed_0: 8576285362408728961
+      Werewolf_Back_Idle_Unarmed_1: -184817723914014318
+      Werewolf_Back_Idle_Unarmed_2: 6486788502818033970
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

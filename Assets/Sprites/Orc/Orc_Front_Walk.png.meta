@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: ff441410f76c74b6cb0df0107fd19883
+guid: 168ab93855fed7049982d59df587f4f3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2238598868404540355
-    second: Skeleton_Back_Walk_0
+      213: -916281253014857028
+    second: Orc_Front_Walk_0
   - first:
-      213: 2534182459457088210
-    second: Skeleton_Back_Walk_1
+      213: 8795043555897151509
+    second: Orc_Front_Walk_1
   - first:
-      213: 6257960150479018566
-    second: Skeleton_Back_Walk_2
+      213: 5126233630397959156
+    second: Orc_Front_Walk_2
   - first:
-      213: -1560478723360663227
-    second: Skeleton_Back_Walk_3
+      213: -5287973611013745899
+    second: Orc_Front_Walk_3
   - first:
-      213: -2080950549200798064
-    second: Skeleton_Back_Walk_4
+      213: 326488753034413234
+    second: Orc_Front_Walk_4
   - first:
-      213: -3221953247054863580
-    second: Skeleton_Back_Walk_5
+      213: 2655432801386796305
+    second: Orc_Front_Walk_5
   - first:
-      213: 1289558109063334726
-    second: Skeleton_Back_Walk_6
+      213: -6389203091913063671
+    second: Orc_Front_Walk_6
   - first:
-      213: -8507714755380775306
-    second: Skeleton_Back_Walk_7
+      213: -515599631040625099
+    second: Orc_Front_Walk_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -121,7 +121,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_0
+      name: Orc_Front_Walk_0
       rect:
         serializedVersion: 2
         x: 0
@@ -135,14 +135,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3c318d96fc9111f10800000000000000
-      internalID: 2238598868404540355
+      spriteID: cba13b71e07b843f0800000000000000
+      internalID: -916281253014857028
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_1
+      name: Orc_Front_Walk_1
       rect:
         serializedVersion: 2
         x: 100
@@ -156,14 +156,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2da27fb25893b2320800000000000000
-      internalID: 2534182459457088210
+      spriteID: 510965514854e0a70800000000000000
+      internalID: 8795043555897151509
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_2
+      name: Orc_Front_Walk_2
       rect:
         serializedVersion: 2
         x: 200
@@ -177,14 +177,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 64a1adbc99db8d650800000000000000
-      internalID: 6257960150479018566
+      spriteID: 4fb088fa35a042740800000000000000
+      internalID: 5126233630397959156
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_3
+      name: Orc_Front_Walk_3
       rect:
         serializedVersion: 2
         x: 300
@@ -198,14 +198,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 549588e6ed0185ae0800000000000000
-      internalID: -1560478723360663227
+      spriteID: 513d2e584085d96b0800000000000000
+      internalID: -5287973611013745899
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_4
+      name: Orc_Front_Walk_4
       rect:
         serializedVersion: 2
         x: 400
@@ -219,14 +219,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 09e7bb7308afe13e0800000000000000
-      internalID: -2080950549200798064
+      spriteID: 2b4c6c38acbe78400800000000000000
+      internalID: 326488753034413234
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_5
+      name: Orc_Front_Walk_5
       rect:
         serializedVersion: 2
         x: 500
@@ -240,14 +240,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 423e06aa7925943d0800000000000000
-      internalID: -3221953247054863580
+      spriteID: 1159493501ef9d420800000000000000
+      internalID: 2655432801386796305
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_6
+      name: Orc_Front_Walk_6
       rect:
         serializedVersion: 2
         x: 600
@@ -261,14 +261,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 64bc1ff844e65e110800000000000000
-      internalID: 1289558109063334726
+      spriteID: 903c1bca3adf457a0800000000000000
+      internalID: -6389203091913063671
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skeleton_Back_Walk_7
+      name: Orc_Front_Walk_7
       rect:
         serializedVersion: 2
         x: 700
@@ -282,8 +282,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 676fd2b71868ee980800000000000000
-      internalID: -8507714755380775306
+      spriteID: 53640890ed838d8f0800000000000000
+      internalID: -515599631040625099
       vertices: []
       indices: 
       edges: []
@@ -291,7 +291,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 4fca77e9a7150b2418761777d663f402
+    spriteID: e436660c4dfcfe246ad134ad328e5d44
     internalID: 0
     vertices: []
     indices: 
@@ -299,14 +299,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Skeleton_Back_Walk_0: 2238598868404540355
-      Skeleton_Back_Walk_1: 2534182459457088210
-      Skeleton_Back_Walk_2: 6257960150479018566
-      Skeleton_Back_Walk_3: -1560478723360663227
-      Skeleton_Back_Walk_4: -2080950549200798064
-      Skeleton_Back_Walk_5: -3221953247054863580
-      Skeleton_Back_Walk_6: 1289558109063334726
-      Skeleton_Back_Walk_7: -8507714755380775306
+      Orc_Front_Walk_0: -916281253014857028
+      Orc_Front_Walk_1: 8795043555897151509
+      Orc_Front_Walk_2: 5126233630397959156
+      Orc_Front_Walk_3: -5287973611013745899
+      Orc_Front_Walk_4: 326488753034413234
+      Orc_Front_Walk_5: 2655432801386796305
+      Orc_Front_Walk_6: -6389203091913063671
+      Orc_Front_Walk_7: -515599631040625099
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

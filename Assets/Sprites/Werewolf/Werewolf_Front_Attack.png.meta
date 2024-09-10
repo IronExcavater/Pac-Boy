@@ -1,16 +1,22 @@
 fileFormatVersion: 2
-guid: 6f70c519dcb474cbdb4623f49f9fb291
+guid: 2a52e1ef628acb34b8f5e6f06c263a26
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1421432829825234594
-    second: Werewolf_Back_Idle_0
+      213: -4508379159431725140
+    second: Werewolf_Front_Attack_0
   - first:
-      213: -7571509730345008324
-    second: Werewolf_Back_Idle_1
+      213: -1630422234848765140
+    second: Werewolf_Front_Attack_1
   - first:
-      213: 5211332030798272933
-    second: Werewolf_Back_Idle_2
+      213: -1366594383641558513
+    second: Werewolf_Front_Attack_2
+  - first:
+      213: -3613036791886641101
+    second: Werewolf_Front_Attack_3
+  - first:
+      213: -4153954445666788952
+    second: Werewolf_Front_Attack_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,7 +112,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Werewolf_Back_Idle_0
+      name: Werewolf_Front_Attack_0
       rect:
         serializedVersion: 2
         x: 0
@@ -120,14 +126,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2a6bfcda0a1f9b310800000000000000
-      internalID: 1421432829825234594
+      spriteID: caf3c497a050f61c0800000000000000
+      internalID: -4508379159431725140
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Werewolf_Back_Idle_1
+      name: Werewolf_Front_Attack_1
       rect:
         serializedVersion: 2
         x: 100
@@ -141,14 +147,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c334f5d04089ce690800000000000000
-      internalID: -7571509730345008324
+      spriteID: c2bd0f1ad939f59e0800000000000000
+      internalID: -1630422234848765140
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Werewolf_Back_Idle_2
+      name: Werewolf_Front_Attack_2
       rect:
         serializedVersion: 2
         x: 200
@@ -162,8 +168,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5a998560fde525840800000000000000
-      internalID: 5211332030798272933
+      spriteID: f02400b06a1e80de0800000000000000
+      internalID: -1366594383641558513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Werewolf_Front_Attack_3
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3380e233e2aebddc0800000000000000
+      internalID: -3613036791886641101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Werewolf_Front_Attack_4
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a950e4b0703a56c0800000000000000
+      internalID: -4153954445666788952
       vertices: []
       indices: 
       edges: []
@@ -171,7 +219,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: e35c1646f2cb7bb44924f3cd8f6c7f6c
+    spriteID: 3105e5cfe21cb1041b1c63eaa7bd3a2f
     internalID: 0
     vertices: []
     indices: 
@@ -179,9 +227,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Werewolf_Back_Idle_0: 1421432829825234594
-      Werewolf_Back_Idle_1: -7571509730345008324
-      Werewolf_Back_Idle_2: 5211332030798272933
+      Werewolf_Front_Attack_0: -4508379159431725140
+      Werewolf_Front_Attack_1: -1630422234848765140
+      Werewolf_Front_Attack_2: -1366594383641558513
+      Werewolf_Front_Attack_3: -3613036791886641101
+      Werewolf_Front_Attack_4: -4153954445666788952
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

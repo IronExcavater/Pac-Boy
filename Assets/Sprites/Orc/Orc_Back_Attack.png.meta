@@ -1,16 +1,22 @@
 fileFormatVersion: 2
-guid: 6f70c519dcb474cbdb4623f49f9fb291
+guid: 43f9ecd0a690b4e4792153ba882c558c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1421432829825234594
-    second: Werewolf_Back_Idle_0
+      213: 7863103954308110834
+    second: Orc_Back_Attack_0
   - first:
-      213: -7571509730345008324
-    second: Werewolf_Back_Idle_1
+      213: -4931443758736924506
+    second: Orc_Back_Attack_1
   - first:
-      213: 5211332030798272933
-    second: Werewolf_Back_Idle_2
+      213: 943921856591704757
+    second: Orc_Back_Attack_2
+  - first:
+      213: -818580593979211217
+    second: Orc_Back_Attack_3
+  - first:
+      213: 3214305928468508884
+    second: Orc_Back_Attack_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,7 +112,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Werewolf_Back_Idle_0
+      name: Orc_Back_Attack_0
       rect:
         serializedVersion: 2
         x: 0
@@ -120,14 +126,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2a6bfcda0a1f9b310800000000000000
-      internalID: 1421432829825234594
+      spriteID: 2f9118cc26b5f1d60800000000000000
+      internalID: 7863103954308110834
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Werewolf_Back_Idle_1
+      name: Orc_Back_Attack_1
       rect:
         serializedVersion: 2
         x: 100
@@ -141,14 +147,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c334f5d04089ce690800000000000000
-      internalID: -7571509730345008324
+      spriteID: 6a02ba2870eff8bb0800000000000000
+      internalID: -4931443758736924506
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Werewolf_Back_Idle_2
+      name: Orc_Back_Attack_2
       rect:
         serializedVersion: 2
         x: 200
@@ -162,8 +168,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5a998560fde525840800000000000000
-      internalID: 5211332030798272933
+      spriteID: 5b230ed6deb791d00800000000000000
+      internalID: 943921856591704757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Orc_Back_Attack_3
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2247db6941d3a4f0800000000000000
+      internalID: -818580593979211217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Orc_Back_Attack_4
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d03cc936328b9c20800000000000000
+      internalID: 3214305928468508884
       vertices: []
       indices: 
       edges: []
@@ -171,7 +219,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: e35c1646f2cb7bb44924f3cd8f6c7f6c
+    spriteID: b358894d41d397643a4853a163209c87
     internalID: 0
     vertices: []
     indices: 
@@ -179,9 +227,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Werewolf_Back_Idle_0: 1421432829825234594
-      Werewolf_Back_Idle_1: -7571509730345008324
-      Werewolf_Back_Idle_2: 5211332030798272933
+      Orc_Back_Attack_0: 7863103954308110834
+      Orc_Back_Attack_1: -4931443758736924506
+      Orc_Back_Attack_2: 943921856591704757
+      Orc_Back_Attack_3: -818580593979211217
+      Orc_Back_Attack_4: 3214305928468508884
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
