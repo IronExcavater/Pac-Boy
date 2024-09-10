@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6232328356035556975
+--- !u!1001 &7162606649497808593
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8,26 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
-      propertyPath: ani
-      value: 
-      objectReference: {fileID: 5632268738571384069}
     - target: {fileID: 1753161451708760938, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 51cffccc547f08b458c47b66d9aac780, type: 2}
-    - target: {fileID: 4590771738689819852, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
-      propertyPath: m_Size.x
-      value: 6.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4590771738689819852, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
-      propertyPath: m_Size.y
-      value: 6.25
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9100000, guid: 72c7c8c29ccc7452fb0d6c8b9c284fb7, type: 2}
     - target: {fileID: 4590771738689819852, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 12276262, guid: 2dbd29575f9dfdf4cbbca2cdb7a1b319, type: 3}
+      objectReference: {fileID: 7363166705265310760, guid: a38cd6ab7a1ed47cf955c74579b3d614, type: 3}
     - target: {fileID: 4590771738689819852, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -74,15 +62,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8363813810959832611, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_Name
-      value: Orc
+      value: Slime
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
---- !u!95 &5632268738571384069 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 1753161451708760938, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
-  m_PrefabInstance: {fileID: 6232328356035556975}
-  m_PrefabAsset: {fileID: 0}

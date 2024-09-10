@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Game { get; private set; }
 
     private List<Character> _characters = new();
+    private List<Item> _items = new();
 
     public enum Mode
     {
@@ -67,14 +68,22 @@ public class GameManager : MonoBehaviour
 
     public static void RegisterCharacter(Character character)
     {
-        print(character);
-        print(Game._characters);
         if (!Game._characters.Contains(character)) Game._characters.Add(character);
     }
 
     public static void UnregisterCharacter(Character character)
     {
         Game._characters.Remove(character);
+    }
+
+    public static void RegisterItem(Item item)
+    {
+        if (!Game._items.Contains(item)) Game._items.Add(item);
+    }
+
+    public static void UnregisterItem(Item item)
+    {
+        Game._items.Remove(item);
     }
 
     private static void TriggerMode(Mode mode)
@@ -84,7 +93,7 @@ public class GameManager : MonoBehaviour
         if (mode.Equals(Mode.Scared)) Game.StartCoroutine(TriggerMode(Mode.Normal, 9f));
     }
 
-    public static IEnumerator TriggerMode(Mode mode, float delaySeconds)
+    private static IEnumerator TriggerMode(Mode mode, float delaySeconds)
     {
         yield return new WaitForSeconds(delaySeconds);
         TriggerMode(mode);

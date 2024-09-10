@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: d6cdd02f0f7e348279a90a132cd0eae5
+guid: ff441410f76c74b6cb0df0107fd19883
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3803708881801139312
-    second: Skeleton_Back_Walk_Unarmed_0
+      213: 2238598868404540355
+    second: Skeleton_Back_Walk_0
   - first:
-      213: 197680706202730436
-    second: Skeleton_Back_Walk_Unarmed_1
+      213: 2534182459457088210
+    second: Skeleton_Back_Walk_1
   - first:
-      213: 7728210033098190210
-    second: Skeleton_Back_Walk_Unarmed_2
+      213: 6257960150479018566
+    second: Skeleton_Back_Walk_2
   - first:
-      213: 6885996763218276858
-    second: Skeleton_Back_Walk_Unarmed_3
+      213: -1560478723360663227
+    second: Skeleton_Back_Walk_3
   - first:
-      213: -3164061435258346818
-    second: Skeleton_Back_Walk_Unarmed_4
+      213: -2080950549200798064
+    second: Skeleton_Back_Walk_4
   - first:
-      213: 4117781422409277494
-    second: Skeleton_Back_Walk_Unarmed_5
+      213: -3221953247054863580
+    second: Skeleton_Back_Walk_5
   - first:
-      213: 5744707895040663343
-    second: Skeleton_Back_Walk_Unarmed_6
+      213: 1289558109063334726
+    second: Skeleton_Back_Walk_6
   - first:
-      213: -6300770236170739994
-    second: Skeleton_Back_Walk_Unarmed_7
+      213: -8507714755380775306
+    second: Skeleton_Back_Walk_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -133,10 +133,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 09bae37cce2863bc0800000000000000
-      internalID: -3803708881801139312
+      spriteID: 8353102d2543f4cd6aad82283b1c1ec8
+      internalID: 1140000999
       vertices: []
       indices: 
       edges: []
@@ -154,10 +154,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 4cf79201e8d4eb200800000000000000
-      internalID: 197680706202730436
+      spriteID: fabfe6ff63b7e43b68cf53cd8ef15a83
+      internalID: -1811926781
       vertices: []
       indices: 
       edges: []
@@ -175,10 +175,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 28d6d6c441e104b60800000000000000
-      internalID: 7728210033098190210
+      spriteID: 5ec2efd10b87647a58b96e63d3c25f4f
+      internalID: 1703945285
       vertices: []
       indices: 
       edges: []
@@ -196,10 +196,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: af17d149299ff8f50800000000000000
-      internalID: 6885996763218276858
+      spriteID: 0fe7dc0d776b44080b9686a7d486704f
+      internalID: -1286121374
       vertices: []
       indices: 
       edges: []
@@ -217,10 +217,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: eb2e9e773eef614d0800000000000000
-      internalID: -3164061435258346818
+      spriteID: 444719ba1a7df49929134adfa490d53a
+      internalID: 1525546541
       vertices: []
       indices: 
       edges: []
@@ -238,10 +238,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 6306861036c452930800000000000000
-      internalID: 4117781422409277494
+      spriteID: 23ec4cdd2c2524b99bf99d6c1071f5cf
+      internalID: 415057500
       vertices: []
       indices: 
       edges: []
@@ -259,10 +259,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: f2fd74ec46d49bf40800000000000000
-      internalID: 5744707895040663343
+      spriteID: 6534e1594f1d140a6b1464a8a270561d
+      internalID: 133991214
       vertices: []
       indices: 
       edges: []
@@ -280,10 +280,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 6ee50b56ada2f88a0800000000000000
-      internalID: -6300770236170739994
+      spriteID: 43eaf4f46e22f41f58d0558c9b86b3ef
+      internalID: 546040938
       vertices: []
       indices: 
       edges: []
@@ -291,7 +291,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: f6e72fe521d00f848b53c5048c61f6f8
+    spriteID: 4fca77e9a7150b2418761777d663f402
     internalID: 0
     vertices: []
     indices: 
@@ -299,14 +299,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Skeleton_Back_Walk_Unarmed_0: -3803708881801139312
-      Skeleton_Back_Walk_Unarmed_1: 197680706202730436
-      Skeleton_Back_Walk_Unarmed_2: 7728210033098190210
-      Skeleton_Back_Walk_Unarmed_3: 6885996763218276858
-      Skeleton_Back_Walk_Unarmed_4: -3164061435258346818
-      Skeleton_Back_Walk_Unarmed_5: 4117781422409277494
-      Skeleton_Back_Walk_Unarmed_6: 5744707895040663343
-      Skeleton_Back_Walk_Unarmed_7: -6300770236170739994
+      Skeleton_Back_Walk_Unarmed_0: 1140000999
+      Skeleton_Back_Walk_Unarmed_1: -1811926781
+      Skeleton_Back_Walk_Unarmed_2: 1703945285
+      Skeleton_Back_Walk_Unarmed_3: -1286121374
+      Skeleton_Back_Walk_Unarmed_4: 1525546541
+      Skeleton_Back_Walk_Unarmed_5: 415057500
+      Skeleton_Back_Walk_Unarmed_6: 133991214
+      Skeleton_Back_Walk_Unarmed_7: 546040938
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

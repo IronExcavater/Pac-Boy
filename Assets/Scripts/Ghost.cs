@@ -1,8 +1,5 @@
 public class Ghost : Character
 {
-    
-    protected bool _isArmed = true;
-    
     public override void ChangeMode(GameManager.Mode mode)
     {
         switch (mode)

@@ -7,11 +7,11 @@ public abstract class Character : MonoBehaviour
     [Header("Components:")]
     [SerializeField] protected Animator ani;
 
-    private Dictionary<string, int> _aniHash = new();
-    private Direction facing;
-    private bool isArmed;
+    private readonly Dictionary<string, int> _aniHash = new();
+    private Direction _facing;
+    private bool _isArmed;
 
-    public enum Direction
+    protected enum Direction
     {
         North,
         East,
@@ -19,29 +19,29 @@ public abstract class Character : MonoBehaviour
         West
     }
     
-    public Direction Facing
+    protected Direction Facing
     {
-        get => facing;
+        get => _facing;
         set
         {
-            if (facing == value) return;
-            facing = value;
+            if (_facing == value) return;
+            _facing = value;
             ChangeFacing();
         }
     }
 
     public bool IsArmed
     {
-        get => isArmed;
+        get => _isArmed;
         set
         {
-            if (isArmed == value) return;
-            isArmed = value;
+            if (_isArmed == value) return;
+            _isArmed = value;
             StartCoroutine(BlinkTransition("Armed", 4));
         }
     }
     
-    private void Start()
+    private void Start() 
     {
         GameManager.RegisterCharacter(this);
         CacheAnimatorHashes();
@@ -83,7 +83,7 @@ public abstract class Character : MonoBehaviour
     private void FlipCharacter()
     {
         // Flip the character by inverting the x scale
-        Vector3 scale = transform.localScale;
+        var scale = transform.localScale;
         scale.x = Facing == Direction.West ? -1 : 1;
         transform.localScale = scale;
     }
