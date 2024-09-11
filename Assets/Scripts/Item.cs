@@ -16,12 +16,11 @@ public class Item : MonoBehaviour
     private void Start()
     {
         GameManager.RegisterItem(this);
+        ani.SetFloat("Type", (int) type); // Inefficient to use string name but only done once in lifetime
     }
-    
+
     private void OnDestroy()
     {
         GameManager.UnregisterItem(this);
     }
-    
-    
 }
