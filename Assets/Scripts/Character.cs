@@ -11,7 +11,7 @@ public abstract class Character : MonoBehaviour
     private Direction _facing;
     private bool _isArmed;
 
-    protected enum Direction
+    public enum Direction
     {
         North,
         East,
@@ -19,10 +19,10 @@ public abstract class Character : MonoBehaviour
         West
     }
     
-    protected Direction Facing
+    public Direction Facing
     {
         get => _facing;
-        set
+        protected set
         {
             if (_facing == value) return;
             _facing = value;
@@ -33,7 +33,7 @@ public abstract class Character : MonoBehaviour
     public bool IsArmed
     {
         get => _isArmed;
-        set
+        protected set
         {
             if (_isArmed == value) return;
             _isArmed = value;
@@ -41,10 +41,11 @@ public abstract class Character : MonoBehaviour
         }
     }
     
-    private void Start() 
+    protected virtual void Start()
     {
-        GameManager.RegisterCharacter(this);
         CacheAnimatorHashes();
+        GameManager.RegisterCharacter(this);
+        Facing = Direction.South;
     }
 
     private void OnDestroy()
@@ -69,8 +70,7 @@ public abstract class Character : MonoBehaviour
             case Direction.North:
                 ani.SetFloat(GetAnimatorHash("Direction"), 0);
                 break;
-            case Direction.East:
-            case Direction.West:
+            case Direction.East or Direction.West:
                 ani.SetFloat(GetAnimatorHash("Direction"), 1);
                 FlipCharacter();
                 break;

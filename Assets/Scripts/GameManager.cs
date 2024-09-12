@@ -11,13 +11,9 @@ public class GameManager : MonoBehaviour
 
     public enum Mode
     {
-        Normal,
-        Scared,
-        // Temp modes
-        Direction,
-        Move,
-        Attack,
-        Defeat
+        Chase,
+        Scatter,
+        Scared
     }
     
     private void Awake()
@@ -32,38 +28,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(Test());
-    }
-    
-    private IEnumerator Test()
-    {
-        AudioManager.PlayMusicOneShot(AudioManager.Audio.musicIntro);
-        AudioManager.QueueMusicLoop(AudioManager.Audio.musicNormal);
-        yield return new WaitForSeconds(3);
-        TriggerMode(Mode.Normal);
-        for (var i = 0; i < 3; i++)
-        {
-            AudioManager.PlaySfxOneShot(AudioManager.Audio.coin);
-            yield return new WaitForSeconds(1);
-            TriggerMode(Mode.Attack);
-            AudioManager.PlaySfxOneShot(AudioManager.Audio.hit);
-            yield return new WaitForSeconds(2);
-            TriggerMode(Mode.Move);
-            yield return new WaitForSeconds(2);
-            TriggerMode(Mode.Scared);
-            AudioManager.PlaySfxOneShot(AudioManager.Audio.potion);
-            AudioManager.ImmediateMusicOneShot(AudioManager.Audio.musicScared);
-            yield return new WaitForSeconds(4);
-            TriggerMode(Mode.Move);
-            yield return new WaitForSeconds(6);
-            TriggerMode(Mode.Direction);
-            AudioManager.PlaySfxOneShot(AudioManager.Audio.select);
-            yield return new WaitForSeconds(2);
-        }
-        AudioManager.PlayMusicLoop(AudioManager.Audio.musicIntermission);
-        yield return new WaitForSeconds(4);
-        TriggerMode(Mode.Defeat);
-        AudioManager.PlaySfxOneShot(AudioManager.Audio.defeat);
+        
     }
 
     public static void RegisterCharacter(Character character)
@@ -90,7 +55,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (var character in Game._characters) character.ChangeMode(mode);
 
-        if (mode.Equals(Mode.Scared)) Game.StartCoroutine(TriggerMode(Mode.Normal, 9f));
+        if (mode.Equals(Mode.Scared)) Game.StartCoroutine(TriggerMode(Mode.Chase, 9f));
     }
 
     private static IEnumerator TriggerMode(Mode mode, float delaySeconds)
