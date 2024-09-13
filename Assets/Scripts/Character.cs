@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ public abstract class Character : MonoBehaviour
     private readonly Dictionary<string, int> _aniHash = new();
     private Direction _facing;
     private bool _isArmed;
+    protected Vector3Int _currentPos;
+    protected Vector3Int _nextPos;
 
     public enum Direction
     {
@@ -18,6 +21,24 @@ public abstract class Character : MonoBehaviour
         South,
         West
     }
+
+    protected static Direction ToDirection(Vector3Int vector) => vector switch
+    {
+        var v when v == Vector3Int.up => Direction.North,
+        var v when v == Vector3Int.right => Direction.East,
+        var v when v == Vector3Int.down => Direction.South,
+        var v when v == Vector3Int.left => Direction.West,
+        _ => throw new ArgumentOutOfRangeException(nameof(vector), "Invalid Vector3Int value for direction")
+    };
+
+    protected static Vector3Int ToVector3Int(Direction direction) => direction switch
+    {
+        Direction.North => Vector3Int.up,
+        Direction.East => Vector3Int.right,
+        Direction.South => Vector3Int.down,
+        Direction.West => Vector3Int.left,
+        _ => Vector3Int.zero
+    };
     
     public Direction Facing
     {
@@ -40,12 +61,19 @@ public abstract class Character : MonoBehaviour
             StartCoroutine(BlinkTransition("Armed", 4));
         }
     }
+
+    public bool Moving
+    {
+        get => ani.GetBool(GetAnimatorHash("Moving"));
+        set => ani.SetBool(GetAnimatorHash("Moving"), value);
+    }
     
     protected virtual void Start()
     {
         CacheAnimatorHashes();
         GameManager.RegisterCharacter(this);
         Facing = Direction.South;
+        _currentPos = Vector3Int.RoundToInt(transform.position);
     }
 
     private void OnDestroy()
@@ -99,4 +127,6 @@ public abstract class Character : MonoBehaviour
     }
 
     public abstract void ChangeMode(GameManager.Mode mode);
+
+    protected abstract void NextPos();
 }

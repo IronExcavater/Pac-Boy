@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed426aed35cf884489d22f6a7d95f547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterSpeed: 2
+  groundTile: {fileID: 11400000, guid: 630873131044bb2468315fab0cb25e56, type: 2}

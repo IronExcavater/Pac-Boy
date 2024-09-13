@@ -10,7 +10,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music Clips:")]
     public AudioClipTempoTuple musicMenu;
-    public AudioClipTempoTuple musicIntro;
+    [SerializeField] private AudioClipTempoTuple musicIntro;
     public AudioClipTempoTuple musicNormal;
     public AudioClipTempoTuple musicScared;
     public AudioClipTempoTuple musicIntermission;
@@ -63,15 +63,22 @@ public class AudioManager : MonoBehaviour
         Audio.ScheduleMusicClip(clip, Audio.NextBeat());
     }
 
-    public static void ImmediateMusicOneShot(AudioClipTempoTuple clip)
+    public static void PlayMusicImmediate(AudioClipTempoTuple clip)
     {
         Audio.ScheduleMusicClip(clip, AudioSettings.dspTime);
     }
     
     public static void PlayMusicLoop(AudioClipTempoTuple clip)
     {
-        Audio.ScheduleMusicClip(clip, Audio.NextBar());
-        Audio._loopedMusic = clip;
+        if (clip.Equals(Audio._loopedMusic)) return;
+
+        if (clip.Equals(Audio.musicNormal)) // any music which has an intro
+        {
+            PlayMusicOneShot(Audio.musicIntro);
+        }
+        else Audio.ScheduleMusicClip(clip, Audio.NextBar());
+        
+        QueueMusicLoop(clip);
     }
 
     public static void QueueMusicLoop(AudioClipTempoTuple clip)

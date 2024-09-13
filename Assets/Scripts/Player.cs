@@ -1,9 +1,13 @@
+using UnityEngine;
+
 public class Player : Character
 {
     protected override void Start()
     {
-        IsArmed = false;
         base.Start();
+        IsArmed = false;
+        GameManager.PlayerPosition = Vector3Int.RoundToInt(transform.position);
+        GameManager.PlayerFacing = Facing;
     }
     
     public override void ChangeMode(GameManager.Mode mode)
@@ -18,7 +22,12 @@ public class Player : Character
                 break;
         }
     }
-    
+
+    protected override void NextPos()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void PlayStep()
     {
         AudioManager.PlaySfxOneShot(AudioManager.Audio.step);
