@@ -123,3 +123,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ani: {fileID: 1753161451708760938}
+  rend: {fileID: 4590771738689819852}
+  type: 0
+  scatterPos: {x: 0, y: 0, z: 0}

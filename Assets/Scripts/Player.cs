@@ -10,9 +10,9 @@ public class Player : Character
         GameManager.PlayerFacing = Facing;
     }
     
-    public override void ChangeMode(GameManager.Mode mode)
+    public override void TriggerMode()
     {
-        switch (mode)
+        switch (GameManager.GameMode)
         {
             case GameManager.Mode.Chase or GameManager.Mode.Scatter:
                 IsArmed = false;

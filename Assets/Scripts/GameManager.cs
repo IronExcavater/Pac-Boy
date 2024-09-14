@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [Header("Attributes:")]
     [SerializeField] private float characterSpeed;
 
+    private Mode _mode;
     private Vector3Int _playerPos;
     private Character.Direction _playerFacing;
     private float _scatterTimer;
@@ -41,7 +42,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _map = GameObject.Find("Level01").GetComponent<Tilemap>();
-        TriggerMode(Mode.Chase);
+        TriggerMode();
     }
 
     public static void RegisterCharacter(Character character)
@@ -74,25 +75,36 @@ public class GameManager : MonoBehaviour
 
     public static Character.Direction PlayerFacing { get; set; }
 
-    private static void TriggerMode(Mode mode)
+    public static Mode GameMode
     {
-        foreach (var character in Game._characters) character.ChangeMode(mode);
+        get => Game._mode;
+        private set
+        {
+            if (value == Game._mode) return;
+            Game._mode = value;
+            TriggerMode();
+        }
+    }
 
-        switch (mode)
+    private static void TriggerMode()
+    {
+        foreach (var character in Game._characters) character.TriggerMode();
+
+        switch (GameMode)
         {
             case Mode.Chase or Mode.Scatter:
                 AudioManager.PlayMusicLoop(AudioManager.Audio.musicNormal);
                 break;
             case Mode.Scared:
                 AudioManager.PlayMusicImmediate(AudioManager.Audio.musicScared);
-                Game.StartCoroutine(TriggerMode(Mode.Chase, 9f));
+                Game.StartCoroutine(QueueMode(Mode.Chase, 9f));
                 break;
         }
     }
 
-    private static IEnumerator TriggerMode(Mode mode, float delaySeconds)
+    private static IEnumerator QueueMode(Mode mode, float delaySeconds)
     {
         yield return new WaitForSeconds(delaySeconds);
-        TriggerMode(mode);
+        GameMode = mode;
     }
 }

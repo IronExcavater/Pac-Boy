@@ -1,18 +1,22 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
     [Header("Components:")]
     [SerializeField] protected Animator ani;
-
+    [SerializeField] private SpriteRenderer rend;
+    
     private readonly Dictionary<string, int> _aniHash = new();
+
+    [Header("Attributes:")]
+    
     private Direction _facing;
     private bool _isArmed;
-    protected Vector3Int _currentPos;
-    protected Vector3Int _nextPos;
+    protected Vector3 _currentPos;
+    protected Vector3 _nextPos;
 
     public enum Direction
     {
@@ -22,14 +26,22 @@ public abstract class Character : MonoBehaviour
         West
     }
 
-    protected static Direction ToDirection(Vector3Int vector) => vector switch
+    protected static Direction ToDirection(Vector3 vector)
     {
-        var v when v == Vector3Int.up => Direction.North,
-        var v when v == Vector3Int.right => Direction.East,
-        var v when v == Vector3Int.down => Direction.South,
-        var v when v == Vector3Int.left => Direction.West,
-        _ => throw new ArgumentOutOfRangeException(nameof(vector), "Invalid Vector3Int value for direction")
-    };
+        if (vector.Equals(Vector3.zero)) return Direction.South;
+        
+        var directionMap = new Dictionary<Direction, Vector3Int>
+        {
+            { Direction.North, Vector3Int.up },
+            { Direction.East, Vector3Int.right },
+            { Direction.South, Vector3Int.down },
+            { Direction.West, Vector3Int.left },
+        };
+
+        return directionMap
+            .OrderBy(dir => Vector3.Distance(dir.Value, vector))
+            .First().Key;
+    }
 
     protected static Vector3Int ToVector3Int(Direction direction) => direction switch
     {
@@ -72,8 +84,8 @@ public abstract class Character : MonoBehaviour
     {
         CacheAnimatorHashes();
         GameManager.RegisterCharacter(this);
-        Facing = Direction.South;
-        _currentPos = Vector3Int.RoundToInt(transform.position);
+        UpdateAnimator();
+        _currentPos = transform.position;
     }
 
     private void OnDestroy()
@@ -126,7 +138,14 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    public abstract void ChangeMode(GameManager.Mode mode);
+    protected void UpdateAnimator()
+    {
+        rend.sortingOrder = -(int)transform.position.y;
+        Facing = ToDirection(_nextPos - _currentPos);
+        Moving = !_nextPos.Equals(_currentPos);
+    }
+
+    public abstract void TriggerMode();
 
     protected abstract void NextPos();
 }
