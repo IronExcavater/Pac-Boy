@@ -6,8 +6,6 @@ public class Player : Character
     {
         base.Start();
         IsArmed = false;
-        GameManager.PlayerPosition = Vector3Int.RoundToInt(transform.position);
-        GameManager.PlayerFacing = Facing;
     }
     
     public override void TriggerMode()

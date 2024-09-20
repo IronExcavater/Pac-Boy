@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public abstract class Character : MonoBehaviour
 {
@@ -12,11 +13,10 @@ public abstract class Character : MonoBehaviour
     private readonly Dictionary<string, int> _aniHash = new();
 
     [Header("Attributes:")]
+    [SerializeField] private string identifier;
     
     private Direction _facing;
     private bool _isArmed;
-    protected Vector3 _currentPos;
-    protected Vector3 _nextPos;
 
     public enum Direction
     {
@@ -28,7 +28,8 @@ public abstract class Character : MonoBehaviour
 
     protected static Direction ToDirection(Vector3 vector)
     {
-        if (vector.Equals(Vector3.zero)) return Direction.South;
+        if (vector.Equals(Vector3.zero))
+            return Direction.South;
         
         var directionMap = new Dictionary<Direction, Vector3Int>
         {
@@ -62,6 +63,10 @@ public abstract class Character : MonoBehaviour
             ChangeFacing();
         }
     }
+    
+    public Vector3 CurrentPosition { get; protected set; }
+    
+    public Vector3 NextPosition { get; protected set; }
 
     public bool IsArmed
     {
@@ -83,19 +88,20 @@ public abstract class Character : MonoBehaviour
     protected virtual void Start()
     {
         CacheAnimatorHashes();
-        GameManager.RegisterCharacter(this);
+        GameManager.RegisterCharacter(identifier, this);
         UpdateAnimator();
-        _currentPos = transform.position;
+        CurrentPosition = transform.position;
     }
 
     private void OnDestroy()
     {
-        GameManager.UnregisterCharacter(this);
+        GameManager.UnregisterCharacter(identifier);
     }
 
     private void CacheAnimatorHashes()
     {
-        foreach (var parameter in ani.parameters) _aniHash.Add(parameter.name, parameter.nameHash);
+        foreach (var parameter in ani.parameters)
+            _aniHash.Add(parameter.name, parameter.nameHash);
     }
 
     protected int GetAnimatorHash(string parameterName)
@@ -141,8 +147,25 @@ public abstract class Character : MonoBehaviour
     protected void UpdateAnimator()
     {
         rend.sortingOrder = -(int)transform.position.y;
-        Facing = ToDirection(_nextPos - _currentPos);
-        Moving = !_nextPos.Equals(_currentPos);
+        Facing = ToDirection(NextPosition - CurrentPosition);
+        Moving = !NextPosition.Equals(CurrentPosition);
+    }
+    
+    protected static List<Vector3Int> GetPossiblePositions(Vector3Int current, Vector3Int previous)
+    {
+        var map = GameManager.LevelTilemap();
+        Vector3Int[] positions =
+        {
+            current + Vector3Int.up,
+            current + Vector3Int.right,
+            current + Vector3Int.down,
+            current + Vector3Int.left
+        };
+        return positions
+            .Where(pos =>
+                pos != previous &&
+                map.GetTile(pos) is Tile tile && tile.Equals(GameManager.GroundTile()))
+            .ToList();
     }
 
     public abstract void TriggerMode();

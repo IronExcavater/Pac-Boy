@@ -8,18 +8,18 @@ public class GameManager : MonoBehaviour
     public static GameManager Game { get; private set; }
     
     [Header("References:")]
-    [SerializeField] private Tilemap _map;
+    [SerializeField] private Tilemap map;
     [SerializeField] private TileBase groundTile;
     
-    private List<Character> _characters = new();
+    private Dictionary<string, Character> _characters = new();
     private List<Item> _items = new();
+
+    private HashSet<string> _logIdentifiers = new();
 
     [Header("Attributes:")]
     [SerializeField] private float characterSpeed;
 
     private Mode _mode;
-    private Vector3Int _playerPos;
-    private Character.Direction _playerFacing;
     private float _scatterTimer;
 
     public enum Mode
@@ -41,18 +41,27 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _map = GameObject.Find("Level01").GetComponent<Tilemap>();
+        map = GameObject.Find("Level01").GetComponent<Tilemap>();
         TriggerMode();
     }
 
-    public static void RegisterCharacter(Character character)
+    public static void RegisterCharacter(string identifier, Character character)
     {
-        if (!Game._characters.Contains(character)) Game._characters.Add(character);
+        if (Game._characters.TryAdd(identifier, character)) return;
+        Debug.LogWarning("Character with identifier " + identifier + " is already registered.");
     }
 
-    public static void UnregisterCharacter(Character character)
+    public static void UnregisterCharacter(string identifier)
     {
-        Game._characters.Remove(character);
+        Game._characters.Remove(identifier);
+    }
+    
+    public static Character GetCharacter(string identifier)
+    {
+        if (Game._characters.TryGetValue(identifier, out var character)) return character;
+        LogWarning("No character found with identifier: " + identifier, "No " + identifier);
+
+        return null;
     }
 
     public static void RegisterItem(Item item)
@@ -65,15 +74,11 @@ public class GameManager : MonoBehaviour
         Game._items.Remove(item);
     }
 
-    public static Tilemap LevelTilemap() { return Game._map; }
+    public static Tilemap LevelTilemap() { return Game.map; }
 
     public static float CharacterSpeed() { return Game.characterSpeed; }
 
     public static TileBase GroundTile() { return Game.groundTile; }
-
-    public static Vector3Int PlayerPosition { get; set; }
-
-    public static Character.Direction PlayerFacing { get; set; }
 
     public static Mode GameMode
     {
@@ -88,7 +93,7 @@ public class GameManager : MonoBehaviour
 
     private static void TriggerMode()
     {
-        foreach (var character in Game._characters) character.TriggerMode();
+        foreach (var character in Game._characters.Values) character.TriggerMode();
 
         switch (GameMode)
         {
@@ -106,5 +111,13 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delaySeconds);
         GameMode = mode;
+    }
+
+    public static void LogWarning(string message, string logIdentifier)
+    {
+        if (Game._logIdentifiers.Contains(logIdentifier)) return;
+        
+        Debug.LogWarning(message);
+        Game._logIdentifiers.Add(logIdentifier);
     }
 }
