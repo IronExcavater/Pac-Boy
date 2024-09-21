@@ -114,4 +114,9 @@ public class Ghost : Character
                 break;
         }
     }
+    
+    public void PlayStep()
+    {
+        AudioManager.PlaySfxOneShot(AudioManager.Audio.step);
+    }
 }

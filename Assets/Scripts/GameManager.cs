@@ -8,9 +8,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Game { get; private set; }
     
     [Header("References:")]
-    [SerializeField] private Tilemap map;
     [SerializeField] private TileBase groundTile;
     
+    private Tilemap _map;
     private Dictionary<string, Character> _characters = new();
     private List<Item> _items = new();
 
@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
     [Header("Attributes:")]
     [SerializeField] private float characterSpeed;
 
-    private Mode _mode;
-    private float _scatterTimer;
+    [SerializeField] private Mode _mode;
+    [SerializeField] private float _scatterTimer;
 
     public enum Mode
     {
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        map = GameObject.Find("Level01").GetComponent<Tilemap>();
+        _map = GameObject.Find("Level01").GetComponent<Tilemap>();
         TriggerMode();
     }
 
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
         Game._items.Remove(item);
     }
 
-    public static Tilemap LevelTilemap() { return Game.map; }
+    public static Tilemap LevelTilemap() { return Game._map; }
 
     public static float CharacterSpeed() { return Game.characterSpeed; }
 
