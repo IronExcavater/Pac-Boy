@@ -94,7 +94,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 2
-      m_TileSpriteIndex: 2
+      m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -104,17 +104,17 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 3
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1
+      m_AllTileFlags: 1073741825
   - first: {x: -1, y: 0, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -124,7 +124,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -139,14 +139,14 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: c44b4d42ce12fd1438593f0e95cdb9fe, type: 2}
   - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: c07e076d04cc68f478b444d10df46e80, type: 2}
+    m_Data: {fileID: 11400000, guid: 6f1adec504cc13341aafcb7ab20ce489, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 2
-    m_Data: {fileID: -7366180687131401920, guid: e18e3ce5398e1164e914849967c37853, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 2551541108661590903, guid: e18e3ce5398e1164e914849967c37853, type: 3}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: 527781219, guid: 2966a54e4efc36647a2d828862ef987a, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: -7366180687131401920, guid: e18e3ce5398e1164e914849967c37853, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 4
     m_Data:
@@ -358,6 +358,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7457041955950401150, guid: 870ba0501a5e3cc40bbfbb2a75128742, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8000008867982568865, guid: 870ba0501a5e3cc40bbfbb2a75128742, type: 3}
       propertyPath: m_Name
       value: Potion
@@ -438,7 +442,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4762784808073506729, guid: bb9d8c3a94e72f44fa8ed62cb08fd00b, type: 3}
   m_PrefabInstance: {fileID: 5996555315923702848}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4747033939055050145
+--- !u!114 &1630341213881736326
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

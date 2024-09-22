@@ -1,25 +1,17 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 [Serializable]
-public class AudioClipTempoTuple : Tuple<AudioClip, int>
+public class AudioClipTempoTuple
 {
-    [SerializeField] protected AudioClip audioClip;
-    [SerializeField] protected int tempo;
-    
-    public AudioClip AudioClip
-    {
-        get => audioClip;
-        set => audioClip = value;
-    }
+    [SerializeField] private AudioClip audioClip;
+    [SerializeField] private int tempo;
 
-    public int Tempo
-    {
-        get => tempo;
-        set => tempo = value;
-    }
-    
-    public AudioClipTempoTuple(AudioClip audioClip, int tempo) : base(audioClip, tempo)
+    public AudioClip AudioClip => audioClip;
+    public int Tempo => tempo;
+
+    public AudioClipTempoTuple(AudioClip audioClip, int tempo)
     {
         this.audioClip = audioClip;
         this.tempo = tempo;

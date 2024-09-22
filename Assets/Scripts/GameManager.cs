@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
     [Header("Attributes:")]
     [SerializeField] private float characterSpeed;
 
-    [SerializeField] private Mode _mode;
-    [SerializeField] private float _scatterTimer;
+    [SerializeField] private Mode mode;
+    [SerializeField] private float scatterTimer;
 
     public enum Mode
     {
@@ -37,11 +37,12 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(Game);
         }
         else Destroy(this);
+        
+        _map = GameObject.Find("Level01").GetComponent<Tilemap>();
     }
 
     private void Start()
     {
-        _map = GameObject.Find("Level01").GetComponent<Tilemap>();
         TriggerMode();
     }
 
@@ -64,6 +65,12 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
+    public static void ClearCharacters()
+    {
+        foreach (var character in Game._characters)
+            Destroy(character.Value.gameObject);
+    }
+
     public static void RegisterItem(Item item)
     {
         if (!Game._items.Contains(item)) Game._items.Add(item);
@@ -74,6 +81,12 @@ public class GameManager : MonoBehaviour
         Game._items.Remove(item);
     }
 
+    public static void ClearItems()
+    {
+        foreach (var item in Game._items)
+            Destroy(item.gameObject);
+    }
+
     public static Tilemap LevelTilemap() { return Game._map; }
 
     public static float CharacterSpeed() { return Game.characterSpeed; }
@@ -82,11 +95,11 @@ public class GameManager : MonoBehaviour
 
     public static Mode GameMode
     {
-        get => Game._mode;
+        get => Game.mode;
         private set
         {
-            if (value == Game._mode) return;
-            Game._mode = value;
+            if (value == Game.mode) return;
+            Game.mode = value;
             TriggerMode();
         }
     }

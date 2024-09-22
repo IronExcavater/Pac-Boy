@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 194c5a8c9e4e37049b7cccedbbb14149, type: 3}
-  m_Name: Wall_Simplified
+  m_Name: Wall Simplified
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 527781219, guid: 2966a54e4efc36647a2d828862ef987a, type: 3}
   m_DefaultGameObject: {fileID: 0}
