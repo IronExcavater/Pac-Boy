@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7858761131047c4af11cb68fd29f18c, type: 3}
-  m_Name: Wall
+  m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: Inside Corner
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 527781219, guid: 2966a54e4efc36647a2d828862ef987a, type: 3}
+  m_Sprite: {fileID: 1797350962, guid: 2966a54e4efc36647a2d828862ef987a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -34,13 +34,3 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 1
-  sprites:
-  - {fileID: 1797350962, guid: 2966a54e4efc36647a2d828862ef987a, type: 3}
-  - {fileID: 527781219, guid: 2966a54e4efc36647a2d828862ef987a, type: 3}
-  - {fileID: 873134356, guid: 2966a54e4efc36647a2d828862ef987a, type: 3}
-  anchor: {x: 0, y: 0}
-  neighborAnchors:
-  - {x: Infinity, y: Infinity}
-  - {x: Infinity, y: Infinity}
-  - {x: Infinity, y: Infinity}
-  - {x: Infinity, y: Infinity}

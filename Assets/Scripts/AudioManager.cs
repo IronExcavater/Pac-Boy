@@ -16,13 +16,7 @@ public class AudioManager : MonoBehaviour
     public AudioClipTempoTuple musicIntermission;
     
     [Header("SFX Clips:")]
-    public AudioClip step;
-    public AudioClip coin;
-    public AudioClip potion;
-    public AudioClip hit;
-    public AudioClip defeat;
-    public AudioClip score;
-    public AudioClip select;
+    public AudioClip step, coin, potion, hit, defeat, score, select;
 
     private AudioClipTempoTuple _loopedMusic;
     private int _sourceToggle;
