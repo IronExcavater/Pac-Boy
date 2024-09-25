@@ -1,11 +1,18 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Object = UnityEngine.Object;
 using Vector2Int = UnityEngine.Vector2Int;
 
+// I'd honestly love to add comments and separate this code into more methods, I just wouldn't stand adding so many
+// parameters to everything. I think it would look more messy. I'd aspire to be a never-nester but this just got the
+// best of me.
 public class LevelGenerator : MonoBehaviour
 {
-    private readonly int[,] _levelArray =
+    private int[,] _typeArray =
     {
         {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 7},
         {2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4},
@@ -24,6 +31,8 @@ public class LevelGenerator : MonoBehaviour
         {0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 4, 0, 0, 0}
     };
     
+    private Vector3Int[,] _anchorArray;
+    
     [SerializeField] private Vector3Int mapOrigin;
 
     [Header("Tiles:")]
@@ -41,43 +50,111 @@ public class LevelGenerator : MonoBehaviour
         GameManager.ClearItems();
 
         MirrorLevel();
-        
-        var anchorArray = GenerateAnchors(_levelArray);
-        anchorArray = GenerateAnchors(_levelArray, anchorArray);
+        StartCoroutine(GenerateLevel());
     }
 
     private void MirrorLevel()
     {
-        var lengthY = _levelArray.GetLength(0);
-        var lengthX = _levelArray.GetLength(1);
-        var newLengthY = lengthY / 2 * 4; // Ensures that odd lengths won't repeat the mid-tile
-        var newLengthX = lengthX / 2 * 4;
-        var newLevelArray = new int[newLengthY, newLengthX];
+        var lengthY = _typeArray.GetLength(0);
+        var lengthX = _typeArray.GetLength(1);
+        var evenLengthY = lengthY / 2 * 2; // Ensures that odd lengths won't repeat the mid-tile
+        var evenLengthX = lengthX / 2 * 2;
+        var newLengthY = lengthY + evenLengthY;
+        var newLengthX = lengthX + evenLengthX;
+        var newTypeArray = new int[newLengthY, newLengthX];
         
+        // Copy original data
+        for (var y = 0; y < lengthY; y++)
+            for (var x = 0; x < lengthX; x++)
+                newTypeArray[y, x] = _typeArray[y, x];
+        
+        // Mirror on x-axis
+        for (var y = 0; y < evenLengthY; y++)
+            for (var x = 0; x < evenLengthX; x++)
+                newTypeArray[newLengthY - 1 - y, x] = newTypeArray[y, x];
+        
+        // Mirror on y-axis
+        for (var y = 0; y < newLengthY; y++)
+            for (var x = 0; x < evenLengthX; x++) 
+                newTypeArray[y, newLengthX - 1 - x] = newTypeArray[y, x];
+
+        _typeArray = newTypeArray;
     }
 
-    private Vector3Int[,] GenerateAnchors(int[,] levelArray, Vector3Int[,] anchorArray = null)
+    private void AdjustCamera()
     {
-        var lengthY = levelArray.GetLength(0);
-        var lengthX = levelArray.GetLength(1);
+        _map.CompressBounds();
 
-        var reverse = anchorArray != null;
-        anchorArray ??= new Vector3Int[lengthY, lengthX];
+        var cam = Camera.main;
+        if (cam is null) return;
+        var mapCenter = _map.cellBounds.center + _map.transform.position;
+        cam.transform.position = new Vector3(mapCenter.x, mapCenter.y, -10);
+        cam.orthographicSize = _map.size.y / 2f;
+    }
+
+    private IEnumerator GenerateLevel()
+    {
+        _anchorArray = new Vector3Int[_typeArray.GetLength(0), _typeArray.GetLength(1)];
+        yield return StartCoroutine(GenerateWalls(_typeArray, _anchorArray));
+        yield return StartCoroutine(GenerateWalls(_typeArray, _anchorArray, true));
+        yield return StartCoroutine(GenerateGround(_typeArray, _anchorArray));
+        AdjustCamera();
+    }
+
+    private IEnumerator GenerateGround(int[,] typeArray, Vector3Int[,] anchorArray)
+    {
+        for (var y = 0; y < typeArray.GetLength(0); y++)
+        {
+            for (var x = 0; x < typeArray.GetLength(1); x++)
+            {
+                if (!IsWall(typeArray[y, x])) continue;
+                
+                var arrayPosition = new Vector2Int(x, y);
+                var anchor = anchorArray[y, x] * new Vector3Int(1, -1, 1);
+
+                var groundPositions = anchor.z switch
+                {
+                    0 or 2 => new[] { arrayPosition + (Vector2Int)anchor },
+                    1 => new[]
+                    {
+                        arrayPosition + (Vector2Int)anchor,
+                        arrayPosition + new Vector2Int(0, anchor.y),
+                        arrayPosition + new Vector2Int(anchor.x, 0),
+                    },
+                    _ => Array.Empty<Vector2Int>()
+                };
+
+                foreach (var position in groundPositions)
+                {
+                    var worldPosition = (Vector3Int)position * new Vector3Int(1, -1, 1) + mapOrigin;
+                    if (_map.GetTile(worldPosition) is not null) continue;
+                    
+                    _map.SetTile(worldPosition, groundTile);
+                    yield return new WaitForSeconds(0.1f);
+                }
+            }
+        }
+    }
+
+    private IEnumerator GenerateWalls(int[,] typeArray, Vector3Int[,] anchorArray, bool reverse = false)
+    {
+        var lengthY = typeArray.GetLength(0);
+        var lengthX = typeArray.GetLength(1);
 
         var step = reverse ? -1 : 1;
-        var startY = levelArray.GetLength(0) * -step;
-        var startX = levelArray.GetLength(1) * -step;
+        var startY = typeArray.GetLength(0) * -step;
+        var startX = typeArray.GetLength(1) * -step;
         var offset = new Vector2Int(reverse ? -1 : lengthX, reverse ? -1 : lengthY);
-        print("Offset: " + offset);
-
+        
         for (var y = startY; y != 0; y += step)
         {
             for (var x = startX; x != 0; x += step)
             {
                 var arrayPosition = new Vector2Int(x + offset.x, y + offset.y);
-                print("arrayPosition: " + arrayPosition);
 
-                var type = levelArray[arrayPosition.y, arrayPosition.x];
+                if (anchorArray[arrayPosition.y, arrayPosition.x] != Vector3Int.zero) continue;
+                
+                var type = typeArray[arrayPosition.y, arrayPosition.x];
                 if (type == 0) continue; // Unknown
                 
                 var worldPosition = mapOrigin + new Vector3Int(arrayPosition.x, -arrayPosition.y);
@@ -87,6 +164,7 @@ public class LevelGenerator : MonoBehaviour
                     if (anchorArray[arrayPosition.y, arrayPosition.x].z == 3) continue;
                     Instantiate(ItemObject(type), worldPosition, Quaternion.identity, _map.transform);
                     anchorArray[arrayPosition.y, arrayPosition.x] = new Vector3Int(0, 0, 3);
+                    yield return new WaitForSeconds(0.1f);
                     continue;
                 }
                 
@@ -94,46 +172,44 @@ public class LevelGenerator : MonoBehaviour
                 if (arrayPosition.Equals(Vector2Int.zero)) 
                     anchorArray[0, 0] = new Vector3Int(1, -1, 2);
                 else
-                    anchorArray[arrayPosition.y, arrayPosition.x] = SetAnchor(arrayPosition, type,
-                        NeighborTypes(levelArray, arrayPosition), NeighborAnchors(anchorArray, arrayPosition));
+                    anchorArray[arrayPosition.y, arrayPosition.x] = SetAnchor(arrayPosition, anchorArray, type,
+                        NeighborTypes(typeArray, arrayPosition), NeighborAnchors(anchorArray, arrayPosition), reverse);
                 
                 var anchor = anchorArray[arrayPosition.y, arrayPosition.x];
                 
+                if (anchor.Equals(Vector3Int.zero)) continue;
                 _map.SetTile(worldPosition, Tile(anchor, type));
                 _map.SetTransformMatrix(worldPosition, SetRotation(anchor));
+                yield return new WaitForSeconds(0.1f);
             }
         }
-
-        return anchorArray;
     }
 
-    private static Vector3Int SetAnchor(Vector2Int arrayPosition, int type, int[] types, Vector3Int[] anchors)
+    private static Vector3Int SetAnchor(Vector2Int arrayPosition, Vector3Int[,] anchorArray, int type, int[] types, Vector3Int[] anchors, bool isClockwise = false)
     {
         switch (type)
         {
             case 1 or 3 or 7:
-                if (IsTested(arrayPosition)) print("index: " + arrayPosition);
-                for (var i = 0; i < anchors.Length; i++)
+                var neighborStart = isClockwise ? 0 : anchors.Length - 1;
+                var neighborStep = isClockwise ? 1 : -1;
+                for (var i = neighborStart; isClockwise ? i < anchors.Length : i >= 0; i += neighborStep)
                 {
                     if (Is2DZero(anchors[i])) continue;
                     var iMod2 = i % 2;
                     if (anchors[i][iMod2] == 0) continue;
-                    if (anchors[i].z == 2)
-                    {
-                        if (IsTested(arrayPosition)) print("i: " + i + ", [1 - iMod2]: " + anchors[i][1 - iMod2] + " = " + (i / 2 == 0 ? 1 : -1));
-                        if (anchors[i][1 - iMod2] == (i / 2 == 0 ? 1 : -1)) continue;
-                    }
-
-                    for (var j = 0; j < anchors.Length; j++)
+                    if (anchors[i].z == 2 && anchors[i][1 - iMod2] == (i / 2 == 0 ? 1 : -1)) continue;
+                    
+                    for (var j = neighborStart; isClockwise ? j < anchors.Length : j >= 0; j += neighborStep)
                     {
                         var jMod2 = j % 2;
                         if (jMod2 == iMod2 || !IsWall(types[j])) continue;
                         if (!Is2DZero(anchors[j]) && anchors[j][jMod2] == 0) continue;
-                        if (anchors[j].z == 2)
-                        {
-                            if (IsTested(arrayPosition)) print("j: " + j + ", [1 - jMod2]: " + anchors[j][1 - jMod2] + " = " + (j / 2 == 0 ? 1 : -1));
-                            if (anchors[j][1 - jMod2] == (j / 2 == 0 ? 1 : -1)) continue;
-                        }
+                        if (anchors[j].z == 2 && anchors[j][1 - jMod2] == (j / 2 == 0 ? 1 : -1)) continue;
+                        
+                        if (Is2DZero(anchors[j]) && types.All(IsWall))
+                            for (var k = j + neighborStep; isClockwise ? k < anchorArray.Length : k >= 0; k += neighborStep) 
+                                if (Is2DZero(anchors[k]))
+                                    return Vector3Int.zero;
                         
                         var secondValue = anchors[i][iMod2];
                         if (i / 2 != j / 2)
@@ -141,13 +217,6 @@ public class LevelGenerator : MonoBehaviour
                         
                         var indexOffset = anchors[i][iMod2] * (i == 1 || i == 2 ? -1 : 1);
                         var cornerType = (i + indexOffset + 4) % 4 == j ? 2 : 1; // 2: Inner corner, 1: Outer corner
-
-                        if (IsTested(arrayPosition))
-                        {
-                            print("i: " + i + ", j: " + j);
-                            print("secondValue: " + secondValue);
-                            print("indexOffset: " + indexOffset + ", cornerType: " + cornerType);
-                        }
                         
                         return new Vector3Int(
                                    anchors[i][0] * (1 - iMod2), 
@@ -158,7 +227,15 @@ public class LevelGenerator : MonoBehaviour
                                    cornerType);
                     }
                 }
-                if (anchors.All(Is2DZero)) return new Vector3Int(-1, 1, 1);
+
+                if (anchors.All(Is2DZero) && !IsBorder(arrayPosition, anchorArray))
+                {
+                    // Assumptions
+                    if (IsWall(types[0]) && IsWall(types[1])) return new Vector3Int(-1, -1, 1);
+                    if (IsWall(types[1]) && IsWall(types[2])) return new Vector3Int(-1, 1, 1);
+                    if (IsWall(types[2]) && IsWall(types[3])) return new Vector3Int(1, 1, 1);
+                    if (IsWall(types[3]) && IsWall(types[0])) return new Vector3Int(1, -1, 1);
+                }
                 break;
             case 2 or 4:
                 for (var i = 0; i < anchors.Length; i++)
@@ -167,7 +244,6 @@ public class LevelGenerator : MonoBehaviour
                     var iMod2 = i % 2;
                     if (anchors[i][iMod2] == 0) continue;
                     
-                    if (IsTested(arrayPosition)) print("i: " + i + " = " + anchors[i]);
                     return new Vector3Int(anchors[i].x * (1 - iMod2), anchors[i].y * iMod2);
                 }
                 break;
@@ -200,7 +276,7 @@ public class LevelGenerator : MonoBehaviour
         return Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0, 0, rotationZ), Vector3.one);
     }
 
-    private static int[] NeighborTypes(int[,] levelArray, Vector2Int arrayPosition)
+    private static int[] NeighborTypes(int[,] typeArray, Vector2Int arrayPosition)
     {
         Vector2Int[] neighbors =
         {
@@ -213,8 +289,8 @@ public class LevelGenerator : MonoBehaviour
         var types = new int[4];
         
         for (var i = 0; i < neighbors.Length; i++)
-            if (ValidPosition(levelArray.GetLength(0), levelArray.GetLength(1), neighbors[i]))
-                types[i] = levelArray[neighbors[i].y, neighbors[i].x];
+            if (ValidPosition(typeArray.GetLength(0), typeArray.GetLength(1), neighbors[i]))
+                types[i] = typeArray[neighbors[i].y, neighbors[i].x];
         
         return types;
     }
@@ -254,27 +330,8 @@ public class LevelGenerator : MonoBehaviour
         return type != 0 && type != 5 && type != 6;
     }
 
-    private static void PrintAnchorArray(Vector3Int[,] anchorArray)
+    private static bool IsBorder(Vector2Int arrayPosition, Vector3Int[,] anchorArray)
     {
-        var str = "";
-        for (var y = 0; y < anchorArray.GetLength(0); y++)
-        {
-            for (var x = 0; x < anchorArray.GetLength(1); x++)
-            {
-                if (x != 0) str += ", ";
-                str += anchorArray[y, x];
-                str += new string(' ', 12 - anchorArray[y, x].ToString().Length);
-            }
-            str += "\n";
-        }
-        print(str);
-    }
-
-    private static bool IsTested(Vector2Int arrayPosition)
-    {
-        return arrayPosition.Equals(new Vector2Int(13, 7)) ||
-               arrayPosition.Equals(new Vector2Int(8, 9)) ||
-               arrayPosition.Equals(new Vector2Int(8, 10)) ||
-               arrayPosition.Equals(new Vector2Int(8, 13));
+        return arrayPosition.x % anchorArray.GetLength(1) == 0 || arrayPosition.y % anchorArray.GetLength(0) == 0;
     }
 }
