@@ -1,11 +1,9 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
-using Object = UnityEngine.Object;
-using Vector2Int = UnityEngine.Vector2Int;
 
 // I'd honestly love to add comments and separate this code into more methods, I just wouldn't stand adding so many
 // parameters to everything. I think it would look more messy. I'd aspire to be a never-nester but this just got the
@@ -35,9 +33,11 @@ public class LevelGenerator : MonoBehaviour
     
     [SerializeField] private Vector3Int mapOrigin;
 
+    [FormerlySerializedAs("sideWallTile")]
     [Header("Tiles:")]
-    [SerializeField] private TileBase sideWallTile;
-    [SerializeField] private TileBase innerCornerTile, outerCornerTile, groundTile;
+    [SerializeField] private TileBase internalSideWallTile;
+    [SerializeField] private TileBase internalInnerCornerTile, internalOuterCornerTile, externalSideWallTile, 
+        externalInnerCornerTile, externalOuterCornerTile, externalTCornerTile, groundTile;
     [SerializeField] private GameObject coinItem, potionItem;
 
     private Tilemap _map;
@@ -95,22 +95,22 @@ public class LevelGenerator : MonoBehaviour
     private IEnumerator GenerateLevel()
     {
         _anchorArray = new Vector3Int[_typeArray.GetLength(0), _typeArray.GetLength(1)];
-        yield return StartCoroutine(GenerateWalls(_typeArray, _anchorArray));
-        yield return StartCoroutine(GenerateWalls(_typeArray, _anchorArray, true));
-        yield return StartCoroutine(GenerateGround(_typeArray, _anchorArray));
+        yield return StartCoroutine(GenerateWalls());
+        yield return StartCoroutine(GenerateWalls(true));
+        GenerateGround();
         AdjustCamera();
     }
 
-    private IEnumerator GenerateGround(int[,] typeArray, Vector3Int[,] anchorArray)
+    private void GenerateGround()
     {
-        for (var y = 0; y < typeArray.GetLength(0); y++)
+        for (var y = 0; y < _typeArray.GetLength(0); y++)
         {
-            for (var x = 0; x < typeArray.GetLength(1); x++)
+            for (var x = 0; x < _typeArray.GetLength(1); x++)
             {
-                if (!IsWall(typeArray[y, x])) continue;
+                if (!IsWall(_typeArray[y, x])) continue;
                 
                 var arrayPosition = new Vector2Int(x, y);
-                var anchor = anchorArray[y, x] * new Vector3Int(1, -1, 1);
+                var anchor = _anchorArray[y, x] * new Vector3Int(1, -1, 1);
 
                 var groundPositions = anchor.z switch
                 {
@@ -130,20 +130,19 @@ public class LevelGenerator : MonoBehaviour
                     if (_map.GetTile(worldPosition) is not null) continue;
                     
                     _map.SetTile(worldPosition, groundTile);
-                    yield return new WaitForSeconds(0.1f);
                 }
             }
         }
     }
 
-    private IEnumerator GenerateWalls(int[,] typeArray, Vector3Int[,] anchorArray, bool reverse = false)
+    private IEnumerator GenerateWalls(bool reverse = false)
     {
-        var lengthY = typeArray.GetLength(0);
-        var lengthX = typeArray.GetLength(1);
+        var lengthY = _typeArray.GetLength(0);
+        var lengthX = _typeArray.GetLength(1);
 
         var step = reverse ? -1 : 1;
-        var startY = typeArray.GetLength(0) * -step;
-        var startX = typeArray.GetLength(1) * -step;
+        var startY = _typeArray.GetLength(0) * -step;
+        var startX = _typeArray.GetLength(1) * -step;
         var offset = new Vector2Int(reverse ? -1 : lengthX, reverse ? -1 : lengthY);
         
         for (var y = startY; y != 0; y += step)
@@ -152,40 +151,40 @@ public class LevelGenerator : MonoBehaviour
             {
                 var arrayPosition = new Vector2Int(x + offset.x, y + offset.y);
 
-                if (anchorArray[arrayPosition.y, arrayPosition.x] != Vector3Int.zero) continue;
+                if (_anchorArray[arrayPosition.y, arrayPosition.x] != Vector3Int.zero) continue;
                 
-                var type = typeArray[arrayPosition.y, arrayPosition.x];
+                var type = _typeArray[arrayPosition.y, arrayPosition.x];
                 if (type == 0) continue; // Unknown
                 
                 var worldPosition = mapOrigin + new Vector3Int(arrayPosition.x, -arrayPosition.y);
                 
                 if (!IsWall(type)) // Item
                 {
-                    if (anchorArray[arrayPosition.y, arrayPosition.x].z == 3) continue;
+                    if (_anchorArray[arrayPosition.y, arrayPosition.x].z == 3) continue;
                     Instantiate(ItemObject(type), worldPosition, Quaternion.identity, _map.transform);
-                    anchorArray[arrayPosition.y, arrayPosition.x] = new Vector3Int(0, 0, 3);
+                    _anchorArray[arrayPosition.y, arrayPosition.x] = new Vector3Int(0, 0, 3);
                     yield return new WaitForSeconds(0.1f);
                     continue;
                 }
                 
                 // Tile
                 if (arrayPosition.Equals(Vector2Int.zero)) 
-                    anchorArray[0, 0] = new Vector3Int(1, -1, 2);
+                    _anchorArray[0, 0] = new Vector3Int(1, -1, 2);
                 else
-                    anchorArray[arrayPosition.y, arrayPosition.x] = SetAnchor(arrayPosition, anchorArray, type,
-                        NeighborTypes(typeArray, arrayPosition), NeighborAnchors(anchorArray, arrayPosition), reverse);
+                    _anchorArray[arrayPosition.y, arrayPosition.x] = SetAnchor(arrayPosition, type,
+                        NeighborTypes(arrayPosition), NeighborAnchors(arrayPosition), reverse);
                 
-                var anchor = anchorArray[arrayPosition.y, arrayPosition.x];
+                var anchor = _anchorArray[arrayPosition.y, arrayPosition.x];
                 
                 if (anchor.Equals(Vector3Int.zero)) continue;
                 _map.SetTile(worldPosition, Tile(anchor, type));
-                _map.SetTransformMatrix(worldPosition, SetRotation(anchor));
+                _map.SetTransformMatrix(worldPosition, SetRotation(anchor, type));
                 yield return new WaitForSeconds(0.1f);
             }
         }
     }
 
-    private static Vector3Int SetAnchor(Vector2Int arrayPosition, Vector3Int[,] anchorArray, int type, int[] types, Vector3Int[] anchors, bool isClockwise = false)
+    private Vector3Int SetAnchor(Vector2Int arrayPosition, int type, int[] types, Vector3Int[] anchors, bool isClockwise = false)
     {
         switch (type)
         {
@@ -207,7 +206,7 @@ public class LevelGenerator : MonoBehaviour
                         if (anchors[j].z == 2 && anchors[j][1 - jMod2] == (j / 2 == 0 ? 1 : -1)) continue;
                         
                         if (Is2DZero(anchors[j]) && types.All(IsWall))
-                            for (var k = j + neighborStep; isClockwise ? k < anchorArray.Length : k >= 0; k += neighborStep) 
+                            for (var k = j + neighborStep; isClockwise ? k < _anchorArray.Length : k >= 0; k += neighborStep) 
                                 if (Is2DZero(anchors[k]))
                                     return Vector3Int.zero;
                         
@@ -228,7 +227,7 @@ public class LevelGenerator : MonoBehaviour
                     }
                 }
 
-                if (anchors.All(Is2DZero) && !IsBorder(arrayPosition, anchorArray))
+                if (anchors.All(Is2DZero) && !IsBorder(arrayPosition))
                 {
                     // Assumptions
                     if (IsWall(types[0]) && IsWall(types[1])) return new Vector3Int(-1, -1, 1);
@@ -251,7 +250,7 @@ public class LevelGenerator : MonoBehaviour
         return Vector3Int.zero;
     }
 
-    private Object ItemObject(int type) => type switch
+    private GameObject ItemObject(int type) => type switch
     {
         5 => coinItem,
         6 => potionItem,
@@ -260,23 +259,33 @@ public class LevelGenerator : MonoBehaviour
 
     private TileBase Tile(Vector3Int anchor, int type) => anchor.z switch
     {
-        0 => IsWall(type) ? sideWallTile : null,
-        1 => outerCornerTile,
-        2 => innerCornerTile,
+        0 => IsWall(type) ? IsExternal(type) ? externalSideWallTile : internalSideWallTile : null,
+        1 => IsExternal(type) ? externalOuterCornerTile : internalOuterCornerTile,
+        2 => IsExternal(type) ? type == 7 ? externalTCornerTile : externalInnerCornerTile : internalInnerCornerTile,
         _ => null
     };
 
-    private static Matrix4x4 SetRotation(Vector3Int anchor)
+    private static Matrix4x4 SetRotation(Vector3Int anchor, int type)
     {
         var rotationZ = Mathf.Atan2(anchor.y, anchor.x) * Mathf.Rad2Deg + 360; // Raw angle + 360 (ensures pos+ value)
         rotationZ = (int)(rotationZ / 90) * 90; // Round to closest 90deg (for corners)
         if (anchor.z == 1) rotationZ += 180; // Rotations for outer corners is shifted by 180deg
         rotationZ %= 360; // Restrict domain to 0 < angle < 360
         
-        return Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0, 0, rotationZ), Vector3.one);
+        if (type != 7)
+            return Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0, 0, rotationZ), Vector3.one);
+        
+        var mirroring = rotationZ switch
+        {
+            90 => Quaternion.Euler(0, 180, 0),
+            180 => Quaternion.Euler(0, 0, 180),
+            270 => Quaternion.Euler(0, 180, 180),
+            _ => Quaternion.Euler(0, 0, 0) // Including zero
+        };
+        return Matrix4x4.TRS(Vector3.zero, mirroring, Vector3.one);
     }
 
-    private static int[] NeighborTypes(int[,] typeArray, Vector2Int arrayPosition)
+    private int[] NeighborTypes(Vector2Int arrayPosition)
     {
         Vector2Int[] neighbors =
         {
@@ -289,13 +298,13 @@ public class LevelGenerator : MonoBehaviour
         var types = new int[4];
         
         for (var i = 0; i < neighbors.Length; i++)
-            if (ValidPosition(typeArray.GetLength(0), typeArray.GetLength(1), neighbors[i]))
-                types[i] = typeArray[neighbors[i].y, neighbors[i].x];
+            if (ValidPosition(_typeArray.GetLength(0), _typeArray.GetLength(1), neighbors[i]))
+                types[i] = _typeArray[neighbors[i].y, neighbors[i].x];
         
         return types;
     }
 
-    private static Vector3Int[] NeighborAnchors(Vector3Int[,] anchorArray, Vector2Int arrayPosition)
+    private Vector3Int[] NeighborAnchors(Vector2Int arrayPosition)
     {
         Vector2Int[] neighbors =
         {
@@ -308,8 +317,8 @@ public class LevelGenerator : MonoBehaviour
         var anchors = new Vector3Int[4];
         
         for (var i = 0; i < neighbors.Length; i++)
-            if (ValidPosition(anchorArray.GetLength(0), anchorArray.GetLength(1), neighbors[i]))
-                anchors[i] = anchorArray[neighbors[i].y, neighbors[i].x];
+            if (ValidPosition(_anchorArray.GetLength(0), _anchorArray.GetLength(1), neighbors[i]))
+                anchors[i] = _anchorArray[neighbors[i].y, neighbors[i].x];
         
         return anchors;
     }
@@ -330,8 +339,13 @@ public class LevelGenerator : MonoBehaviour
         return type != 0 && type != 5 && type != 6;
     }
 
-    private static bool IsBorder(Vector2Int arrayPosition, Vector3Int[,] anchorArray)
+    private bool IsBorder(Vector2Int arrayPosition)
     {
-        return arrayPosition.x % anchorArray.GetLength(1) == 0 || arrayPosition.y % anchorArray.GetLength(0) == 0;
+        return arrayPosition.x % _anchorArray.GetLength(1) == 0 || arrayPosition.y % _anchorArray.GetLength(0) == 0;
+    }
+
+    private static bool IsExternal(int type)
+    {
+        return type == 1 || type == 2 || type == 7;
     }
 }
