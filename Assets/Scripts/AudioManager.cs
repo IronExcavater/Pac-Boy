@@ -23,6 +23,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip death;
     [SerializeField] private AudioClip score;
     [SerializeField] private AudioClip select;
+    [SerializeField] private AudioClip ghostDeath;
 
     private AudioClipTempoTuple _loopedMusic;
     private int _sourceToggle;
