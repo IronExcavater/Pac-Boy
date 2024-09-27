@@ -11,12 +11,11 @@ public class AudioManager : MonoBehaviour
     [Header("Music Clips:")]
     public AudioClipTempoTuple musicMenu;
     [SerializeField] private AudioClipTempoTuple musicIntro;
-    public AudioClipTempoTuple musicNormal;
-    public AudioClipTempoTuple musicScared;
-    public AudioClipTempoTuple musicIntermission;
-    
+    public AudioClipTempoTuple musicNormal, musicScared, musicIntermission;
+
     [Header("SFX Clips:")]
-    public AudioClip step, coin, potion, hit, defeat, score, select;
+    public AudioClip step;
+    public AudioClip coin, potion, hit, defeat, score, select, ghostDeath;
 
     private AudioClipTempoTuple _loopedMusic;
     private int _sourceToggle;

@@ -202,6 +202,7 @@ MonoBehaviour:
   defeat: {fileID: 8300000, guid: f8f39b1358f8cfb4c9779caa910f9033, type: 3}
   score: {fileID: 8300000, guid: 8931e9dc72d9070498967403603833d3, type: 3}
   select: {fileID: 8300000, guid: 0eab1fbd45b9b9f48865667981614a3f, type: 3}
+  ghostDeath: {fileID: 8300000, guid: d6747d78b82d74c809e82d66549a6aa9, type: 3}
 --- !u!1 &4281810089051750984
 GameObject:
   m_ObjectHideFlags: 0
