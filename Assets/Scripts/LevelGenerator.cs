@@ -12,7 +12,7 @@ public class LevelGenerator : MonoBehaviour
 {
     private int[,] _typeArray =
     {
-        {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 7},
+        /*{1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 7},
         {2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4},
         {2, 5, 3, 4, 4, 3, 5, 3, 4, 4, 4, 3, 5, 4},
         {2, 6, 4, 0, 0, 4, 5, 4, 0, 0, 0, 4, 5, 4},
@@ -26,7 +26,17 @@ public class LevelGenerator : MonoBehaviour
         {0, 0, 0, 0, 0, 2, 5, 4, 4, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 2, 5, 4, 4, 0, 3, 4, 4, 0},
         {2, 2, 2, 2, 2, 1, 5, 3, 3, 0, 4, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 4, 0, 0, 0}
+        {0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 4, 0, 0, 0}*/
+        {1, 2, 2, 1, 0, 0, 0, 0, 1, 2, 2, 2, 2, 7},
+        {2, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 4},
+        {2, 0, 0, 1, 2, 7, 7, 2, 1, 0, 3, 4, 4, 3},
+        {1, 1, 0, 0, 0, 4, 4, 0, 0, 0, 3, 4, 3, 0},
+        {1, 1, 0, 3, 4, 3, 3, 4, 3, 0, 0, 0, 4, 0},
+        {2, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0, 3, 3, 0},
+        {2, 0, 0, 3, 4, 4, 4, 4, 3, 0, 0, 3, 4, 4},
+        {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 2, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4},
+        {0, 2, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     };
     
     private Vector3Int[,] _anchorArray;
@@ -186,6 +196,8 @@ public class LevelGenerator : MonoBehaviour
 
     private Vector3Int SetAnchor(Vector2Int arrayPosition, int type, int[] types, Vector3Int[] anchors, bool isClockwise = false)
     {
+        if (IsTested(arrayPosition)) print("arrayPosition: " + arrayPosition);
+        
         switch (type)
         {
             case 1 or 3 or 7:
@@ -200,15 +212,12 @@ public class LevelGenerator : MonoBehaviour
                     
                     for (var j = neighborStart; isClockwise ? j < anchors.Length : j >= 0; j += neighborStep)
                     {
-                        var jMod2 = j % 2;
-                        if (jMod2 == iMod2 || !IsWall(types[j])) continue;
-                        if (!Is2DZero(anchors[j]) && anchors[j][jMod2] == 0) continue;
-                        if (anchors[j].z == 2 && anchors[j][1 - jMod2] == (j / 2 == 0 ? 1 : -1)) continue;
-                        
-                        if (Is2DZero(anchors[j]) && types.All(IsWall))
-                            for (var k = j + neighborStep; isClockwise ? k < _anchorArray.Length : k >= 0; k += neighborStep) 
-                                if (Is2DZero(anchors[k]))
-                                    return Vector3Int.zero;
+                        if (!ValidSecondNeighbor(i, j, types, anchors)) continue;
+
+                        if (Is2DZero(anchors[j]) && types.Where(IsWall).Count() > 2)
+                            for (var k = j + neighborStep; isClockwise ? k < anchors.Length : k >= 0; k += neighborStep)
+                                if (!Is2DZero(anchors[k]) && ValidSecondNeighbor(i, k, types, anchors))
+                                    j = k;
                         
                         var secondValue = anchors[i][iMod2];
                         if (i / 2 != j / 2)
@@ -216,6 +225,13 @@ public class LevelGenerator : MonoBehaviour
                         
                         var indexOffset = anchors[i][iMod2] * (i == 1 || i == 2 ? -1 : 1);
                         var cornerType = (i + indexOffset + 4) % 4 == j ? 2 : 1; // 2: Inner corner, 1: Outer corner
+                        
+                        if (IsTested(arrayPosition))
+                        {
+                            print("i: " + i + ", j: " + j);
+                            print("secondValue: " + secondValue);
+                            print("indexOffset: " + indexOffset + ", cornerType: " + cornerType);
+                        }
                         
                         return new Vector3Int(
                                    anchors[i][0] * (1 - iMod2), 
@@ -227,13 +243,18 @@ public class LevelGenerator : MonoBehaviour
                     }
                 }
 
-                if (anchors.All(Is2DZero) && !IsBorder(arrayPosition))
+                if (anchors.All(Is2DZero) && types.Where(IsWall).Count() == 2)
                 {
                     // Assumptions
-                    if (IsWall(types[0]) && IsWall(types[1])) return new Vector3Int(-1, -1, 1);
-                    if (IsWall(types[1]) && IsWall(types[2])) return new Vector3Int(-1, 1, 1);
-                    if (IsWall(types[2]) && IsWall(types[3])) return new Vector3Int(1, 1, 1);
-                    if (IsWall(types[3]) && IsWall(types[0])) return new Vector3Int(1, -1, 1);
+                    var anchor = Vector3Int.zero;
+                    if (IsWall(types[0]) && IsWall(types[1])) anchor = new Vector3Int(-1, -1, 0);
+                    if (IsWall(types[1]) && IsWall(types[2])) anchor = new Vector3Int(-1, 1, 0);
+                    if (IsWall(types[2]) && IsWall(types[3])) anchor = new Vector3Int(1, 1, 0);
+                    if (IsWall(types[3]) && IsWall(types[0])) anchor = new Vector3Int(1, -1, 0);
+
+                    if (IsBorder(arrayPosition))
+                        return anchor * -1 + Vector3Int.forward * 2;
+                    return anchor + Vector3Int.forward;
                 }
                 break;
             case 2 or 4:
@@ -242,12 +263,23 @@ public class LevelGenerator : MonoBehaviour
                     if (Is2DZero(anchors[i])) continue;
                     var iMod2 = i % 2;
                     if (anchors[i][iMod2] == 0) continue;
+                    if (anchors[i].z == 2 && anchors[i][1 - iMod2] == (i / 2 == 0 ? 1 : -1)) continue;
                     
                     return new Vector3Int(anchors[i].x * (1 - iMod2), anchors[i].y * iMod2);
                 }
                 break;
         }
         return Vector3Int.zero;
+    }
+
+    private static bool ValidSecondNeighbor(int i, int j, int[] types, Vector3Int[] anchors)
+    {
+        var iMod2 = i % 2;
+        var jMod2 = j % 2;
+        if (jMod2 == iMod2 || !IsWall(types[j])) return false;
+        if (!Is2DZero(anchors[j]) && anchors[j][jMod2] == 0) return false;
+        if (anchors[j].z == 2 && anchors[j][1 - jMod2] == (j / 2 == 0 ? 1 : -1)) return false;
+        return true;
     }
 
     private GameObject ItemObject(int type) => type switch
@@ -347,5 +379,11 @@ public class LevelGenerator : MonoBehaviour
     private static bool IsExternal(int type)
     {
         return type == 1 || type == 2 || type == 7;
+    }
+
+    private static bool IsTested(Vector2Int arrayPosition)
+    {
+        // return arrayPosition.Equals(new Vector2Int(15, 3));
+        return false;
     }
 }
