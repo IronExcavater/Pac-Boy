@@ -30,13 +30,13 @@ public class LevelGenerator : MonoBehaviour
         {1, 2, 2, 1, 0, 0, 0, 0, 1, 2, 2, 2, 2, 7},
         {2, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 4},
         {2, 0, 0, 1, 2, 7, 7, 2, 1, 0, 3, 4, 4, 3},
-        {1, 1, 0, 0, 0, 4, 4, 0, 0, 0, 3, 4, 3, 0},
-        {1, 1, 0, 3, 4, 3, 3, 4, 3, 0, 0, 0, 4, 0},
+        {7, 3, 0, 0, 0, 4, 4, 0, 0, 0, 3, 4, 3, 0},
+        {7, 3, 0, 3, 4, 3, 3, 4, 3, 0, 0, 0, 4, 0},
         {2, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0, 3, 3, 0},
         {2, 0, 0, 3, 4, 4, 4, 4, 3, 0, 0, 3, 4, 4},
         {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 2, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4},
-        {0, 2, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 2, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
     
     private Vector3Int[,] _anchorArray;
@@ -188,7 +188,7 @@ public class LevelGenerator : MonoBehaviour
                 
                 if (anchor.Equals(Vector3Int.zero)) continue;
                 _map.SetTile(worldPosition, Tile(anchor, type));
-                _map.SetTransformMatrix(worldPosition, SetRotation(anchor, type));
+                _map.SetTransformMatrix(worldPosition, SetRotation(arrayPosition, anchor, type));
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -297,7 +297,7 @@ public class LevelGenerator : MonoBehaviour
         _ => null
     };
 
-    private static Matrix4x4 SetRotation(Vector3Int anchor, int type)
+    private Matrix4x4 SetRotation(Vector2Int arrayPosition, Vector3Int anchor, int type)
     {
         var rotationZ = Mathf.Atan2(anchor.y, anchor.x) * Mathf.Rad2Deg + 360; // Raw angle + 360 (ensures pos+ value)
         rotationZ = (int)(rotationZ / 90) * 90; // Round to closest 90deg (for corners)
@@ -314,6 +314,17 @@ public class LevelGenerator : MonoBehaviour
             270 => Quaternion.Euler(0, 180, 180),
             _ => Quaternion.Euler(0, 0, 0) // Including zero
         };
+        if (arrayPosition.x == 0 || arrayPosition.x == _anchorArray.GetLength(1) - 1)
+        {
+            mirroring = rotationZ switch
+            {
+                90 => Quaternion.Euler(0, 0, 90),
+                180 => Quaternion.Euler(0, 180, 270),
+                270 => Quaternion.Euler(0, 0, 270),
+                _ => Quaternion.Euler(0, 180, 90) // Including zero
+            };
+        }
+        
         return Matrix4x4.TRS(Vector3.zero, mirroring, Vector3.one);
     }
 
