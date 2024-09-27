@@ -7,12 +7,12 @@ using UnityEngine.Tilemaps;
 
 // I'd honestly love to add comments and separate this code into more methods, I just wouldn't stand adding so many
 // parameters to everything. I think it would look more messy. I'd aspire to be a never-nester but this just got the
-// best of me.
+// best of me. Also, gave up generalising the T intersections, just hardcoded them.
 public class LevelGenerator : MonoBehaviour
 {
     private int[,] _typeArray =
     {
-        /*{1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 7},
+        {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 7},
         {2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4},
         {2, 5, 3, 4, 4, 3, 5, 3, 4, 4, 4, 3, 5, 4},
         {2, 6, 4, 0, 0, 4, 5, 4, 0, 0, 0, 4, 5, 4},
@@ -26,17 +26,7 @@ public class LevelGenerator : MonoBehaviour
         {0, 0, 0, 0, 0, 2, 5, 4, 4, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 2, 5, 4, 4, 0, 3, 4, 4, 0},
         {2, 2, 2, 2, 2, 1, 5, 3, 3, 0, 4, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 4, 0, 0, 0}*/
-        {1, 2, 2, 1, 0, 0, 0, 0, 1, 2, 2, 2, 2, 7},
-        {2, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 4},
-        {2, 0, 0, 1, 2, 7, 7, 2, 1, 0, 3, 4, 4, 3},
-        {7, 3, 0, 0, 0, 4, 4, 0, 0, 0, 3, 4, 3, 0},
-        {7, 3, 0, 3, 4, 3, 3, 4, 3, 0, 0, 0, 4, 0},
-        {2, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0, 3, 3, 0},
-        {2, 0, 0, 3, 4, 4, 4, 4, 3, 0, 0, 3, 4, 4},
-        {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 2, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4},
-        {0, 2, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        {0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 4, 0, 0, 0}
     };
     
     private Vector3Int[,] _anchorArray;
