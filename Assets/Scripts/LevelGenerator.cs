@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -50,7 +49,7 @@ public class LevelGenerator : MonoBehaviour
         GameManager.ClearItems();
 
         MirrorLevel();
-        StartCoroutine(GenerateLevel());
+        GenerateLevel();
     }
 
     private void MirrorLevel()
@@ -92,11 +91,11 @@ public class LevelGenerator : MonoBehaviour
         cam.orthographicSize = _map.size.y / 2f;
     }
 
-    private IEnumerator GenerateLevel()
+    private void GenerateLevel()
     {
         _anchorArray = new Vector3Int[_typeArray.GetLength(0), _typeArray.GetLength(1)];
-        yield return StartCoroutine(GenerateWalls());
-        yield return StartCoroutine(GenerateWalls(true));
+        GenerateWalls();
+        GenerateWalls(true);
         GenerateGround();
         AdjustCamera();
     }
@@ -135,7 +134,7 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    private IEnumerator GenerateWalls(bool reverse = false)
+    private void GenerateWalls(bool reverse = false)
     {
         var lengthY = _typeArray.GetLength(0);
         var lengthX = _typeArray.GetLength(1);
@@ -163,7 +162,6 @@ public class LevelGenerator : MonoBehaviour
                     if (_anchorArray[arrayPosition.y, arrayPosition.x].z == 3) continue;
                     Instantiate(ItemObject(type), worldPosition, Quaternion.identity, _map.transform);
                     _anchorArray[arrayPosition.y, arrayPosition.x] = new Vector3Int(0, 0, 3);
-                    yield return new WaitForSeconds(0.1f);
                     continue;
                 }
                 
@@ -178,7 +176,7 @@ public class LevelGenerator : MonoBehaviour
                 
                 if (anchor.Equals(Vector3Int.zero)) continue;
                 _map.SetTile(worldPosition, Tile(anchor, type));
-                _map.SetTransformMatrix(worldPosition, SetRotation(anchor, type));
+                _map.SetTransformMatrix(worldPosition, SetRotation(arrayPosition, anchor, type));
             }
         }
     }

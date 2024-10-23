@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        TriggerMode();
+        GameMode = Mode.Scatter;
     }
 
     public static void RegisterCharacter(string identifier, Character character)
