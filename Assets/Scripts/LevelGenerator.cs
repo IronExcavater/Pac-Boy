@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 
 // I'd honestly love to add comments and separate this code into more methods, I just wouldn't stand adding so many
 // parameters to everything. I think it would look more messy. I'd aspire to be a never-nester but this just got the
-// best of me.
+// best of me. Also, gave up generalising the T intersections, just hardcoded them.
 public class LevelGenerator : MonoBehaviour
 {
     private int[,] _typeArray =
@@ -50,7 +50,7 @@ public class LevelGenerator : MonoBehaviour
         GameManager.ClearItems();
 
         MirrorLevel();
-        GenerateLevel();
+        StartCoroutine(GenerateLevel());
     }
 
     private void MirrorLevel()
@@ -92,11 +92,11 @@ public class LevelGenerator : MonoBehaviour
         cam.orthographicSize = _map.size.y / 2f;
     }
 
-    private void GenerateLevel()
+    private IEnumerator GenerateLevel()
     {
         _anchorArray = new Vector3Int[_typeArray.GetLength(0), _typeArray.GetLength(1)];
-        GenerateWalls();
-        GenerateWalls(true);
+        yield return StartCoroutine(GenerateWalls());
+        yield return StartCoroutine(GenerateWalls(true));
         GenerateGround();
         AdjustCamera();
     }
@@ -135,7 +135,7 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    private void GenerateWalls(bool reverse = false)
+    private IEnumerator GenerateWalls(bool reverse = false)
     {
         var lengthY = _typeArray.GetLength(0);
         var lengthX = _typeArray.GetLength(1);
@@ -163,6 +163,7 @@ public class LevelGenerator : MonoBehaviour
                     if (_anchorArray[arrayPosition.y, arrayPosition.x].z == 3) continue;
                     Instantiate(ItemObject(type), worldPosition, Quaternion.identity, _map.transform);
                     _anchorArray[arrayPosition.y, arrayPosition.x] = new Vector3Int(0, 0, 3);
+                    yield return new WaitForSeconds(0.1f);
                     continue;
                 }
                 
@@ -198,15 +199,12 @@ public class LevelGenerator : MonoBehaviour
                     
                     for (var j = neighborStart; isClockwise ? j < anchors.Length : j >= 0; j += neighborStep)
                     {
-                        var jMod2 = j % 2;
-                        if (jMod2 == iMod2 || !IsWall(types[j])) continue;
-                        if (!Is2DZero(anchors[j]) && anchors[j][jMod2] == 0) continue;
-                        if (anchors[j].z == 2 && anchors[j][1 - jMod2] == (j / 2 == 0 ? 1 : -1)) continue;
-                        
-                        if (Is2DZero(anchors[j]) && types.All(IsWall))
-                            for (var k = j + neighborStep; isClockwise ? k < _anchorArray.Length : k >= 0; k += neighborStep) 
-                                if (Is2DZero(anchors[k]))
-                                    return Vector3Int.zero;
+                        if (!ValidSecondNeighbor(i, j, types, anchors)) continue;
+
+                        if (Is2DZero(anchors[j]) && types.Where(IsWall).Count() > 2)
+                            for (var k = j + neighborStep; isClockwise ? k < anchors.Length : k >= 0; k += neighborStep)
+                                if (!Is2DZero(anchors[k]) && ValidSecondNeighbor(i, k, types, anchors))
+                                    j = k;
                         
                         var secondValue = anchors[i][iMod2];
                         if (i / 2 != j / 2)
@@ -225,13 +223,18 @@ public class LevelGenerator : MonoBehaviour
                     }
                 }
 
-                if (anchors.All(Is2DZero) && !IsBorder(arrayPosition))
+                if (anchors.All(Is2DZero) && types.Where(IsWall).Count() == 2)
                 {
                     // Assumptions
-                    if (IsWall(types[0]) && IsWall(types[1])) return new Vector3Int(-1, -1, 1);
-                    if (IsWall(types[1]) && IsWall(types[2])) return new Vector3Int(-1, 1, 1);
-                    if (IsWall(types[2]) && IsWall(types[3])) return new Vector3Int(1, 1, 1);
-                    if (IsWall(types[3]) && IsWall(types[0])) return new Vector3Int(1, -1, 1);
+                    var anchor = Vector3Int.zero;
+                    if (IsWall(types[0]) && IsWall(types[1])) anchor = new Vector3Int(-1, -1, 0);
+                    if (IsWall(types[1]) && IsWall(types[2])) anchor = new Vector3Int(-1, 1, 0);
+                    if (IsWall(types[2]) && IsWall(types[3])) anchor = new Vector3Int(1, 1, 0);
+                    if (IsWall(types[3]) && IsWall(types[0])) anchor = new Vector3Int(1, -1, 0);
+
+                    if (IsBorder(arrayPosition))
+                        return anchor * -1 + Vector3Int.forward * 2;
+                    return anchor + Vector3Int.forward;
                 }
                 break;
             case 2 or 4:
@@ -240,12 +243,23 @@ public class LevelGenerator : MonoBehaviour
                     if (Is2DZero(anchors[i])) continue;
                     var iMod2 = i % 2;
                     if (anchors[i][iMod2] == 0) continue;
+                    if (anchors[i].z == 2 && anchors[i][1 - iMod2] == (i / 2 == 0 ? 1 : -1)) continue;
                     
                     return new Vector3Int(anchors[i].x * (1 - iMod2), anchors[i].y * iMod2);
                 }
                 break;
         }
         return Vector3Int.zero;
+    }
+
+    private static bool ValidSecondNeighbor(int i, int j, int[] types, Vector3Int[] anchors)
+    {
+        var iMod2 = i % 2;
+        var jMod2 = j % 2;
+        if (jMod2 == iMod2 || !IsWall(types[j])) return false;
+        if (!Is2DZero(anchors[j]) && anchors[j][jMod2] == 0) return false;
+        if (anchors[j].z == 2 && anchors[j][1 - jMod2] == (j / 2 == 0 ? 1 : -1)) return false;
+        return true;
     }
 
     private GameObject ItemObject(int type) => type switch
@@ -263,7 +277,7 @@ public class LevelGenerator : MonoBehaviour
         _ => null
     };
 
-    private static Matrix4x4 SetRotation(Vector3Int anchor, int type)
+    private Matrix4x4 SetRotation(Vector2Int arrayPosition, Vector3Int anchor, int type)
     {
         var rotationZ = Mathf.Atan2(anchor.y, anchor.x) * Mathf.Rad2Deg + 360; // Raw angle + 360 (ensures pos+ value)
         rotationZ = (int)(rotationZ / 90) * 90; // Round to closest 90deg (for corners)
@@ -280,6 +294,17 @@ public class LevelGenerator : MonoBehaviour
             270 => Quaternion.Euler(0, 180, 180),
             _ => Quaternion.Euler(0, 0, 0) // Including zero
         };
+        if (arrayPosition.x == 0 || arrayPosition.x == _anchorArray.GetLength(1) - 1)
+        {
+            mirroring = rotationZ switch
+            {
+                90 => Quaternion.Euler(0, 0, 90),
+                180 => Quaternion.Euler(0, 180, 270),
+                270 => Quaternion.Euler(0, 0, 270),
+                _ => Quaternion.Euler(0, 180, 90) // Including zero
+            };
+        }
+        
         return Matrix4x4.TRS(Vector3.zero, mirroring, Vector3.one);
     }
 
