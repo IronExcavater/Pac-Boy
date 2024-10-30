@@ -185,10 +185,10 @@ MonoBehaviour:
     tempo: 63
   musicIntro:
     audioClip: {fileID: 8300000, guid: 002ebf74c169d164988637b7f25989be, type: 3}
-    tempo: 108
+    tempo: 109
   musicNormal:
     audioClip: {fileID: 8300000, guid: 59aad4545a596ef41a68ed9316dba86c, type: 3}
-    tempo: 108
+    tempo: 109
   musicScared:
     audioClip: {fileID: 8300000, guid: b2623735ac5b6b74ba5182082d8825bd, type: 3}
     tempo: 109

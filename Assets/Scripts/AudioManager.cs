@@ -30,6 +30,11 @@ public class AudioManager : MonoBehaviour
         }
         else Destroy(this);
     }
+
+    private void Start()
+    {
+        PlayMusicLoop(musicNormal);
+    }
     
     private void Update()
     {
