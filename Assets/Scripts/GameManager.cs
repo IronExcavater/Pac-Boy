@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
     {
         if (Game._characters.TryGetValue(identifier, out var character)) return character;
         LogWarning("No character found with identifier: " + identifier, "No " + identifier);
-
         return null;
     }
 
