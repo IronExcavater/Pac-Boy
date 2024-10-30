@@ -3466,7 +3466,6 @@ GameObject:
   m_Component:
   - component: {fileID: 472865227}
   - component: {fileID: 472865226}
-  - component: {fileID: 472865228}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -3502,29 +3501,6 @@ Transform:
   - {fileID: 1235796493}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &472865228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 472865225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b02bfc15217d1f44bb3af37167329c04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapOrigin: {x: -14, y: 14, z: 0}
-  internalSideWallTile: {fileID: 11400000, guid: 8fbd01e2440fd974985f4ca2ba925023, type: 2}
-  internalInnerCornerTile: {fileID: 11400000, guid: d47893841b1fc0f4f8115fb0068aed83, type: 2}
-  internalOuterCornerTile: {fileID: 11400000, guid: ee3578553ed556e40901bb03f6a27170, type: 2}
-  externalSideWallTile: {fileID: 11400000, guid: d0bb6940bcdc7564cb00b4b961166e1c, type: 2}
-  externalInnerCornerTile: {fileID: 11400000, guid: 719b20f85fcc90940b68442fcda10acd, type: 2}
-  externalOuterCornerTile: {fileID: 11400000, guid: 0eeae531e2de4b94890fdfeb512f93f0, type: 2}
-  externalTCornerTile: {fileID: 11400000, guid: f9254952c30089c49a15b31e885bdb4a, type: 2}
-  groundTile: {fileID: 11400000, guid: 630873131044bb2468315fab0cb25e56, type: 2}
-  coinItem: {fileID: 259471344664066717, guid: e037189a07f524018a661f050cbda630, type: 3}
-  potionItem: {fileID: 8000008867982568865, guid: 870ba0501a5e3cc40bbfbb2a75128742, type: 3}
 --- !u!1001 &473854420
 PrefabInstance:
   m_ObjectHideFlags: 0

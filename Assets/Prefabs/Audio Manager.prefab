@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2390342490348396044}
   - component: {fileID: 5669948730575998833}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SFX Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1028541956796196335}
   - component: {fileID: 5103881582649742328}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Audio Manager
   m_TagString: GameController
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7683260296063697655}
   - component: {fileID: 5500798555024529316}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Music Source 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,7 +342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4861382668180235066}
   - component: {fileID: 5022838070446886384}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Music Source 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

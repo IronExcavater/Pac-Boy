@@ -31,13 +31,7 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
-        if (Game == null)
-        {
-            Game = this;
-            DontDestroyOnLoad(Game);
-        }
-        else Destroy(this);
-        
+        Game = this;
         _map = GameObject.Find("Level01").GetComponent<Tilemap>();
     }
 
