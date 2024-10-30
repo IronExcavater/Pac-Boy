@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[CreateAssetMenu(fileName = "Wall Rule Tile", menuName = "Custom Tiles/Wall Rule Tile")]
+[CreateAssetMenu(fileName = "Wall Rule Tile")]
 public class WallRuleTile : RuleTile<WallRuleTile.Neighbor>
 {
     public Tile groundTile;
