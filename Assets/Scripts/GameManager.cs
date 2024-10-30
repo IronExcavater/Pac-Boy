@@ -33,6 +33,11 @@ public class GameManager : MonoBehaviour
     {
         Game = this;
         _map = GameObject.Find("Level01").GetComponent<Tilemap>();
+        _map.CompressBounds();
+        var cam = Camera.main;
+        if (cam == null) return;
+        cam.orthographicSize = _map.cellBounds.size.y / 2f;
+        cam.transform.position = _map.cellBounds.center - new Vector3(0.5f, 0.5f, 10);
     }
 
     private void Start()
