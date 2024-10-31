@@ -17,19 +17,12 @@ public class Ghost : Character
         Inky,   // 'Bashful', targets tile that intersects vector of Blinky's tile and two tiles in front of player at a distance from the player equal to Blinky's distance from the player
         Clyde   // 'Ignorant', targets player similar to Blinky until 8 tiles away, in which case he targets his scatter target tile
     }
-
-    protected override void Start()
-    {
-        base.Start();
-        NextPosition = CurrentPosition;
-    }
-
+    
     private void Update()
     {
         if (AnimationManager.TargetExists(transform)) return;
         TargetPos();
         NextPos();
-        AnimationManager.AddTween(transform, NextPosition, 1 / GameManager.CharacterSpeed(), AnimationManager.Easing.Linear);
     }
 
     private void TargetPos()
@@ -70,7 +63,6 @@ public class Ghost : Character
     {
         var previousPos = CurrentPosition;
         CurrentPosition = NextPosition;
-        transform.position = CurrentPosition; // Recenter position, removing slight offset due to MoveTowards()
         
         var possiblePos = GetPossiblePositions(Vector3Int.RoundToInt(CurrentPosition), Vector3Int.RoundToInt(previousPos));
 
@@ -85,6 +77,8 @@ public class Ghost : Character
             } catch (InvalidOperationException) {} // Happens if no possible positions (thrown by First()) -> automatically reverses ghost   
 
         UpdateAnimator();
+        AnimationManager.AddTween(transform, NextPosition, 1 / GameManager.CharacterSpeed(),
+            AnimationManager.Easing.Linear);
     }
 
     private void ReversePos()

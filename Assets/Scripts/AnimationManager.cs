@@ -71,6 +71,12 @@ public class AnimationManager : MonoBehaviour
         {
             var percent = EasingPercentage(tween);
             var position = Vector3.Lerp(tween.StartPos, tween.EndPos, percent);
+            
+            if (tween.Target == null)
+            {
+                toRemove.Add(tween.Target);
+                continue;
+            }
             SetPosition(tween.Target, position);
             
             if (Vector3.Distance(position, tween.EndPos) > 0.1f) continue;

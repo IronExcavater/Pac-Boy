@@ -91,6 +91,7 @@ public abstract class Character : MonoBehaviour
         GameManager.RegisterCharacter(identifier, this);
         UpdateAnimator();
         CurrentPosition = transform.position;
+        NextPosition = CurrentPosition;
     }
 
     private void OnDestroy()
@@ -106,7 +107,7 @@ public abstract class Character : MonoBehaviour
 
     protected int GetAnimatorHash(string parameterName)
     {
-        return _aniHash.TryGetValue(parameterName, out var hash) ? hash : throw new KeyNotFoundException();
+        return _aniHash.TryGetValue(parameterName, out var hash) ? hash : throw new KeyNotFoundException(parameterName);
     }
     
     private void ChangeFacing()
