@@ -111,27 +111,9 @@ public abstract class Character : MonoBehaviour
     
     private void ChangeFacing()
     {
-        switch (Facing)
-        {
-            case Direction.North:
-                ani.SetFloat(GetAnimatorHash("Direction"), 0);
-                break;
-            case Direction.East or Direction.West:
-                ani.SetFloat(GetAnimatorHash("Direction"), 1);
-                FlipCharacter();
-                break;
-            case Direction.South:
-                ani.SetFloat(GetAnimatorHash("Direction"), 2);
-                break;
-        }
-    }
-
-    private void FlipCharacter()
-    {
-        // Flip the character by inverting the x scale
-        var scale = transform.localScale;
-        scale.x = Facing == Direction.West ? -1 : 1;
-        transform.localScale = scale;
+        ani.SetFloat(GetAnimatorHash("Direction"), (int)Facing % 2 == 0 ? (int)Facing : 1);
+        if ((int)Facing == 3) rend.flipX = true;
+        if ((int)Facing == 1) rend.flipX = false;
     }
 
     private IEnumerator BlinkTransition(string parameterName, int repeat)

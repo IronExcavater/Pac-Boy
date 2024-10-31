@@ -24,10 +24,18 @@ PrefabInstance:
       propertyPath: scatterPos.y
       value: -18
       objectReference: {fileID: 0}
+    - target: {fileID: 1184937038283517396, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: m_text
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268942622847973387, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: m_Name
+      value: Ghost2Canvas
+      objectReference: {fileID: 0}
     - target: {fileID: 1753161451708760938, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 73ee876da144730439e20a49848ea5b2, type: 2}
+      objectReference: {fileID: 22100000, guid: c4081d8bf11f82842b5c21c1977c1e6a, type: 2}
     - target: {fileID: 4590771738689819852, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_Sprite
       value: 
