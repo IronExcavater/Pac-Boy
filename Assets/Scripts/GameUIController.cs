@@ -8,6 +8,8 @@ public class GameUIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] private Image[] lifeImages;
     [SerializeField] private TextMeshProUGUI scaredCountdownText;
+    [SerializeField] private Image startCountdownImage;
+    [SerializeField] private TextMeshProUGUI startCountdownText;
     
     public void Level1Button()
     {
@@ -29,7 +31,7 @@ public class GameUIController : MonoBehaviour
         if (LoadManager.isLoading) return;
         scoreText.text = GameManager.Game.score.ToString();
         
-        var elapsedTime = Time.time - GameManager.Game.time;
+        var elapsedTime = GameManager.ElapsedTime();
         var minutes = Mathf.FloorToInt(elapsedTime / 60f);
         var seconds = Mathf.FloorToInt(elapsedTime % 60f);
         var milliseconds = Mathf.FloorToInt((elapsedTime * 100f) % 100f);
@@ -39,7 +41,16 @@ public class GameUIController : MonoBehaviour
         for (var i = 0; i < lifeImages.Length; i++) 
             lifeImages[i].enabled = i + 1 <= GameManager.Game.lives;
 
-        var countdownTime = GameManager.Game.scaredLength - (Time.time - GameManager.Game.scaredTime);
-        scaredCountdownText.text = countdownTime < 0 ? "" : $"{Mathf.FloorToInt(countdownTime % 60f) + 1}";
+        var scaredCountdown = GameManager.Game.scaredLength - (Time.time - GameManager.Game.scaredTime);
+        scaredCountdownText.enabled = scaredCountdown > 0;
+        var scaredSeconds = Mathf.FloorToInt(scaredCountdown % 60f) + 1;
+        scaredCountdownText.text = scaredSeconds.ToString();
+        
+        // TODO: Broken countdown
+        var startCountdown = GameManager.Game.countdownLength - (Time.time - GameManager.Game.countdownTime);
+        startCountdownImage.enabled = startCountdown > 0;
+        startCountdownText.enabled = startCountdown > 0;
+        var startSeconds = Mathf.FloorToInt(startCountdown % 60f);
+        startCountdownText.text = (startSeconds - 1).ToString();
     }
 }

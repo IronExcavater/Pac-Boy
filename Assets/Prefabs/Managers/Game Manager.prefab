@@ -50,9 +50,11 @@ MonoBehaviour:
   scaredSpeed: 1.5
   scaredLength: 10
   scatterLength: 4
+  countdownLength: 3
   mode: 0
   score: 0
   time: 0
   lives: 3
   scaredTime: -11
   scatterTime: 0
+  countdownTime: 0

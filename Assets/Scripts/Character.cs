@@ -131,7 +131,7 @@ public abstract class Character : MonoBehaviour
         CurrentPosition = transform.position;
         NextPosition = CurrentPosition;
         IsAlive = true;
-        IsLocked = false;
+        IsLocked = true;
         Facing = Direction.East;
         UpdateAnimator();
     }
@@ -201,12 +201,17 @@ public abstract class Character : MonoBehaviour
         UpdateAnimator();
     }
 
-    public IEnumerator Unlock(float delaySeconds)
+    public void Unlock()
     {
-        yield return new WaitForSeconds(delaySeconds);
         IsLocked = false;
         UpdateAnimator();
         AddTween();
+    }
+
+    public IEnumerator Unlock(float delaySeconds)
+    {
+        yield return new WaitForSeconds(delaySeconds);
+        Unlock();
     }
 
     public abstract void TriggerMode();

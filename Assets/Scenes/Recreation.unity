@@ -6862,6 +6862,8 @@ MonoBehaviour:
   - {fileID: 1363805823}
   - {fileID: 2064668190}
   scaredCountdownText: {fileID: 108208881}
+  startCountdownImage: {fileID: 657131525}
+  startCountdownText: {fileID: 1401732963}
 --- !u!1001 &879705341
 PrefabInstance:
   m_ObjectHideFlags: 0

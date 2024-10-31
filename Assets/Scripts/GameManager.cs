@@ -22,14 +22,17 @@ public class GameManager : MonoBehaviour
     public float scaredSpeed;
     public float scaredLength;
     public float scatterLength;
+    public float countdownLength;
     [SerializeField] private Mode mode;
     
     [Header("Game:")]
     public int score;
-    public float time;
+    public float startTime;
+    public float endTime;
     public float lives = 3;
     public float scaredTime;
     public float scatterTime;
+    public float countdownTime;
 
     public enum Mode
     {
@@ -48,17 +51,21 @@ public class GameManager : MonoBehaviour
         if (cam == null) return;
         cam.orthographicSize = _map.cellBounds.size.y / 2f;
         cam.transform.position = _map.cellBounds.center - new Vector3(5.5f, 0.5f, 10);
-        StartCoroutine(StartLevel(0));
+        StartCoroutine(StartLevel(2));
     }
 
     public IEnumerator StartLevel(float delaySeconds)
     {
         yield return new WaitUntil(() => !LoadManager.isLoading);
-        time = Time.time;
-        GameMode = Mode.Chase;
         yield return new WaitForSeconds(delaySeconds);
+        countdownTime = Time.time;
         foreach (var character in Game._characters.Values)
             character.Spawn();
+        yield return new WaitUntil(() => countdownLength - (Time.time - countdownTime) < 0);
+        foreach (var character in Game._characters.Values)
+            character.Unlock();
+        startTime = Time.time;
+        GameMode = Mode.Chase;
     }
 
     public static void RestartLevel(float delaySeconds)
@@ -66,6 +73,12 @@ public class GameManager : MonoBehaviour
         Game.lives -= 1;
         GameMode = Mode.None;
         Game.StartCoroutine(Game.StartLevel(delaySeconds));
+    }
+
+    public static float ElapsedTime()
+    {
+        if (GameMode != Mode.None) Game.endTime = Time.time;
+        return Game.endTime - Game.startTime;
     }
 
     public static void RegisterCharacter(string identifier, Character character)
