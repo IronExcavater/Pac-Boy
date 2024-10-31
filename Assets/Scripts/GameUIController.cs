@@ -7,7 +7,7 @@ public class GameUIController : MonoBehaviour
     [SerializeField] public TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] private Image[] lifeImages;
-    [SerializeField] private TextMeshProUGUI ghostCountdownText;
+    [SerializeField] private TextMeshProUGUI scaredCountdownText;
     
     public void Level1Button()
     {
@@ -40,6 +40,6 @@ public class GameUIController : MonoBehaviour
             lifeImages[i].enabled = i + 1 <= GameManager.Game.lives;
 
         var countdownTime = GameManager.Game.scaredLength - (Time.time - GameManager.Game.scaredTime);
-        ghostCountdownText.text = countdownTime < 0 ? "" : $"{Mathf.FloorToInt(countdownTime % 60f) + 1}";
+        scaredCountdownText.text = countdownTime < 0 ? "" : $"{Mathf.FloorToInt(countdownTime % 60f) + 1}";
     }
 }

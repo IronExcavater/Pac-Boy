@@ -9,12 +9,10 @@ AnimatorOverrideController:
   m_Name: GhostController_Orc
   m_Controller: {fileID: 9100000, guid: e2ccd70fe6a06bf4f955b9f646278613, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: 7400000, guid: 458e7a29247a74ef79906cc405c55ceb, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 3dfd0947239b08146b45c58b462ea392, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: b996abc2afcca4cafaa1bc72b73e07fa, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: ba44ebcef2c234f558e421254db4c2a9, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3dfd0947239b08146b45c58b462ea392, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: b02e863b12a6b8d4e9165b040830f9e5, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 458e7a29247a74ef79906cc405c55ceb, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ba44ebcef2c234f558e421254db4c2a9, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 47a1380a48280b74da0587883701b8bc, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: b1357c26d02a742b5b8d1a7832657c28, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 6cefaf905e24a484ba25c76d58907990, type: 2}
@@ -43,3 +41,5 @@ AnimatorOverrideController:
     m_OverrideClip: {fileID: 7400000, guid: adcf2d7b87f0dfe47929fec12f7a7ff7, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: de0997f9719fee241b36bf6db4f9c014, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: f9c09dbcc561b0441990e278fc8eba8a, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 9e12c1ee72410db419ec62ad1103c5da, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 458e7a29247a74ef79906cc405c55ceb, type: 2}

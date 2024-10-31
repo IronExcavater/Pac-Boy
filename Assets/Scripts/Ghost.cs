@@ -151,12 +151,10 @@ public class Ghost : Character
             case GameManager.Mode.Chase or GameManager.Mode.Scatter:
                 player.Death();
                 Attack();
-                AudioManager.PlaySfxOneShot(AudioManager.Audio.defeat);
                 break;
             case GameManager.Mode.Scared:
                 Death();
                 player.Attack();
-                AudioManager.PlaySfxOneShot(AudioManager.Audio.ghostDefeat);
                 break;
         }
     }
@@ -174,6 +172,7 @@ public class Ghost : Character
     {
         base.Death();
         GameManager.AddScore(300);
+        AudioManager.PlaySfxOneShot(AudioManager.Audio.ghostDefeat);
         StartCoroutine(Respawn(5));
     }
 

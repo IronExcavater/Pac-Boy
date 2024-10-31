@@ -54,5 +54,5 @@ MonoBehaviour:
   score: 0
   time: 0
   lives: 3
-  scaredTime: -10
+  scaredTime: -11
   scatterTime: 0

@@ -579,7 +579,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 155597970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2873e91188c3b9e4dadde8f91364bda7, type: 3}
+  m_Script: {fileID: 11500000, guid: ae4357bbeafb425ab451e60f1a5ec723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &183110947
@@ -775,7 +775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4860078380514475639, guid: a24f14513a92ee445861e9de7836d714, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: ButtonController, Assembly-CSharp
+      value: StartUIController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8112231869158200740, guid: a24f14513a92ee445861e9de7836d714, type: 3}
       propertyPath: m_text
@@ -4398,7 +4398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4860078380514475639, guid: a24f14513a92ee445861e9de7836d714, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: ButtonController, Assembly-CSharp
+      value: StartUIController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8112231869158200740, guid: a24f14513a92ee445861e9de7836d714, type: 3}
       propertyPath: m_text

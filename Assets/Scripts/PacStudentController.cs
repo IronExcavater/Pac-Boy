@@ -98,6 +98,7 @@ public class PacStudentController : Character
     public override void Death()
     {
         base.Death();
+        AudioManager.PlaySfxOneShot(AudioManager.Audio.defeat);
         GameManager.RestartLevel(4);
     }
 
