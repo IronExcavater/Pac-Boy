@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         var cam = Camera.main;
         if (cam == null) return;
         cam.orthographicSize = _map.cellBounds.size.y / 2f;
-        cam.transform.position = _map.cellBounds.center - new Vector3(0.5f, 0.5f, 10);
+        cam.transform.position = _map.cellBounds.center - new Vector3(5.5f, 0.5f, 10);
     }
 
     private void Start()
