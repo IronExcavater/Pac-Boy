@@ -60,7 +60,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &563691571940276967
 MonoBehaviour:
@@ -337,7 +337,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -363,6 +363,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ani: {fileID: 1753161451708760938}
   rend: {fileID: 4590771738689819852}
+  dustPrefab: {fileID: 5408067072340590547, guid: 1964fda7554c9094981aab211a74ae90, type: 3}
   identifier: 
+  _facing: 0
   type: 0
   scatterPos: {x: 0, y: 0, z: 0}

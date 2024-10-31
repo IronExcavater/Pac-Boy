@@ -18,7 +18,7 @@ public class Ghost : Character
         Clyde   // 'Ignorant', targets player similar to Blinky until 8 tiles away, in which case he targets his scatter target tile
     }
     
-    private void Update()
+    protected void Update()
     {
         if (AnimationManager.TargetExists(transform)) return;
         TargetPos();
@@ -77,6 +77,8 @@ public class Ghost : Character
             } catch (InvalidOperationException) {} // Happens if no possible positions (thrown by First()) -> automatically reverses ghost   
 
         UpdateAnimator();
+        if (!Moving) return;
+        DustParticle();
         AnimationManager.AddTween(transform, NextPosition, 1 / GameManager.CharacterSpeed(),
             AnimationManager.Easing.Linear);
     }
@@ -86,8 +88,8 @@ public class Ghost : Character
         var temp = CurrentPosition;
         NextPosition = CurrentPosition;
         CurrentPosition = temp;
-        
         UpdateAnimator();
+        DustParticle();
     }
 
     public override void TriggerMode()

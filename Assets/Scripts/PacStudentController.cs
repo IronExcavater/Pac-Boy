@@ -11,7 +11,7 @@ public class PacStudentController : Character
         IsArmed = false;
     }
 
-    private void Update()
+    protected void Update()
     {
         if (Input.GetKeyDown(KeyCode.W)) lastInput = KeyCode.W;
         if (Input.GetKeyDown(KeyCode.A)) lastInput = KeyCode.A;
@@ -51,6 +51,7 @@ public class PacStudentController : Character
             AnimationManager.AddTween(transform, NextPosition, 1 / GameManager.CharacterSpeed(),
                 AnimationManager.Easing.Linear);
             UpdateAnimator();
+            DustParticle();
             return;
         }
         if (possibleCurrentPos != CurrentPosition && currentTile.Equals(GameManager.GroundTile()))
@@ -59,6 +60,7 @@ public class PacStudentController : Character
             AnimationManager.AddTween(transform, NextPosition, 1 / GameManager.CharacterSpeed(),
                 AnimationManager.Easing.Linear);
             UpdateAnimator();
+            DustParticle();
             return;
         }
 

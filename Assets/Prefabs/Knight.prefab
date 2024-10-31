@@ -98,7 +98,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2875184811977189179, guid: da25c5ae1b403e24daa9b6834b225a69, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -124,4 +124,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ani: {fileID: 3349019559506341440}
   rend: {fileID: 2523294733877260207}
+  dustPrefab: {fileID: 5408067072340590547, guid: 1964fda7554c9094981aab211a74ae90, type: 3}
   identifier: Player

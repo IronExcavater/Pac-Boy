@@ -9,13 +9,15 @@ public abstract class Character : MonoBehaviour
     [Header("Components:")]
     [SerializeField] protected Animator ani;
     [SerializeField] private SpriteRenderer rend;
+    [SerializeField] private GameObject dustPrefab;
+    private ParticleSystem _dustParticle;
     
     private readonly Dictionary<string, int> _aniHash = new();
 
     [Header("Attributes:")]
     [SerializeField] private string identifier;
     
-    private Direction _facing;
+    public Direction _facing;
     private bool _isArmed;
 
     public enum Direction
@@ -92,7 +94,26 @@ public abstract class Character : MonoBehaviour
         UpdateAnimator();
         CurrentPosition = transform.position;
         NextPosition = CurrentPosition;
+        _dustParticle = Instantiate(dustPrefab, transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+        _dustParticle.Stop();
     }
+
+    protected void DustParticle()
+    {
+        var shape = _dustParticle.shape;
+        shape.rotation = new Vector3(0, 0, DustDirection(Facing));
+        _dustParticle.transform.position = transform.position;
+        _dustParticle.Emit(1);
+    }
+    
+    private static float DustDirection(Direction direction) => direction switch
+    {
+        Direction.North => 180,
+        Direction.East => 90,
+        Direction.South => 0,
+        Direction.West => 270,
+        _ => 0
+    };
 
     private void OnDestroy()
     {
@@ -113,8 +134,8 @@ public abstract class Character : MonoBehaviour
     private void ChangeFacing()
     {
         ani.SetFloat(GetAnimatorHash("Direction"), (int)Facing % 2 == 0 ? (int)Facing : 1);
-        if ((int)Facing == 3) rend.flipX = true;
-        if ((int)Facing == 1) rend.flipX = false;
+        if (Facing == Direction.West) rend.flipX = true;
+        if (Facing == Direction.East) rend.flipX = false;
     }
 
     private IEnumerator BlinkTransition(string parameterName, int repeat)
