@@ -4,12 +4,6 @@ public class PacStudentController : Character
 {
     private KeyCode lastInput;
     private KeyCode currentInput;
-    
-    protected override void Start()
-    {
-        base.Start();
-        IsArmed = false;
-    }
 
     protected void Update()
     {
@@ -31,34 +25,48 @@ public class PacStudentController : Character
                 break;
             case GameManager.Mode.Scared:
                 IsArmed = true;
+                StartCoroutine(BlinkTransition("Armed", 2));
                 break;
         }
+        UpdateAnimator();
     }
 
     protected override void NextPos()
     {
+        if (!IsAlive) return;
+        if (IsLocked) return;
         CurrentPosition = NextPosition;
+        
+        var currentTile = GameManager.LevelTilemap().GetTile(Vector3Int.RoundToInt(CurrentPosition));
+        if (GameManager.IsFillerTile(currentTile))
+        {
+            var offset = CurrentPosition.x < 0 ? 1 : 0;
+            var teleportPosition = new Vector3(-CurrentPosition.x - offset, CurrentPosition.y);
+            transform.position = teleportPosition;
+            CurrentPosition = teleportPosition;
+        }
+        
         var possibleLastPos = InputToPosition(lastInput); // Newest input
         var possibleCurrentPos = InputToPosition(currentInput); // Existing input
         
-        var lastTile = GameManager.LevelTilemap().GetTile(Vector3Int.RoundToInt(possibleLastPos));
-        var currentTile = GameManager.LevelTilemap().GetTile(Vector3Int.RoundToInt(possibleCurrentPos));
+        var lastDirectionTile = GameManager.LevelTilemap().GetTile(Vector3Int.RoundToInt(possibleLastPos));
+        var currentDirectionTile = GameManager.LevelTilemap().GetTile(Vector3Int.RoundToInt(possibleCurrentPos));
         
-        if (possibleLastPos != CurrentPosition && lastTile.Equals(GameManager.GroundTile()))
+        if (possibleLastPos != CurrentPosition && GameManager.IsGroundTile(lastDirectionTile)
+            || GameManager.IsFillerTile(lastDirectionTile))
         {
             currentInput = lastInput;
             NextPosition = possibleLastPos;
-            AnimationManager.AddTween(transform, NextPosition, 1 / GameManager.CharacterSpeed(),
-                AnimationManager.Easing.Linear);
+            AddTween();
             UpdateAnimator();
             DustParticle();
             return;
         }
-        if (possibleCurrentPos != CurrentPosition && currentTile.Equals(GameManager.GroundTile()))
+        if (possibleCurrentPos != CurrentPosition && GameManager.IsGroundTile(currentDirectionTile)
+            || GameManager.IsFillerTile(currentDirectionTile))
         {
             NextPosition = possibleCurrentPos;
-            AnimationManager.AddTween(transform, NextPosition, 1 / GameManager.CharacterSpeed(),
-                AnimationManager.Easing.Linear);
+            AddTween();
             UpdateAnimator();
             DustParticle();
             return;
@@ -70,6 +78,14 @@ public class PacStudentController : Character
         UpdateAnimator();
     }
     
+    protected override void AddTween()
+    {
+        CurrentPosition = transform.position;
+        AnimationManager.AddTween(transform, NextPosition,
+            Vector3.Distance(CurrentPosition, NextPosition) / GameManager.Game.characterSpeed,
+            AnimationManager.Easing.Linear);
+    }
+    
     private Vector3 InputToPosition(KeyCode input) => input switch
     {
         KeyCode.W => CurrentPosition + Vector3.up,
@@ -78,6 +94,12 @@ public class PacStudentController : Character
         KeyCode.D => CurrentPosition + Vector3.right,
         _ => CurrentPosition
     };
+    
+    public override void Death()
+    {
+        base.Death();
+        GameManager.RestartLevel(4);
+    }
 
     public void PlayStep()
     {

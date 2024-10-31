@@ -36,7 +36,7 @@ public class CherryController : MonoBehaviour
         AnimationManager.AddTween(cherry.transform, endPosition,
             Vector3.Distance(spawnPosition, endPosition) / cherrySpeed,
             AnimationManager.Easing.Linear);
-        yield return new WaitUntil(() => !AnimationManager.TargetExists(cherry.transform));
+        yield return new WaitUntil(() => cherry == null || !AnimationManager.TargetExists(cherry.transform));
         Destroy(cherry);
     }
 

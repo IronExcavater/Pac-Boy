@@ -2,20 +2,20 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class UIManager : MonoBehaviour
+public class LoadManager : MonoBehaviour
 {
-    public static UIManager UI { get; private set; }
+    public static LoadManager Load { get; private set; }
 
     [Header("Load Screen:")]
     public RectTransform loadTransform;
-    public static bool isLoading = false;
+    public static bool isLoading;
 
     private void Awake()
     {
-        if (UI == null)
+        if (Load == null)
         {
-            UI = this;
-            DontDestroyOnLoad(UI);
+            Load = this;
+            DontDestroyOnLoad(Load);
             Initialize();
         }
         else Destroy(gameObject);
@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
     private static IEnumerator LoadScreen(string sceneName)
     {
         isLoading = true;
-        var loadRect = UI.loadTransform;
+        var loadRect = Load.loadTransform;
         var tweenIn = AnimationManager.AddTween(loadRect, Vector3.zero, 2, AnimationManager.Easing.EaseInCubic);
         yield return new WaitUntil(() => !AnimationManager.TweenExists(tweenIn));
         SceneManager.LoadSceneAsync(sceneName);

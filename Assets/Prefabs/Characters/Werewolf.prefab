@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &4850403347388471198
+--- !u!1001 &1436248516883324965
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8,38 +8,78 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1859550934516808468, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -1859550934516808468, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -1859550934516808468, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 0.28
+      objectReference: {fileID: 0}
+    - target: {fileID: -1859550934516808468, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: -1859550934516808468, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 6.25
+      objectReference: {fileID: 0}
+    - target: {fileID: -1859550934516808468, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 6.25
+      objectReference: {fileID: 0}
+    - target: {fileID: -1859550934516808468, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: m_SpriteTilingProperty.adaptiveTilingThreshold
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: type
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: identifier
-      value: Clyde
+      value: Inky
       objectReference: {fileID: 0}
     - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: scatterPos.x
-      value: -14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: scatterPos.y
       value: -18
       objectReference: {fileID: 0}
+    - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: spawnPosition.x
+      value: -2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1184937038283517396, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_text
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1268942622847973387, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_Name
-      value: Ghost2Canvas
+      value: Ghost4Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 1753161451708760938, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 22100000, guid: c4081d8bf11f82842b5c21c1977c1e6a, type: 2}
+      objectReference: {fileID: 22100000, guid: 4ee1aad458b549043abe84c6734e9388, type: 2}
+    - target: {fileID: 4590771738689819852, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: m_Size.x
+      value: 0.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590771738689819852, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: m_Size.y
+      value: 0.22
+      objectReference: {fileID: 0}
     - target: {fileID: 4590771738689819852, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 303854554312539980, guid: 325800bc3c65f8f49a1c76d3eaf5a577, type: 3}
+      objectReference: {fileID: -5023896043672300000, guid: c7fd26c4b0475e2419b536104da55a0e, type: 3}
     - target: {fileID: 4590771738689819852, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -86,7 +126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8363813810959832611, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_Name
-      value: Skeleton
+      value: Werewolf
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

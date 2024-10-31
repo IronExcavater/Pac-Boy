@@ -15,7 +15,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("SFX Clips:")]
     public AudioClip step;
-    public AudioClip coin, potion, hit, defeat, score, select, ghostDeath;
+    public AudioClip coin, potion, hit, defeat, score, select, ghostDefeat;
 
     private AudioClipTempoTuple _loopedMusic;
     private int _sourceToggle;

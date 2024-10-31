@@ -21,6 +21,7 @@ public class AnimationManager : MonoBehaviour
         public float StartTime { get; private set; }
         public float Duration { get; private set; }
         public Easing Type { get; private set; }
+        public bool isComplete { get; set; }
 
         public Tween(Transform target, Vector3 startPos, Vector3 endPos, float startTime, float duration, Easing type)
         {
@@ -30,6 +31,7 @@ public class AnimationManager : MonoBehaviour
             StartTime = startTime;
             Duration = duration;
             Type = type;
+            isComplete = false;
         }
     }
     
@@ -53,6 +55,18 @@ public class AnimationManager : MonoBehaviour
         Animation._tweens.Add(target, tween);
         return tween;
     }
+
+    public static Tween GetTween(Transform target)
+    {
+        Animation._tweens.TryGetValue(target, out var tween);
+        return tween;
+    }
+    
+    public static void RemoveTween(Transform target)
+    {
+        if (!TargetExists(target)) return;
+        GetTween(target).isComplete = true;
+    }
     
     public static bool TargetExists(Transform target)
     {
@@ -72,15 +86,16 @@ public class AnimationManager : MonoBehaviour
             var percent = EasingPercentage(tween);
             var position = Vector3.Lerp(tween.StartPos, tween.EndPos, percent);
             
-            if (tween.Target == null)
+            if (tween.Target == null || tween.isComplete) 
+                tween.isComplete = true;
+            else
             {
-                toRemove.Add(tween.Target);
-                continue;
-            }
-            SetPosition(tween.Target, position);
+                SetPosition(tween.Target, position);
             
-            if (Vector3.Distance(position, tween.EndPos) > 0.1f) continue;
-            SetPosition(tween.Target, tween.EndPos);
+                if (Vector3.Distance(position, tween.EndPos) > 0.1f) continue;
+                SetPosition(tween.Target, tween.EndPos);
+                tween.isComplete = true;
+            }
             toRemove.Add(tween.Target);
         }
 

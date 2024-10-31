@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public abstract class Character : MonoBehaviour
 {
@@ -16,9 +15,12 @@ public abstract class Character : MonoBehaviour
 
     [Header("Attributes:")]
     [SerializeField] private string identifier;
-    
-    public Direction _facing;
+
+    [SerializeField] private Vector3 spawnPosition;
+    private Direction _facing;
     private bool _isArmed;
+    private bool _isAlive;
+    private bool _isLocked;
 
     public enum Direction
     {
@@ -67,7 +69,6 @@ public abstract class Character : MonoBehaviour
     }
     
     public Vector3 CurrentPosition { get; protected set; }
-    
     public Vector3 NextPosition { get; protected set; }
 
     public bool IsArmed
@@ -75,10 +76,38 @@ public abstract class Character : MonoBehaviour
         get => _isArmed;
         protected set
         {
-            if (_isArmed == value) return;
             _isArmed = value;
-            StartCoroutine(BlinkTransition("Armed", 4));
+            ani.SetFloat(GetAnimatorHash("Armed"), _isArmed ? 1 : 0);
         }
+    }
+
+    public bool IsAlive
+    {
+        get => _isAlive;
+        set
+        {
+            _isAlive = value;
+            ani.SetBool(GetAnimatorHash("Alive"), _isAlive);
+        }
+    }
+
+    public bool IsLocked
+    {
+        get => _isLocked;
+        set => _isLocked = value;
+    }
+
+    public void Attack()
+    {
+        Lock();
+        ani.SetTrigger(GetAnimatorHash("Attack"));
+        StartCoroutine(Unlock(1));
+    }
+
+    public virtual void Death()
+    {
+        Lock();
+        IsAlive = false;
     }
 
     public bool Moving
@@ -87,15 +116,24 @@ public abstract class Character : MonoBehaviour
         set => ani.SetBool(GetAnimatorHash("Moving"), value);
     }
     
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         CacheAnimatorHashes();
         GameManager.RegisterCharacter(identifier, this);
-        UpdateAnimator();
-        CurrentPosition = transform.position;
-        NextPosition = CurrentPosition;
         _dustParticle = Instantiate(dustPrefab, transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
         _dustParticle.Stop();
+    }
+
+    public void Spawn()
+    {
+        AnimationManager.RemoveTween(transform);
+        transform.position = spawnPosition;
+        CurrentPosition = transform.position;
+        NextPosition = CurrentPosition;
+        IsAlive = true;
+        IsLocked = false;
+        Facing = Direction.East;
+        UpdateAnimator();
     }
 
     protected void DustParticle()
@@ -138,41 +176,42 @@ public abstract class Character : MonoBehaviour
         if (Facing == Direction.East) rend.flipX = false;
     }
 
-    private IEnumerator BlinkTransition(string parameterName, int repeat)
+    protected IEnumerator BlinkTransition(string parameterName, float transitionSeconds)
     {
         var initial = ani.GetFloat(GetAnimatorHash(parameterName));
-        for (var i = 0; i < repeat * 2 - 1; i++)
+        for (var i = 0; i < transitionSeconds * 10; i++)
         {
             ani.SetFloat(GetAnimatorHash(parameterName), i % 2 == 0 ? 1 - initial : initial);
             yield return new WaitForSeconds(0.1f);
         }
+        ani.SetFloat(GetAnimatorHash(parameterName), initial);
     }
 
     protected void UpdateAnimator()
     {
         rend.sortingOrder = -(int)transform.position.y;
         Facing = ToDirection(NextPosition - CurrentPosition);
-        Moving = !NextPosition.Equals(CurrentPosition);
+        Moving = !NextPosition.Equals(CurrentPosition) && !IsLocked;
     }
-    
-    protected static List<Vector3Int> GetPossiblePositions(Vector3Int current, Vector3Int previous)
+
+    public void Lock()
     {
-        var map = GameManager.LevelTilemap();
-        Vector3Int[] positions =
-        {
-            current + Vector3Int.up,
-            current + Vector3Int.right,
-            current + Vector3Int.down,
-            current + Vector3Int.left
-        };
-        return positions
-            .Where(pos =>
-                pos != previous &&
-                map.GetTile(pos) is Tile tile && tile.Equals(GameManager.GroundTile()))
-            .ToList();
+        IsLocked = true;
+        AnimationManager.RemoveTween(transform);
+        UpdateAnimator();
+    }
+
+    public IEnumerator Unlock(float delaySeconds)
+    {
+        yield return new WaitForSeconds(delaySeconds);
+        IsLocked = false;
+        UpdateAnimator();
+        AddTween();
     }
 
     public abstract void TriggerMode();
+
+    protected abstract void AddTween();
 
     protected abstract void NextPos();
 }

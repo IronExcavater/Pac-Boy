@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Item : MonoBehaviour
@@ -17,6 +18,24 @@ public class Item : MonoBehaviour
     {
         GameManager.RegisterItem(this);
         ani.SetFloat("Type", (int) type); // Inefficient to use string name but only done once in lifetime
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.gameObject.Equals(GameManager.GetCharacter("Player").gameObject)) return;
+        switch (type)
+        {
+            case Type.Coin:
+                GameManager.AddScore(10);
+                break;
+            case Type.Ingot:
+                GameManager.AddScore(100);
+                break;
+            case Type.Potion:
+                GameManager.GameMode = GameManager.Mode.Scared;
+                break;
+        }
+        Destroy(gameObject);
     }
 
     private void OnDestroy()

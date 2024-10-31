@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 2930309734263910468}
   - component: {fileID: 2702923746773349351}
   m_Layer: 5
-  m_Name: Input Manager
+  m_Name: Load Manager
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

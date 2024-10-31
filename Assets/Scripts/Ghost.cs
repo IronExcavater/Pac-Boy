@@ -1,6 +1,10 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 public class Ghost : Character
@@ -8,7 +12,7 @@ public class Ghost : Character
     public Type type;
     [SerializeField] private Vector3Int scatterPos;
     
-    private Vector3 _targetPos;
+    public Vector3 _targetPos;
 
     public enum Type
     {
@@ -20,8 +24,8 @@ public class Ghost : Character
     
     protected void Update()
     {
-        if (AnimationManager.TargetExists(transform)) return;
         TargetPos();
+        if (AnimationManager.TargetExists(transform)) return;
         NextPos();
     }
 
@@ -61,13 +65,17 @@ public class Ghost : Character
 
     protected override void NextPos()
     {
+        if (!IsAlive) return;
+        if (IsLocked) return;
         var previousPos = CurrentPosition;
         CurrentPosition = NextPosition;
         
         var possiblePos = GetPossiblePositions(Vector3Int.RoundToInt(CurrentPosition), Vector3Int.RoundToInt(previousPos));
 
-        if (GameManager.GameMode == GameManager.Mode.Scared) 
-            NextPosition = possiblePos[Random.Range(0, possiblePos.Count)];
+        if (GameManager.GameMode == GameManager.Mode.Scared)
+        {
+            if (possiblePos.Count > 0) NextPosition = possiblePos[Random.Range(0, possiblePos.Count)];
+        }
         else
             try
             {
@@ -75,12 +83,28 @@ public class Ghost : Character
                     .OrderBy(pos => Vector3.Distance(pos, _targetPos))
                     .First();
             } catch (InvalidOperationException) {} // Happens if no possible positions (thrown by First()) -> automatically reverses ghost   
-
+        
+        AddTween();
         UpdateAnimator();
         if (!Moving) return;
         DustParticle();
-        AnimationManager.AddTween(transform, NextPosition, 1 / GameManager.CharacterSpeed(),
-            AnimationManager.Easing.Linear);
+    }
+    
+    private static List<Vector3Int> GetPossiblePositions(Vector3Int current, Vector3Int previous)
+    {
+        var map = GameManager.LevelTilemap();
+        Vector3Int[] positions =
+        {
+            current + Vector3Int.up,
+            current + Vector3Int.right,
+            current + Vector3Int.down,
+            current + Vector3Int.left
+        };
+        return positions
+            .Where(pos =>
+                pos != previous &&
+                map.GetTile(pos) is Tile tile && GameManager.IsGroundTile(tile))
+            .ToList();
     }
 
     private void ReversePos()
@@ -104,12 +128,58 @@ public class Ghost : Character
                 break;
             case GameManager.Mode.Scared:
                 IsArmed = false;
+                StartCoroutine(RecoveringBlinking(7));
+                break;
+        }
+        UpdateAnimator();
+    }
+
+    private IEnumerator RecoveringBlinking(float delaySeconds)
+    {
+        yield return new WaitForSeconds(delaySeconds);
+        yield return StartCoroutine(BlinkTransition("Armed", 3));
+        IsArmed = true;
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!IsAlive) return;
+        var player = GameManager.GetCharacter("Player");
+        if (!other.gameObject.Equals(player.gameObject)) return;
+        switch (GameManager.GameMode)
+        {
+            case GameManager.Mode.Chase or GameManager.Mode.Scatter:
+                player.Death();
+                Attack();
+                AudioManager.PlaySfxOneShot(AudioManager.Audio.defeat);
+                break;
+            case GameManager.Mode.Scared:
+                Death();
+                player.Attack();
+                AudioManager.PlaySfxOneShot(AudioManager.Audio.ghostDefeat);
                 break;
         }
     }
-    
-    public void PlayStep()
+
+    protected override void AddTween()
     {
-        AudioManager.PlaySfxOneShot(AudioManager.Audio.step);
+        CurrentPosition = transform.position;
+        AnimationManager.AddTween(transform, NextPosition,
+            Vector3.Distance(CurrentPosition, NextPosition) / 
+            (GameManager.GameMode == GameManager.Mode.Scared ? GameManager.Game.scaredSpeed : GameManager.Game.characterSpeed),
+            AnimationManager.Easing.Linear);
+    }
+    
+    public override void Death()
+    {
+        base.Death();
+        GameManager.AddScore(300);
+        StartCoroutine(Respawn(5));
+    }
+
+    private IEnumerator Respawn(float delaySeconds)
+    {
+        yield return new WaitForSeconds(delaySeconds);
+        Spawn();
     }
 }
