@@ -1,4 +1,4 @@
-public class Player : Character
+public class PacStudentController : Character
 {
     protected override void Start()
     {

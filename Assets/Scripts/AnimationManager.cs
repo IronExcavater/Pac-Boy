@@ -6,6 +6,12 @@ public class AnimationManager : MonoBehaviour
     public static AnimationManager Animation { get; private set; }
     
     private Dictionary<Transform, Tween> _tweens = new();
+
+    public enum Easing
+    {
+        Linear,
+        EaseInCubic,
+    }
     
     public class Tween
     {
@@ -14,14 +20,16 @@ public class AnimationManager : MonoBehaviour
         public Vector3 EndPos { get; private set; }
         public float StartTime { get; private set; }
         public float Duration { get; private set; }
+        public Easing Type { get; private set; }
 
-        public Tween(Transform target, Vector3 startPos, Vector3 endPos, float startTime, float duration)
+        public Tween(Transform target, Vector3 startPos, Vector3 endPos, float startTime, float duration, Easing type)
         {
             Target = target;
             StartPos = startPos;
             EndPos = endPos;
             StartTime = startTime;
             Duration = duration;
+            Type = type;
         }
     }
     
@@ -35,13 +43,13 @@ public class AnimationManager : MonoBehaviour
         else Destroy(this);
     }
     
-    public static Tween AddTween(Transform target, Vector3 endPos, float duration)
+    public static Tween AddTween(Transform target, Vector3 endPos, float duration, Easing type)
     {
         if (TargetExists(target)) return null;
         Vector3 startPos = target is RectTransform rectTransform
             ? rectTransform.anchoredPosition
             : target.transform.position;
-        var tween = new Tween(target, startPos, endPos, Time.time, duration);
+        var tween = new Tween(target, startPos, endPos, Time.time, duration, type);
         Animation._tweens.Add(target, tween);
         return tween;
     }
@@ -61,7 +69,7 @@ public class AnimationManager : MonoBehaviour
         List<Transform> toRemove = new();
         foreach (var tween in _tweens.Values)
         {
-            var percent = Mathf.Pow((Time.time - tween.StartTime) / tween.Duration, 3);
+            var percent = EasingPercentage(tween);
             var position = Vector3.Lerp(tween.StartPos, tween.EndPos, percent);
             SetPosition(tween.Target, position);
             
@@ -80,4 +88,10 @@ public class AnimationManager : MonoBehaviour
         else
             target.position = position;
     }
+
+    private static float EasingPercentage(Tween tween) => tween.Type switch
+    {
+        Easing.EaseInCubic => Mathf.Pow((Time.time - tween.StartTime) / tween.Duration, 3),
+        _ => (Time.time - tween.StartTime) / tween.Duration
+    };
 }

@@ -38,10 +38,10 @@ public class UIManager : MonoBehaviour
     {
         isLoading = true;
         var loadRect = UI.loadTransform;
-        var tweenIn = AnimationManager.AddTween(loadRect, Vector3.zero, 2);
+        var tweenIn = AnimationManager.AddTween(loadRect, Vector3.zero, 2, AnimationManager.Easing.EaseInCubic);
         yield return new WaitUntil(() => !AnimationManager.TweenExists(tweenIn));
         SceneManager.LoadSceneAsync(sceneName);
-        var tweenOut = AnimationManager.AddTween(loadRect, new Vector3(0, -Screen.height), 2);
+        var tweenOut = AnimationManager.AddTween(loadRect, new Vector3(0, -Screen.height), 2, AnimationManager.Easing.EaseInCubic);
         yield return new WaitUntil(() => !AnimationManager.TweenExists(tweenOut));
         isLoading = false;
     }

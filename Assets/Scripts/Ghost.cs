@@ -26,13 +26,10 @@ public class Ghost : Character
 
     private void Update()
     {
-        if (Vector3.Distance(NextPosition, transform.position) < 0.01)
-        {
-            TargetPos();
-            NextPos();
-        }
-        // TODO: Use bezier curves
-        transform.position = Vector3.MoveTowards(transform.position, NextPosition, GameManager.CharacterSpeed() * Time.deltaTime);
+        if (AnimationManager.TargetExists(transform)) return;
+        TargetPos();
+        NextPos();
+        AnimationManager.AddTween(transform, NextPosition, 1 / GameManager.CharacterSpeed(), AnimationManager.Easing.Linear);
     }
 
     private void TargetPos()
