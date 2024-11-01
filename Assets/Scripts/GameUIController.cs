@@ -35,7 +35,10 @@ public class GameUIController : UIController
         
         var startCountdown = GameManager.Game.countdownLength - (Time.time - GameManager.Game.countdownTime);
         var startSeconds = Mathf.FloorToInt(startCountdown % 60f);
-        startCountdownText.text = startSeconds == 0 ? "GO" : startSeconds.ToString();
+        var startSecondsText = startSeconds == 0 ? "GO" : startSeconds.ToString();
+        if (startCountdownObject.activeInHierarchy && !startCountdownText.text.Equals(startSecondsText)) 
+            AudioManager.PlaySfxOneShot(startSecondsText == "GO" ? AudioManager.Audio.select : AudioManager.Audio.coin);
+        startCountdownText.text = startSecondsText;
     }
 
     public void ShowCountdown() { startCountdownObject.SetActive(true); }

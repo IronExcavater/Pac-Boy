@@ -153,7 +153,6 @@ public class GameManager : MonoBehaviour
         foreach (var character in Game._characters.Values)
             if (character is Ghost { IsAlive: false })
                 return;
-        Debug.Log("No ghosts");
         if (AudioManager.IsCurrentClip(AudioManager.Audio.musicGhost.AudioClip))
             AudioManager.PlayMusicLoop(AudioManager.Audio.musicNormal);
     }
