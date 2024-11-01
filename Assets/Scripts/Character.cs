@@ -7,10 +7,10 @@ public abstract class Character : MonoBehaviour
 {
     [Header("Components:")]
     [SerializeField] protected Animator ani;
-    [SerializeField] private SpriteRenderer rend;
+    [SerializeField] protected SpriteRenderer rend;
     [SerializeField] private GameObject particlePrefab;
     private ParticleSystem _particle;
-    private ParticleSystemRenderer _particleRenderer;
+    private ParticleSystemRenderer _particleRend;
     [SerializeField] protected Material dustMaterial;
     [SerializeField] protected Material bashMaterial;
     
@@ -19,12 +19,10 @@ public abstract class Character : MonoBehaviour
     [Header("Attributes:")]
     [SerializeField] private string identifier;
 
-    [SerializeField] private Vector3 spawnPosition;
+    protected Vector3 spawnPosition;
     private Direction _facing;
     private bool _isArmed;
     private bool _isAlive;
-    private bool _isLocked;
-
     public enum Direction
     {
         North,
@@ -87,18 +85,14 @@ public abstract class Character : MonoBehaviour
     public bool IsAlive
     {
         get => _isAlive;
-        set
+        protected set
         {
             _isAlive = value;
             ani.SetBool(GetAnimatorHash("Alive"), _isAlive);
         }
     }
 
-    public bool IsLocked
-    {
-        get => _isLocked;
-        set => _isLocked = value;
-    }
+    protected bool IsLocked { get; set; }
 
     public void Attack()
     {
@@ -123,9 +117,10 @@ public abstract class Character : MonoBehaviour
     protected virtual void Awake()
     {
         CacheAnimatorHashes();
-        GameManager.RegisterCharacter(identifier, this);
         _particle = Instantiate(particlePrefab, transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
-        _particleRenderer = _particle.GetComponent<ParticleSystemRenderer>();
+        _particleRend = _particle.GetComponent<ParticleSystemRenderer>();
+        spawnPosition = transform.position;
+        GameManager.RegisterCharacter(identifier, this);
         PreloadParticles();
     }
     
@@ -136,8 +131,9 @@ public abstract class Character : MonoBehaviour
         _particle.Clear();  // Clear immediately to hide it
     }
 
-    public virtual void Spawn()
+    public virtual void Reset()
     {
+        StopAllCoroutines();
         AnimationManager.RemoveTween(transform);
         transform.position = spawnPosition;
         CurrentPosition = transform.position;
@@ -153,8 +149,8 @@ public abstract class Character : MonoBehaviour
     
     protected void EmitParticle(Material material, string layer, float speed, Vector3 direction, int count)
     {
-        _particleRenderer.material = material;
-        _particleRenderer.sortingLayerName = layer;
+        _particleRend.material = material;
+        _particleRend.sortingLayerName = layer;
         var main = _particle.main;
         main.startSpeed = speed;
         var shape = _particle.shape;

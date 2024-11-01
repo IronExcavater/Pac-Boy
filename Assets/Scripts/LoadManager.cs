@@ -55,7 +55,10 @@ public class LoadManager : MonoBehaviour
             PlayerPrefs.SetFloat("time", time);
         }
     }
+    
+    public static void SaveMusicOption(int musicOption) { PlayerPrefs.SetInt("musicOption", musicOption); }
 
     public static float LoadBestTime() { return PlayerPrefs.GetFloat("time", 0); }
     public static int LoadHighScore() { return PlayerPrefs.GetInt("score", 0); }
+    public static int LoadMusicOption() { return PlayerPrefs.GetInt("musicOption", 0); }
 }

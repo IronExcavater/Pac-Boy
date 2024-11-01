@@ -414,7 +414,7 @@ MonoBehaviour:
   dustMaterial: {fileID: 2100000, guid: b5d5a8a2a60870e4281b543190c93ec7, type: 2}
   bashMaterial: {fileID: 2100000, guid: 994a6d097da41484dbf2982f73bab8aa, type: 2}
   identifier: 
-  spawnPosition: {x: 0, y: 0, z: 0}
   type: 0
+  exitDelay: 0
   scatterPos: {x: 0, y: 0, z: 0}
-  _targetPos: {x: 0, y: 0, z: 0}
+  ghostCorpsePrefab: {fileID: 1247604251617734882, guid: 468c31be047a17847835e15c1e6ecdaa, type: 3}

@@ -54,6 +54,11 @@ public class GameManager : MonoBehaviour
         StartCoroutine(StartLevel(0));
     }
 
+    private void Start()
+    {
+        AudioManager.PlayMusicLoopNextBar(AudioManager.Audio.musicIntro);
+    }
+
     public static IEnumerator StartLevel(float delaySeconds)
     {
         GameMode = Mode.None;
@@ -63,7 +68,7 @@ public class GameManager : MonoBehaviour
         Game.uiController.ShowCountdown();
         foreach (var character in Game._characters.Values)
         {
-            character.Spawn();
+            character.Reset();
             character.Lock();
         }
         yield return new WaitUntil(() => Game.countdownLength - (Time.time - Game.countdownTime) < 0);
@@ -99,7 +104,7 @@ public class GameManager : MonoBehaviour
         var result = Game._characters.TryAdd(identifier, character);
         if (result)
         {
-            character.Spawn();
+            character.Reset();
             character.TriggerMode();
             return;
         }
@@ -151,10 +156,10 @@ public class GameManager : MonoBehaviour
     public static void CheckForDeadGhosts()
     {
         foreach (var character in Game._characters.Values)
-            if (character is Ghost { IsAlive: false })
+            if (character is GhostController { IsAlive: false })
                 return;
         if (AudioManager.IsCurrentClip(AudioManager.Audio.musicGhost.AudioClip))
-            AudioManager.PlayMusicLoop(AudioManager.Audio.musicNormal);
+            AudioManager.PlayMusicLoopNextBar(AudioManager.Audio.musicNormal);
     }
 
     public static IEnumerator AddScore(int score)
@@ -191,10 +196,11 @@ public class GameManager : MonoBehaviour
         switch (GameMode)
         {
             case Mode.Chase or Mode.Scatter:
-                AudioManager.PlayMusicLoop(AudioManager.Audio.musicNormal);
+                if (!AudioManager.IsCurrentClip(AudioManager.Audio.musicGhost.AudioClip))
+                    AudioManager.PlayMusicLoopNextBar(AudioManager.Audio.musicNormal);
                 break;
             case Mode.Scared:
-                AudioManager.PlayMusicImmediate(AudioManager.Audio.musicScared);
+                AudioManager.PlayMusicOneShotNow(AudioManager.Audio.musicScared);
                 Game.scaredTime = Time.time;
                 Game.StartCoroutine(QueueMode(Mode.Chase, Game.scaredLength));
                 break;

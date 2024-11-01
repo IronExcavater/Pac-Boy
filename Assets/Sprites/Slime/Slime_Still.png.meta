@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f21b437b8fc02e444945fda043bcf1bd
+guid: 7801d3d55647f634fb94db9bf524b69c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1557013538026691241
-    second: UI_0
+      213: 1776899431364125386
+    second: Slime_Still_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -40,13 +40,13 @@ TextureImporter:
     filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
-    wrapW: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,85 +100,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Border
+      name: Slime_Still_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 40
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 8, y: 8, z: 8, w: 8}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 755e173cf60646ae0800000000000000
-      internalID: -1557013538026691241
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Button_Up
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 24
-        width: 18
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 5, y: 5, z: 5, w: 5}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 61418457e43ab82499148b832811fc0e
-      internalID: -440487433
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Button_U
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 8
-        width: 18
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 5, y: 5, z: 5, w: 5}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ce790638308731148ac08c7a9426315e
-      internalID: 1279323350
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Music_Icon
-      rect:
-        serializedVersion: 2
-        x: 19
-        y: 26
-        width: 12
-        height: 12
+        x: 41
+        y: 42
+        width: 19
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 49a12afa6143b374eb152e736da5eb84
-      internalID: 1633491474
+      spriteID: ac26d005e90d8a810800000000000000
+      internalID: 1776899431364125386
       vertices: []
       indices: 
       edges: []
@@ -186,7 +123,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: c0e609721c933134b8e6c2418df2c98e
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -194,10 +131,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Border: -1557013538026691241
-      Button_U: 1279323350
-      Button_Up: -440487433
-      Music_Icon: 1633491474
+      Slime_Still_0: 1776899431364125386
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

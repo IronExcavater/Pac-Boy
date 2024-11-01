@@ -41,6 +41,10 @@ PrefabInstance:
       value: Blinky
       objectReference: {fileID: 0}
     - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: stillSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 980c831d97a1a9241bf71e8f9f666998, type: 3}
+    - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: _targetPos.x
       value: 11
       objectReference: {fileID: 0}

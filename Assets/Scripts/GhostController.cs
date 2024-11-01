@@ -6,12 +6,16 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
-public class Ghost : Character
+public class GhostController : Character
 {
     public Type type;
+    public float exitDelay;
     [SerializeField] private Vector3Int scatterPos;
+    [SerializeField] private GameObject ghostCorpsePrefab;
+    [SerializeField] private Sprite stillSprite;
     
-    public Vector3 _targetPos;
+    private Vector3 _targetPos;
+    private GameObject _ghostCorpse;
 
     public enum Type
     {
@@ -21,6 +25,8 @@ public class Ghost : Character
         Clyde,   // 'Ignorant', targets player similar to Blinky until 8 tiles away, in which case he targets his scatter target tile
         Hidey   // 'Scared', always flees player's current tile
     }
+    
+    protected bool IsSpawn { get; set; }
     
     protected void Update()
     {
@@ -65,8 +71,7 @@ public class Ghost : Character
 
     protected override void NextPos()
     {
-        if (!IsAlive) return;
-        if (IsLocked) return;
+        if (!IsAlive || IsLocked || IsSpawn) return;
         var previousPos = CurrentPosition;
         CurrentPosition = NextPosition;
         
@@ -143,7 +148,7 @@ public class Ghost : Character
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!IsAlive) return;
+        if (!IsAlive || IsSpawn) return;
         var player = GameManager.GetCharacter("Player");
         if (!other.gameObject.Equals(player.gameObject)) return;
         switch (GameManager.GameMode)
@@ -167,20 +172,80 @@ public class Ghost : Character
             (GameManager.GameMode == GameManager.Mode.Scared ? GameManager.Game.scaredSpeed : GameManager.Game.characterSpeed),
             AnimationManager.Easing.Linear);
     }
+
+    public override void Reset()
+    {
+        base.Reset();
+        IsSpawn = true;
+        StartCoroutine(ExitSpawnArea(exitDelay));
+    }
     
     public override void Death()
     {
         base.Death();
         GameManager.Game.StartCoroutine(GameManager.AddScore(300));
         AudioManager.PlaySfxOneShot(AudioManager.Audio.ghostDefeat);
-        AudioManager.PlayMusicImmediate(AudioManager.Audio.musicGhost);
-        StartCoroutine(Respawn(5));
+        AudioManager.PlayMusicOneShotNextBeat(AudioManager.Audio.musicGhost);
+        StartCoroutine(Corpse());
     }
 
-    private IEnumerator Respawn(float delaySeconds)
+    private IEnumerator Corpse()
     {
-        yield return new WaitForSeconds(delaySeconds);
-        Spawn();
+        yield return new WaitForSeconds(2);
+        _ghostCorpse = Instantiate(ghostCorpsePrefab, transform.position, Quaternion.identity);
+        var ghostCorpseRend = _ghostCorpse.GetComponent<SpriteRenderer>();
+        ghostCorpseRend.sprite = rend.sprite;
+        ghostCorpseRend.sortingOrder = rend.sortingOrder;
+        ani.enabled = false;
+        rend.sprite = stillSprite;
+        rend.color = new Color(0.8f, 0.8f, 1, 0.8f);
+        
+        NextPosition = spawnPosition;
+        AnimationManager.AddTween(transform, NextPosition,
+            Vector3.Distance(CurrentPosition, NextPosition) / GameManager.Game.scaredSpeed,
+            AnimationManager.Easing.Linear);
+        yield return new WaitUntil(() => !AnimationManager.TargetExists(transform));
+        CurrentPosition = NextPosition;
+        ani.enabled = true;
+        IsAlive = true;
+        IsSpawn = true;
         GameManager.CheckForDeadGhosts();
+        rend.color = Color.white;
+        StartCoroutine(FadeOutAndDestroy(_ghostCorpse, 2));
+        StartCoroutine(ExitSpawnArea(2));
+    }
+
+    private IEnumerator FadeOutAndDestroy(GameObject obj, float duration)
+    {
+        var objRend = obj.GetComponent<SpriteRenderer>();
+        var elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            var newAlpha = Mathf.Lerp(1, 0, elapsedTime / duration);
+            objRend.color = new Color(1, 1, 1, newAlpha);
+            yield return null;
+        }
+        Destroy(obj);
+    }
+
+    private IEnumerator ExitSpawnArea(float delaySeconds)
+    {
+        yield return new WaitUntil(() => GameManager.GameMode != GameManager.Mode.None);
+        yield return new WaitForSeconds(delaySeconds);
+        NextPosition = GameManager.LevelTilemap().cellBounds.center + new Vector3(-0.5f, -0.5f);
+        AnimationManager.AddTween(transform, NextPosition,
+            Vector3.Distance(CurrentPosition, NextPosition) / GameManager.Game.scaredSpeed,
+            AnimationManager.Easing.Linear);
+        yield return new WaitUntil(() => !AnimationManager.TargetExists(transform));
+        CurrentPosition = NextPosition;
+        NextPosition = GameManager.LevelTilemap().cellBounds.center + new Vector3(-0.5f, 2.5f);
+        AnimationManager.AddTween(transform, NextPosition,
+            Vector3.Distance(CurrentPosition, NextPosition) / GameManager.Game.scaredSpeed,
+            AnimationManager.Easing.Linear);
+        yield return new WaitUntil(() => !AnimationManager.TargetExists(transform));
+        CurrentPosition = NextPosition;
+        IsSpawn = false;
+        Unlock();
     }
 }

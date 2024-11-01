@@ -10,8 +10,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music Clips:")]
     public AudioClipTempoTuple musicMenu;
-    [SerializeField] private AudioClipTempoTuple musicIntro;
-    public AudioClipTempoTuple musicNormal, musicScared, musicGhost, musicIntermission;
+    public AudioClipTempoTuple musicIntro, musicNormal, musicScared, musicGhost, musicIntermission;
 
     [Header("SFX Clips:")]
     public AudioClip step;
@@ -29,11 +28,6 @@ public class AudioManager : MonoBehaviour
             DontDestroyOnLoad(Audio);
         }
         else Destroy(this);
-    }
-
-    private void Start()
-    {
-        PlayMusicLoop(musicNormal);
     }
     
     private void Update()
@@ -58,37 +52,35 @@ public class AudioManager : MonoBehaviour
 
     public static bool IsCurrentClip(AudioClip clip)
     {
-        var currentClip = Audio.musicSource[1 - Audio._sourceToggle].clip;
+        var currentClip = GetCurrentClip();
         return currentClip != null && currentClip.Equals(clip);
     }
 
     public static AudioClip GetCurrentClip() { return Audio.musicSource[1 - Audio._sourceToggle].clip; }
 
-    public static void PlayMusicOneShot(AudioClipTempoTuple clip)
-    {
-        Audio.ScheduleMusicClip(clip, Audio.NextBeat());
-    }
-
-    public static void PlayMusicImmediate(AudioClipTempoTuple clip)
-    {
-        Audio.ScheduleMusicClip(clip, AudioSettings.dspTime);
-    }
+    public static void PlayMusicOneShotNextBar(AudioClipTempoTuple clip) { Audio.ScheduleMusicClip(clip, Audio.NextBar()); }
+    public static void PlayMusicOneShotNextBeat(AudioClipTempoTuple clip) { Audio.ScheduleMusicClip(clip, Audio.NextBeat()); }
+    public static void PlayMusicOneShotNow(AudioClipTempoTuple clip) { Audio.ScheduleMusicClip(clip, AudioSettings.dspTime); }
     
-    public static void PlayMusicLoop(AudioClipTempoTuple clip)
+    public static void PlayMusicLoopNextBar(AudioClipTempoTuple clip) { Audio.PlayMusicLoop(clip, Audio.NextBar()); }
+    public static void PlayMusicLoopNextBeat(AudioClipTempoTuple clip) { Audio.PlayMusicLoop(clip, Audio.NextBeat()); }
+    public static void PlayMusicLoopNow(AudioClipTempoTuple clip) { Audio.PlayMusicLoop(clip, AudioSettings.dspTime); }
+
+    private void PlayMusicLoop(AudioClipTempoTuple clip, double nextDspTime)
     {
         if (IsCurrentClip(clip.AudioClip))
             return;
 
-        if (clip.Equals(Audio.musicNormal)) // any music which has an intro
-            PlayMusicOneShot(Audio.musicIntro);
-        else Audio.ScheduleMusicClip(clip, Audio.NextBar());
-        
-        QueueMusicLoop(clip);
-    }
-
-    public static void QueueMusicLoop(AudioClipTempoTuple clip)
-    {
-        Audio._loopedMusic = clip;
+        if (clip.Equals(musicIntro)) // any music which has an intro
+        {
+            PlayMusicOneShotNextBeat(clip);
+            _loopedMusic = musicNormal;
+        }
+        else
+        {
+            ScheduleMusicClip(clip, nextDspTime);
+            _loopedMusic = clip;
+        }
     }
     
     public static void PlaySfxOneShot(AudioClip clip)

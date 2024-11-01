@@ -95,9 +95,9 @@ public class PacStudentController : Character
     
     protected void WallParticle() { EmitParticle(dustMaterial, "Particles", 2, new Vector3(0, 0, DustDirection(Facing) - 180), 3);}
 
-    public override void Spawn()
+    public override void Reset()
     {
-        base.Spawn();
+        base.Reset();
         lastInput = KeyCode.None;
         currentInput = KeyCode.None;
     }
