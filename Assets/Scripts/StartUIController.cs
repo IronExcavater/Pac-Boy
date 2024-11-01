@@ -1,11 +1,13 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class StartUIController : MonoBehaviour
+public class StartUIController : UIController
 {
+    [SerializeField] private TextMeshProUGUI highScoreText;
+    
     public void Level1Button()
     {
-        LoadManager.Load.LoadScene("Recreation");
+        LoadManager.LoadScene("Recreation");
     }
 
     public void Level2Button()
@@ -20,5 +22,11 @@ public class StartUIController : MonoBehaviour
         #else
             Application.Quit();
         #endif
+    }
+
+    private void Start()
+    {
+        LoadManager.SaveHighScore(10, 1000);
+        highScoreText.text = $"{LoadManager.LoadHighScore()}, {FormattedTime(LoadManager.LoadBestTime())}";
     }
 }

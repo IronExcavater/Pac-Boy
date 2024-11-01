@@ -25,8 +25,8 @@ public class Ghost : Character
     protected void Update()
     {
         TargetPos();
-        if (AnimationManager.TargetExists(transform)) return;
-        NextPos();
+        if (!AnimationManager.TargetExists(transform)) NextPos();;
+        UpdateAnimator();
     }
 
     private void TargetPos()

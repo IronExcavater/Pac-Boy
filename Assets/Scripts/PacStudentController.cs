@@ -11,9 +11,9 @@ public class PacStudentController : Character
         if (Input.GetKeyDown(KeyCode.A)) lastInput = KeyCode.A;
         if (Input.GetKeyDown(KeyCode.S)) lastInput = KeyCode.S;
         if (Input.GetKeyDown(KeyCode.D)) lastInput = KeyCode.D;
-
-        if (AnimationManager.TargetExists(transform)) return;
-        NextPos();
+        
+        if (!AnimationManager.TargetExists(transform)) NextPos();;
+        UpdateAnimator();
     }
     
     public override void TriggerMode()
@@ -58,7 +58,6 @@ public class PacStudentController : Character
             currentInput = lastInput;
             NextPosition = possibleLastPos;
             AddTween();
-            UpdateAnimator();
             DustParticle();
             return;
         }
@@ -67,15 +66,12 @@ public class PacStudentController : Character
         {
             NextPosition = possibleCurrentPos;
             AddTween();
-            UpdateAnimator();
             DustParticle();
             return;
         }
 
         currentInput = KeyCode.None;
         AudioManager.PlaySfxOneShot(AudioManager.Audio.hit);
-
-        UpdateAnimator();
     }
     
     protected override void AddTween()

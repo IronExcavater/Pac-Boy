@@ -189,7 +189,7 @@ public abstract class Character : MonoBehaviour
 
     protected void UpdateAnimator()
     {
-        rend.sortingOrder = -(int)transform.position.y;
+        rend.sortingOrder = -(int)(transform.position.y * 10);
         Facing = ToDirection(NextPosition - CurrentPosition);
         Moving = !NextPosition.Equals(CurrentPosition) && !IsLocked;
     }

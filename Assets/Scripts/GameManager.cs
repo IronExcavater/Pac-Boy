@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [Header("References:")]
     [SerializeField] private TileBase groundTile;
     [SerializeField] private TileBase fillerTile;
+    [SerializeField] private GameUIController uiController;
     
     private Tilemap _map;
     private Dictionary<string, Character> _characters = new();
@@ -27,8 +28,7 @@ public class GameManager : MonoBehaviour
     
     [Header("Game:")]
     public int score;
-    public float startTime;
-    public float endTime;
+    public float time;
     public float lives = 3;
     public float scaredTime;
     public float scatterTime;
@@ -51,34 +51,44 @@ public class GameManager : MonoBehaviour
         if (cam == null) return;
         cam.orthographicSize = _map.cellBounds.size.y / 2f;
         cam.transform.position = _map.cellBounds.center - new Vector3(5.5f, 0.5f, 10);
-        StartCoroutine(StartLevel(2));
+        StartCoroutine(StartLevel(0));
     }
 
-    public IEnumerator StartLevel(float delaySeconds)
+    public static IEnumerator StartLevel(float delaySeconds)
     {
+        GameMode = Mode.None;
         yield return new WaitUntil(() => !LoadManager.isLoading);
         yield return new WaitForSeconds(delaySeconds);
-        countdownTime = Time.time;
+        Game.countdownTime = Time.time;
+        Game.uiController.ShowCountdown();
         foreach (var character in Game._characters.Values)
             character.Spawn();
-        yield return new WaitUntil(() => countdownLength - (Time.time - countdownTime) < 0);
+        yield return new WaitUntil(() => Game.countdownLength - (Time.time - Game.countdownTime) < 0);
+        Game.uiController.HideCountdown();
         foreach (var character in Game._characters.Values)
             character.Unlock();
-        startTime = Time.time;
         GameMode = Mode.Chase;
+    }
+    
+    public static IEnumerator FinishLevel(float delaySeconds)
+    {
+        GameMode = Mode.None;
+        yield return new WaitForSeconds(delaySeconds);
+        Game.uiController.ShowGameOver();
+        LoadManager.SaveHighScore(Game.time, Game.score);
+        yield return new WaitForSeconds(3);
+        LoadManager.LoadScene("StartScene");
     }
 
     public static void RestartLevel(float delaySeconds)
     {
         Game.lives -= 1;
-        GameMode = Mode.None;
-        Game.StartCoroutine(Game.StartLevel(delaySeconds));
+        Game.StartCoroutine(Game.lives <= 0 ? FinishLevel(delaySeconds) : StartLevel(delaySeconds));
     }
 
-    public static float ElapsedTime()
+    public void Update()
     {
-        if (GameMode != Mode.None) Game.endTime = Time.time;
-        return Game.endTime - Game.startTime;
+        if (GameMode != Mode.None) time += Time.deltaTime;
     }
 
     public static void RegisterCharacter(string identifier, Character character)
@@ -125,6 +135,14 @@ public class GameManager : MonoBehaviour
     {
         foreach (var item in Game._items)
             Destroy(item.gameObject);
+    }
+
+    public static void CheckForCoins()
+    {
+        foreach (var item in Game._items)
+            if (item.type == Item.Type.Coin)
+                return;
+        Game.StartCoroutine(FinishLevel(3));
     }
 
     public static void AddScore(int score) { Game.score += score; }

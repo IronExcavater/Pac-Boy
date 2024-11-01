@@ -16,22 +16,22 @@ public class LoadManager : MonoBehaviour
         {
             Load = this;
             DontDestroyOnLoad(Load);
-            Initialize();
         }
         else Destroy(gameObject);
     }
 
-    private void Initialize()
+    private IEnumerator Start()
     {
-        loadTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Screen.width + 12);
-        loadTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Screen.height + 12);
+        yield return new WaitForEndOfFrame();
+        loadTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Screen.width);
+        loadTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Screen.height);
         loadTransform.anchoredPosition = new Vector2(loadTransform.anchoredPosition.x, -loadTransform.sizeDelta.y);
     }
 
-    public void LoadScene(string sceneName)
+    public static void LoadScene(string sceneName)
     {
         if (isLoading) return;
-        StartCoroutine(LoadScreen(sceneName));
+        Load.StartCoroutine(LoadScreen(sceneName));
     }
 
     private static IEnumerator LoadScreen(string sceneName)
@@ -45,4 +45,17 @@ public class LoadManager : MonoBehaviour
         yield return new WaitUntil(() => !AnimationManager.TweenExists(tweenOut));
         isLoading = false;
     }
+
+    public static void SaveHighScore(float time, int score)
+    {
+        var prevScore = LoadHighScore();
+        if (score > prevScore || score >= prevScore && time < LoadBestTime())
+        {
+            PlayerPrefs.SetInt("score", score);
+            PlayerPrefs.SetFloat("time", time);
+        }
+    }
+
+    public static float LoadBestTime() { return PlayerPrefs.GetFloat("time", 0); }
+    public static int LoadHighScore() { return PlayerPrefs.GetInt("score", 0); }
 }

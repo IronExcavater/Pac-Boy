@@ -5,7 +5,7 @@ public class Item : MonoBehaviour
 {
     [Header("Components:")]
     [SerializeField] private Animator ani;
-    [SerializeField] private Type type;
+    public Type type;
 
     public enum Type
     {
@@ -27,6 +27,7 @@ public class Item : MonoBehaviour
         {
             case Type.Coin:
                 GameManager.AddScore(10);
+                GameManager.CheckForCoins();
                 break;
             case Type.Ingot:
                 GameManager.AddScore(100);
