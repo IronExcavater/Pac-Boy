@@ -8,8 +8,11 @@ public abstract class Character : MonoBehaviour
     [Header("Components:")]
     [SerializeField] protected Animator ani;
     [SerializeField] private SpriteRenderer rend;
-    [SerializeField] private GameObject dustPrefab;
-    private ParticleSystem _dustParticle;
+    [SerializeField] private GameObject particlePrefab;
+    private ParticleSystem _particle;
+    private ParticleSystemRenderer _particleRenderer;
+    [SerializeField] protected Material dustMaterial;
+    [SerializeField] protected Material bashMaterial;
     
     private readonly Dictionary<string, int> _aniHash = new();
 
@@ -107,6 +110,7 @@ public abstract class Character : MonoBehaviour
     public virtual void Death()
     {
         Lock();
+        BashParticle();
         IsAlive = false;
     }
 
@@ -120,31 +124,46 @@ public abstract class Character : MonoBehaviour
     {
         CacheAnimatorHashes();
         GameManager.RegisterCharacter(identifier, this);
-        _dustParticle = Instantiate(dustPrefab, transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
-        _dustParticle.Stop();
+        _particle = Instantiate(particlePrefab, transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+        _particleRenderer = _particle.GetComponent<ParticleSystemRenderer>();
+        PreloadParticles();
+    }
+    
+    private void PreloadParticles()
+    {
+        DustParticle();
+        BashParticle();
+        _particle.Clear();  // Clear immediately to hide it
     }
 
-    public void Spawn()
+    public virtual void Spawn()
     {
         AnimationManager.RemoveTween(transform);
         transform.position = spawnPosition;
         CurrentPosition = transform.position;
         NextPosition = CurrentPosition;
         IsAlive = true;
-        IsLocked = true;
+        IsLocked = false;
         Facing = Direction.East;
         UpdateAnimator();
     }
 
-    protected void DustParticle()
+    protected void DustParticle() { EmitParticle(dustMaterial, "Particles", 1, new Vector3(0, 0, DustDirection(Facing)), 1); }
+    protected void BashParticle() { EmitParticle(bashMaterial, "Default", 0, Vector3.zero, 2); }
+    
+    protected void EmitParticle(Material material, string layer, float speed, Vector3 direction, int count)
     {
-        var shape = _dustParticle.shape;
-        shape.rotation = new Vector3(0, 0, DustDirection(Facing));
-        _dustParticle.transform.position = transform.position;
-        _dustParticle.Emit(1);
+        _particleRenderer.material = material;
+        _particleRenderer.sortingLayerName = layer;
+        var main = _particle.main;
+        main.startSpeed = speed;
+        var shape = _particle.shape;
+        shape.rotation = direction;
+        _particle.transform.position = transform.position;
+        _particle.Emit(count);
     }
     
-    private static float DustDirection(Direction direction) => direction switch
+    protected static float DustDirection(Direction direction) => direction switch
     {
         Direction.North => 180,
         Direction.East => 90,

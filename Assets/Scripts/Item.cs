@@ -26,14 +26,17 @@ public class Item : MonoBehaviour
         switch (type)
         {
             case Type.Coin:
-                GameManager.AddScore(10);
+                GameManager.Game.StartCoroutine(GameManager.AddScore(10));
                 GameManager.CheckForCoins();
+                AudioManager.PlaySfxOneShot(AudioManager.Audio.coin);
                 break;
             case Type.Ingot:
-                GameManager.AddScore(100);
+                GameManager.Game.StartCoroutine(GameManager.AddScore(100));
+                AudioManager.PlaySfxOneShot(AudioManager.Audio.select);
                 break;
             case Type.Potion:
                 GameManager.GameMode = GameManager.Mode.Scared;
+                AudioManager.PlaySfxOneShot(AudioManager.Audio.potion);
                 break;
         }
         Destroy(gameObject);

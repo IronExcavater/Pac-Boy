@@ -410,8 +410,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ani: {fileID: 1753161451708760938}
   rend: {fileID: 4590771738689819852}
-  dustPrefab: {fileID: 5408067072340590547, guid: 1964fda7554c9094981aab211a74ae90, type: 3}
+  particlePrefab: {fileID: 5408067072340590547, guid: 1964fda7554c9094981aab211a74ae90, type: 3}
+  dustMaterial: {fileID: 2100000, guid: b5d5a8a2a60870e4281b543190c93ec7, type: 2}
+  bashMaterial: {fileID: 2100000, guid: 994a6d097da41484dbf2982f73bab8aa, type: 2}
   identifier: 
+  spawnPosition: {x: 0, y: 0, z: 0}
   type: 0
   scatterPos: {x: 0, y: 0, z: 0}
   _targetPos: {x: 0, y: 0, z: 0}

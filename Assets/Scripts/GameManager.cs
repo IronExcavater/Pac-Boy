@@ -62,7 +62,10 @@ public class GameManager : MonoBehaviour
         Game.countdownTime = Time.time;
         Game.uiController.ShowCountdown();
         foreach (var character in Game._characters.Values)
+        {
             character.Spawn();
+            character.Lock();
+        }
         yield return new WaitUntil(() => Game.countdownLength - (Time.time - Game.countdownTime) < 0);
         Game.uiController.HideCountdown();
         foreach (var character in Game._characters.Values)
@@ -145,7 +148,25 @@ public class GameManager : MonoBehaviour
         Game.StartCoroutine(FinishLevel(3));
     }
 
-    public static void AddScore(int score) { Game.score += score; }
+    public static void CheckForDeadGhosts()
+    {
+        foreach (var character in Game._characters.Values)
+            if (character is Ghost { IsAlive: false })
+                return;
+        Debug.Log("No ghosts");
+        if (AudioManager.IsCurrentClip(AudioManager.Audio.musicGhost.AudioClip))
+            AudioManager.PlayMusicLoop(AudioManager.Audio.musicNormal);
+    }
+
+    public static IEnumerator AddScore(int score)
+    {
+        for (var i = 0; i < score / 10; i++)
+        {
+            Game.score += 10;
+            yield return new WaitForSeconds(0.2f);
+        }
+        Game.score += score % 10;
+    }
 
     public static Tilemap LevelTilemap() { return Game._map; }
 

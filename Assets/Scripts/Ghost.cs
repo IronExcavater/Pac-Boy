@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
@@ -19,7 +18,8 @@ public class Ghost : Character
         Blinky, // 'Chaser', targets player's current tile
         Pinky,  // 'Ambusher', targets four tiles in front of player
         Inky,   // 'Bashful', targets tile that intersects vector of Blinky's tile and two tiles in front of player at a distance from the player equal to Blinky's distance from the player
-        Clyde   // 'Ignorant', targets player similar to Blinky until 8 tiles away, in which case he targets his scatter target tile
+        Clyde,   // 'Ignorant', targets player similar to Blinky until 8 tiles away, in which case he targets his scatter target tile
+        Hidey   // 'Scared', always flees player's current tile
     }
     
     protected void Update()
@@ -171,8 +171,9 @@ public class Ghost : Character
     public override void Death()
     {
         base.Death();
-        GameManager.AddScore(300);
+        GameManager.Game.StartCoroutine(GameManager.AddScore(300));
         AudioManager.PlaySfxOneShot(AudioManager.Audio.ghostDefeat);
+        AudioManager.PlayMusicImmediate(AudioManager.Audio.musicGhost);
         StartCoroutine(Respawn(5));
     }
 
@@ -180,5 +181,6 @@ public class Ghost : Character
     {
         yield return new WaitForSeconds(delaySeconds);
         Spawn();
+        GameManager.CheckForDeadGhosts();
     }
 }
