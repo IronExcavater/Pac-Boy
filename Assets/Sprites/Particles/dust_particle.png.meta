@@ -112,7 +112,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dust_particle_0
+      name: Dust_Particle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -120,20 +120,20 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 32647234f94da44d0800000000000000
-      internalID: -3149471208900704733
+      spriteID: ee680858dac5b4f4687bcb4c2d4d56f6
+      internalID: -1205527945
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dust_particle_1
+      name: Dust_Particle_1
       rect:
         serializedVersion: 2
         x: 64
@@ -141,20 +141,20 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 493ad7c46c27ad7f0800000000000000
-      internalID: -587030605406035052
+      spriteID: 51f9d57300591b94d9a271fb29b07596
+      internalID: 48823506
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dust_particle_2
+      name: Dust_Particle_2
       rect:
         serializedVersion: 2
         x: 128
@@ -162,20 +162,20 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 2e2dc3c68cd14bf30800000000000000
-      internalID: 4590326666843968226
+      spriteID: 292911c75e0537845b337fed7b795a59
+      internalID: -2042331319
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dust_particle_3
+      name: Dust_Particle_3
       rect:
         serializedVersion: 2
         x: 192
@@ -183,20 +183,20 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 651fe77935eb68070800000000000000
-      internalID: 8108377445360398678
+      spriteID: 40572665ab224d146b892546e3836ba4
+      internalID: 2048511934
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dust_particle_4
+      name: Dust_Particle_4
       rect:
         serializedVersion: 2
         x: 256
@@ -204,20 +204,20 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: d4f574d51811acb80800000000000000
-      internalID: -8373861309828604083
+      spriteID: abbb6e86694b1574f8e2a8a8b512aa7e
+      internalID: -1349718396
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dust_particle_5
+      name: Dust_Particle_5
       rect:
         serializedVersion: 2
         x: 320
@@ -225,14 +225,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7c969ac29061ff429b72b1400154c12
-      internalID: 700324548
+      spriteID: d96e065ab4fb09d43a7b1f60bae83152
+      internalID: -339550914
       vertices: []
       indices: 
       edges: []
@@ -248,12 +248,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      dust_particle_0: -587030605406035052
-      dust_particle_1: 4590326666843968226
-      dust_particle_2: 8108377445360398678
-      dust_particle_3: -8373861309828604083
-      dust_particle_4: 700324548
-      dust_particle_5: 700324548
+      Dust_Particle_0: -1205527945
+      Dust_Particle_1: 48823506
+      Dust_Particle_2: -2042331319
+      Dust_Particle_3: 2048511934
+      Dust_Particle_4: -1349718396
+      Dust_Particle_5: -339550914
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

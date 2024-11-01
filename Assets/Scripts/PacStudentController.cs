@@ -70,8 +70,10 @@ public class PacStudentController : Character
             return;
         }
 
+        if (currentInput == KeyCode.None) return;
         currentInput = KeyCode.None;
         AudioManager.PlaySfxOneShot(AudioManager.Audio.hit);
+        WallParticle();
     }
     
     protected override void AddTween()
@@ -90,6 +92,15 @@ public class PacStudentController : Character
         KeyCode.D => CurrentPosition + Vector3.right,
         _ => CurrentPosition
     };
+    
+    protected void WallParticle() { EmitParticle(dustMaterial, "Particles", 2, new Vector3(0, 0, DustDirection(Facing) - 180), 3);}
+
+    public override void Spawn()
+    {
+        base.Spawn();
+        lastInput = KeyCode.None;
+        currentInput = KeyCode.None;
+    }
     
     public override void Death()
     {

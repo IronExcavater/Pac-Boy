@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
     [Header("Music Clips:")]
     public AudioClipTempoTuple musicMenu;
     [SerializeField] private AudioClipTempoTuple musicIntro;
-    public AudioClipTempoTuple musicNormal, musicScared, musicIntermission;
+    public AudioClipTempoTuple musicNormal, musicScared, musicGhost, musicIntermission;
 
     [Header("SFX Clips:")]
     public AudioClip step;
@@ -56,6 +56,14 @@ public class AudioManager : MonoBehaviour
         _sourceToggle = 1 - _sourceToggle;
     }
 
+    public static bool IsCurrentClip(AudioClip clip)
+    {
+        var currentClip = Audio.musicSource[1 - Audio._sourceToggle].clip;
+        return currentClip != null && currentClip.Equals(clip);
+    }
+
+    public static AudioClip GetCurrentClip() { return Audio.musicSource[1 - Audio._sourceToggle].clip; }
+
     public static void PlayMusicOneShot(AudioClipTempoTuple clip)
     {
         Audio.ScheduleMusicClip(clip, Audio.NextBeat());
@@ -68,12 +76,11 @@ public class AudioManager : MonoBehaviour
     
     public static void PlayMusicLoop(AudioClipTempoTuple clip)
     {
-        if (clip.Equals(Audio._loopedMusic)) return;
+        if (IsCurrentClip(clip.AudioClip))
+            return;
 
         if (clip.Equals(Audio.musicNormal)) // any music which has an intro
-        {
             PlayMusicOneShot(Audio.musicIntro);
-        }
         else Audio.ScheduleMusicClip(clip, Audio.NextBar());
         
         QueueMusicLoop(clip);
@@ -109,13 +116,19 @@ public class AudioManager : MonoBehaviour
 
     private void ScheduleMusicClip(AudioClipTempoTuple clip, double nextDspTime)
     {
+        if (IsCurrentClip(clip.AudioClip)) return;
         // Load next clip and schedule at next time
         musicSource[_sourceToggle].clip = clip.AudioClip;
         musicSource[_sourceToggle].PlayScheduled(nextDspTime);
         // Set end time to next time plus clip's duration
-        if (_loopedMusic != null) musicSource[1 - _sourceToggle].SetScheduledEndTime(nextDspTime);
+        EndCurrentClip(nextDspTime);
         _endDspTime = nextDspTime + (double) clip.AudioClip.samples / clip.AudioClip.frequency;
         // Switch source toggle
         _sourceToggle = 1 - _sourceToggle;
+    }
+
+    private void EndCurrentClip(double nextDspTime)
+    {
+        if (GetCurrentClip() != null) musicSource[1 - _sourceToggle].SetScheduledEndTime(nextDspTime);
     }
 }

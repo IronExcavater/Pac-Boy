@@ -192,6 +192,9 @@ MonoBehaviour:
   musicScared:
     audioClip: {fileID: 8300000, guid: b2623735ac5b6b74ba5182082d8825bd, type: 3}
     tempo: 109
+  musicGhost:
+    audioClip: {fileID: 8300000, guid: 45595a2327986844cac39a7ae6137860, type: 3}
+    tempo: 102
   musicIntermission:
     audioClip: {fileID: 8300000, guid: 7c5f05f4a10509e4abe8164452743165, type: 3}
     tempo: 71
