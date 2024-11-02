@@ -1,6 +1,7 @@
-# Game Boy Medieval Pac-Man
+# Pac-Boy
+### Game Boy Medieval Pac-Man
 
-A Game Boy-styled, medieval-themed reimagining of the classic Pac-Man, developed as part of the *Introduction to Computer Game Development* course at UTS. This project combines nostalgic retro visuals with medieval themes, introducing fresh gameplay mechanics to the original game design.
+A Game Boy-styled, medieval-themed reimagining of the classic Pac-Man, developed as part of the [*Introduction to Computer Game Development*](https://handbook.uts.edu.au/subjects/31263.html) subject at UTS. This project combines nostalgic retro visuals with medieval themes, introducing fresh gameplay mechanics to the original game design.
 
 ## 📜 Project Motivation and Inspiration
 
@@ -20,7 +21,7 @@ This project was created to explore the recreation and innovation of classic Ata
 
 ## 🎮 How to Play & Install
 
-1. **Download and Extract**: [Latest release](https://github.com/YourUsername/Medieval-Pacman/releases) – Download the zip file, extract it, and open the executable file.
+1. **Download and Extract**: [Latest release](https://github.com/IronExcavater/Pac-Boy/releases) – Download the zip file, extract it, and open the executable file.
 2. **Controls**:
    - **Movement**: **W, A, S, D** keys
    - **Phase Ability** (Level 2): When near a wall, press a direction key (W, A, S, D) followed by **Space** to teleport through it.
@@ -35,4 +36,4 @@ This project was created to explore the recreation and innovation of classic Ata
 
 ## 📄 License
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/YourUsername/Medieval-Pacman/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/IronExcavater/Pac-Boy/blob/main/LICENSE) file for details.
