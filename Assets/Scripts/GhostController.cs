@@ -11,6 +11,8 @@ public class GhostController : Character
     public Type type;
     public float exitDelay;
     [SerializeField] private Vector3Int scatterPos;
+    [SerializeField] private Vector3Int[] followPath;
+    private int _followIndex;
     [SerializeField] private GameObject ghostCorpsePrefab;
     [SerializeField] private Sprite stillSprite;
     
@@ -22,8 +24,10 @@ public class GhostController : Character
         Blinky, // 'Chaser', targets player's current tile
         Pinky,  // 'Ambusher', targets four tiles in front of player
         Inky,   // 'Bashful', targets tile that intersects vector of Blinky's tile and two tiles in front of player at a distance from the player equal to Blinky's distance from the player
-        Clyde,   // 'Ignorant', targets player similar to Blinky until 8 tiles away, in which case he targets his scatter target tile
-        Hidey   // 'Scared', always flees player's current tile
+        Clyde,  // 'Ignorant', targets player similar to Blinky until 8 tiles away, in which case he targets his scatter target tile
+        Hidey,  // always flees player's current tile
+        Clumsy, // moves in random directions
+        Bordy   // moves clockwise around the outside wall of the map
     }
     
     protected bool IsSpawn { get; set; }
@@ -37,34 +41,45 @@ public class GhostController : Character
 
     private void TargetPos()
     {
+        var player = GameManager.GetCharacter("Player");
         switch (GameManager.GameMode)
         {
             case GameManager.Mode.Chase:
-                var player = GameManager.GetCharacter("Player");
-                if (player is null) return;
-                
                 switch (type)
                 {
-                    case Type.Blinky:
+                    case Type.Blinky or Type.Hidey:
+                        if (player is null) return;
                         _targetPos = player.CurrentPosition;
                         break;
                     case Type.Pinky:
+                        if (player is null) return;
                         _targetPos = player.CurrentPosition + ToVector3Int(player.Facing) * 4;
                         break;
                     case Type.Inky:
+                        if (player is null) return;
                         var blinky = GameManager.GetCharacter("Blinky");
-                        if (blinky is null) return;
+                        if (blinky is null) break;
                         
                         var blinkyToPlayer = player.CurrentPosition - blinky.CurrentPosition;
                         _targetPos = Vector3Int.RoundToInt(blinky.CurrentPosition + blinkyToPlayer * 2);
                         break;
                     case Type.Clyde:
+                        if (player is null) return;
                         _targetPos = Vector3.Distance(CurrentPosition, player.CurrentPosition) > 8 ? _targetPos = player.CurrentPosition : scatterPos;
+                        break;
+                    case Type.Bordy:
+                        _targetPos = followPath[_followIndex];
+                        if (CurrentPosition != followPath[_followIndex]) break;
+                        _followIndex = (_followIndex + 1) % followPath.Length;
                         break;
                 }
                 break;
             case GameManager.Mode.Scatter:
                 _targetPos = scatterPos;
+                break;
+            case GameManager.Mode.Scared:
+                if (player is null) return;
+                _targetPos = player.CurrentPosition;
                 break;
         }
     }
@@ -77,18 +92,28 @@ public class GhostController : Character
         
         var possiblePos = GetPossiblePositions(Vector3Int.RoundToInt(CurrentPosition), Vector3Int.RoundToInt(previousPos));
 
-        if (GameManager.GameMode == GameManager.Mode.Scared)
+        if (GameManager.GameMode == GameManager.Mode.Scared || type == Type.Hidey)
+        {
+            var filteredPos = possiblePos.FindAll(pos =>
+                Vector3.Distance(pos, _targetPos) >= Vector3.Distance(CurrentPosition, _targetPos));
+            if (filteredPos.Count > 0) NextPosition = filteredPos[Random.Range(0, filteredPos.Count)];
+            else if (possiblePos.Count > 0) NextPosition = possiblePos[Random.Range(0, possiblePos.Count)];
+        }
+        else if (type == Type.Clumsy)
         {
             if (possiblePos.Count > 0) NextPosition = possiblePos[Random.Range(0, possiblePos.Count)];
         }
         else
+        {
             try
             {
                 NextPosition = possiblePos
                     .OrderBy(pos => Vector3.Distance(pos, _targetPos))
                     .First();
-            } catch (InvalidOperationException) {} // Happens if no possible positions (thrown by First()) -> automatically reverses ghost   
-        
+            }
+            catch (InvalidOperationException) {} // Happens if no possible positions (thrown by First()) -> automatically reverses ghost   
+        }
+
         AddTween();
         UpdateAnimator();
         if (!Moving) return;

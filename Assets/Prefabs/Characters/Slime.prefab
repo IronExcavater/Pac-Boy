@@ -38,15 +38,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: type
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: exitDelay
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: identifier
-      value: Pinky
+      value: Hidey
       objectReference: {fileID: 0}
     - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: stillSprite
@@ -54,23 +54,27 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 7801d3d55647f634fb94db9bf524b69c, type: 3}
     - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: scatterPos.x
-      value: -12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: scatterPos.y
-      value: 7
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: spawnPosition.x
       value: -0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: scatterPos.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1184937038283517396, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_text
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1268942622847973387, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_Name
-      value: Ghost3Canvas
+      value: Ghost1Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 1753161451708760938, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_Controller

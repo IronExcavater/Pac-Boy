@@ -37,6 +37,14 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: exitDelay
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: identifier
       value: Blinky
       objectReference: {fileID: 0}
@@ -54,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: scatterPos.x
-      value: 11
+      value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: scatterPos.y
@@ -68,13 +76,17 @@ PrefabInstance:
       propertyPath: spawnPosition.y
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 275593373619123680, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
+      propertyPath: scatterPos.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1184937038283517396, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_text
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1268942622847973387, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_Name
-      value: Ghost1Canvas
+      value: Ghost2Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 1753161451708760938, guid: f14bee02bb6796b428a437ab7d864c34, type: 3}
       propertyPath: m_Controller
