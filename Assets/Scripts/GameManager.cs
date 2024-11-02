@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
     
     [Header("References:")]
     [SerializeField] private TileBase groundTile;
+    [SerializeField] private TileBase wallTile;
     [SerializeField] private TileBase fillerTile;
     [SerializeField] private GameUIController uiController;
     
@@ -138,6 +140,7 @@ public class GameManager : MonoBehaviour
     public static void UnregisterItem(Item item)
     {
         Game._items.Remove(item);
+        if (item.type == Item.Type.Coin) CheckForCoins();
     }
 
     public static void ClearItems()
@@ -163,6 +166,12 @@ public class GameManager : MonoBehaviour
             AudioManager.PlayMusicLoopNextBar(AudioManager.Audio.musicNormal);
     }
 
+    public static bool PlayerCanPhase()
+    {
+        var player = GetCharacter("Player");
+        return player != null && ((PacStudentController)player).CanPhase;
+    }
+
     public static IEnumerator AddScore(int score)
     {
         for (var i = 0; i < score / 10; i++)
@@ -176,7 +185,7 @@ public class GameManager : MonoBehaviour
     public static Tilemap LevelTilemap() { return Game._map; }
 
     public static bool IsGroundTile(TileBase tile) { return tile != null && tile.Equals(Game.groundTile); }
-    
+    public static bool IsWallTile(TileBase tile) { return tile != null && tile.Equals(Game.wallTile); }
     public static bool IsFillerTile(TileBase tile) { return tile != null && tile.Equals(Game.fillerTile); }
 
     public static Mode GameMode
@@ -220,5 +229,10 @@ public class GameManager : MonoBehaviour
         
         Debug.LogWarning(message);
         Game._logIdentifiers.Add(logIdentifier);
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 }

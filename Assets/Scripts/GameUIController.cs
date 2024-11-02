@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ public class GameUIController : UIController
     [SerializeField] private GameObject startCountdownObject;
     [SerializeField] private TextMeshProUGUI startCountdownText;
     [SerializeField] private GameObject gameOverObject;
+    [SerializeField] private Image phaseImage;
 
     public void ExitButton()
     {
@@ -24,8 +26,11 @@ public class GameUIController : UIController
         
         timeText.text = FormattedTime(GameManager.Game.time);
 
-        for (var i = 0; i < lifeImages.Length; i++) 
-            lifeImages[i].enabled = i + 1 <= GameManager.Game.lives;
+        for (var i = 0; i < lifeImages.Length; i++)
+        {
+            if (i + 1 <= GameManager.Game.lives != lifeImages[i].enabled)
+                StartCoroutine(PopLife(lifeImages[i]));
+        }
 
         var scaredCountdown = GameManager.Game.scaredLength - (Time.time - GameManager.Game.scaredTime);
         scaredCountdown = GameManager.Game.scaredTime == 0 ? 0 : scaredCountdown;
@@ -39,6 +44,9 @@ public class GameUIController : UIController
         if (startCountdownObject.activeInHierarchy && !startCountdownText.text.Equals(startSecondsText)) 
             AudioManager.PlaySfxOneShot(startSecondsText == "GO" ? AudioManager.Audio.select : AudioManager.Audio.coin);
         startCountdownText.text = startSecondsText;
+        
+        var canPhase = GameManager.PlayerCanPhase();
+        phaseImage.color = new Color(1, 1, 1, canPhase ? 1 : 0.3f);
     }
 
     public void ShowCountdown() { startCountdownObject.SetActive(true); }
@@ -46,4 +54,12 @@ public class GameUIController : UIController
     
     public void ShowGameOver() { gameOverObject.SetActive(true); }
     public void HideGameOver() { gameOverObject.SetActive(false); }
+
+    public IEnumerator PopLife(Image lifeImage)
+    {
+        var lifeAni = lifeImage.GetComponent<Animator>();
+        lifeAni.SetTrigger("Pop");
+        yield return new WaitForSeconds(2);
+        lifeImage.enabled = false;
+    }
 }

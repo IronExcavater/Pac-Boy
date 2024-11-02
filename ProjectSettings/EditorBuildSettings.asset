@@ -9,7 +9,10 @@ EditorBuildSettings:
     path: Assets/Scenes/StartScene.unity
     guid: 8322cc2aa93a83a4ba7c5f01d74de11f
   - enabled: 1
-    path: Assets/Scenes/Recreation.unity
+    path: Assets/Scenes/RecreationScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/InnovationScene.unity
+    guid: fab52837f4facde458ed6989388c02c5
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

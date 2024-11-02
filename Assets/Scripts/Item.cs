@@ -27,12 +27,14 @@ public class Item : MonoBehaviour
         {
             case Type.Coin:
                 GameManager.Game.StartCoroutine(GameManager.AddScore(10));
-                GameManager.CheckForCoins();
                 AudioManager.PlaySfxOneShot(AudioManager.Audio.coin);
                 break;
             case Type.Ingot:
                 GameManager.Game.StartCoroutine(GameManager.AddScore(100));
                 AudioManager.PlaySfxOneShot(AudioManager.Audio.select);
+                var player = GameManager.GetCharacter("Player");
+                if (player is null) break;
+                ((PacStudentController)player).CanPhase = true;
                 break;
             case Type.Potion:
                 GameManager.GameMode = GameManager.Mode.Scared;

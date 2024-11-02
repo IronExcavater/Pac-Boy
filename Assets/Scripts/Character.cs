@@ -92,7 +92,7 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    protected bool IsLocked { get; set; }
+    public bool IsLocked { get; set; }
 
     public void Attack()
     {

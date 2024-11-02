@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundTile: {fileID: 11400000, guid: 630873131044bb2468315fab0cb25e56, type: 2}
+  wallTile: {fileID: 11400000, guid: 7c84f20f8162fae4d958c5a0ade7a699, type: 2}
   fillerTile: {fileID: 11400000, guid: 9a711d30bd27bc74e8795f583c1a05ef, type: 2}
   uiController: {fileID: 0}
   characterSpeed: 2

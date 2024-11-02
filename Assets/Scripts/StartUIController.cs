@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ public class StartUIController : UIController
     
     public void Level1Button()
     {
-        LoadManager.LoadScene("Recreation");
+        LoadManager.LoadScene("RecreationScene");
     }
 
     public void Level2Button()
@@ -36,7 +35,6 @@ public class StartUIController : UIController
     private void Start()
     {
         AudioManager.PlayMusicLoopNextBar(GetMenuMusic(LoadManager.LoadMusicOption()));
-        LoadManager.SaveHighScore(10, 1000);
         highScoreText.text = $"{LoadManager.LoadHighScore()}, {FormattedTime(LoadManager.LoadBestTime())}";
     }
 

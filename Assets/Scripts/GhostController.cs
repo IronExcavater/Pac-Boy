@@ -139,8 +139,7 @@ public class GhostController : Character
 
     private void ReversePos()
     {
-        var temp = CurrentPosition;
-        NextPosition = CurrentPosition;
+        var temp = NextPosition = CurrentPosition;
         CurrentPosition = temp;
         UpdateAnimator();
         DustParticle();
@@ -173,9 +172,10 @@ public class GhostController : Character
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!IsAlive || IsSpawn) return;
+        if (!IsAlive || IsSpawn || GameManager.GameMode == GameManager.Mode.None) return;
         var player = GameManager.GetCharacter("Player");
         if (!other.gameObject.Equals(player.gameObject)) return;
+        if (!player.IsAlive || player.IsLocked) return;
         switch (GameManager.GameMode)
         {
             case GameManager.Mode.Chase or GameManager.Mode.Scatter:
@@ -231,9 +231,7 @@ public class GhostController : Character
             AnimationManager.Easing.Linear);
         yield return new WaitUntil(() => !AnimationManager.TargetExists(transform));
         CurrentPosition = NextPosition;
-        ani.enabled = true;
-        IsAlive = true;
-        IsSpawn = true;
+        ani.enabled = IsAlive = IsSpawn = true;
         GameManager.CheckForDeadGhosts();
         rend.color = Color.white;
         StartCoroutine(FadeOutAndDestroy(_ghostCorpse, 2));
