@@ -24,9 +24,10 @@ public class GameManager : MonoBehaviour
     public float scaredLength;
     public float scatterLength;
     public float countdownLength;
-    [SerializeField] private Mode mode;
+    public Vector3 spawnExitPosition;
     
     [Header("Game:")]
+    [SerializeField] private Mode mode;
     public int score;
     public float time;
     public float lives = 3;

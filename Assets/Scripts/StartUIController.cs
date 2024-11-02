@@ -13,7 +13,7 @@ public class StartUIController : UIController
 
     public void Level2Button()
     {
-        
+        LoadManager.LoadScene("InnovationScene");
     }
 
     public void MusicButton()

@@ -258,13 +258,13 @@ public class GhostController : Character
     {
         yield return new WaitUntil(() => GameManager.GameMode != GameManager.Mode.None);
         yield return new WaitForSeconds(delaySeconds);
-        NextPosition = GameManager.LevelTilemap().cellBounds.center + new Vector3(-0.5f, -0.5f);
+        NextPosition = new Vector3(-0.5f, transform.position.y);
         AnimationManager.AddTween(transform, NextPosition,
             Vector3.Distance(CurrentPosition, NextPosition) / GameManager.Game.scaredSpeed,
             AnimationManager.Easing.Linear);
         yield return new WaitUntil(() => !AnimationManager.TargetExists(transform));
         CurrentPosition = NextPosition;
-        NextPosition = GameManager.LevelTilemap().cellBounds.center + new Vector3(-0.5f, 2.5f);
+        NextPosition = GameManager.Game.spawnExitPosition;
         AnimationManager.AddTween(transform, NextPosition,
             Vector3.Distance(CurrentPosition, NextPosition) / GameManager.Game.scaredSpeed,
             AnimationManager.Easing.Linear);
