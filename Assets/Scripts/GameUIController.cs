@@ -46,7 +46,7 @@ public class GameUIController : UIController
         startCountdownText.text = startSecondsText;
         
         var canPhase = GameManager.PlayerCanPhase();
-        phaseImage.color = new Color(1, 1, 1, canPhase ? 1 : 0.3f);
+        phaseImage.color = new Color(1, 1, 1, canPhase ? 1 : 0.2f);
     }
 
     public void ShowCountdown() { startCountdownObject.SetActive(true); }
